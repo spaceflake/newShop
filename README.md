@@ -11,13 +11,14 @@
 <br>
 
 ## Developers:
-* *Tomas Fridekrans* (https://github.com/spaceflake)
 
-* *Hazem Kawas* (https://github.com/hazem-89)
+- _Tomas Fridekrans_ (https://github.com/spaceflake)
 
-* *Philip Risberg* (https://github.com/Prisberg)
+- _Hazem Kawas_ (https://github.com/hazem-89)
 
-* *Emil Hagelin* (https://github.com/empafrontend)
+- _Philip Risberg_ (https://github.com/Prisberg)
+
+- _Emil Hagelin_ (https://github.com/empafrontend)
 
 <br>
 
@@ -26,12 +27,14 @@
 <br>
 
 ## Intro
+
 I denna uppgift skall vi bygga en webbshops-applikation inkluderande en klient och en server. Servern ska vara kopplad till en mongodb databas och vara strukturerad baserad på ett REST-API med resurser.
 
 ## Krav
-- [x] Alla sidor skall vara responsiva. (G) 
-- [x] Arbetet ska implementeras med en React frontend och en Express backend. (G) 
-- [x] Skapa ett ER diagram och koddiagram, detta ska lämnas in vid idégodkännandet G) 
+
+- [x] Alla sidor skall vara responsiva. (G)
+- [x] Arbetet ska implementeras med en React frontend och en Express backend. (G)
+- [x] Skapa ett ER diagram och koddiagram, detta ska lämnas in vid idégodkännandet G)
 - [x] Beskriv er företagsidé i en kort textuell presentation, detta ska lämnas in vid idégodkännandet (G)
 - [x] All data som programmet utnyttjar ska vara sparat i en Mongo-databas (produkter, beställningar, konton mm) (G)
 - [x] Man ska kunna logga in som administratör i systemet (G)
@@ -49,13 +52,16 @@ I denna uppgift skall vi bygga en webbshops-applikation inkluderande en klient o
 
 <br>
 
-
 ### Clone this repository to your computer and/or open it in your code editor.
 
+```
 $ npm install
+```
+
 To install npm
 
+```
 $ npm start
+```
+
 Runs the app in the development mode.
-
-
