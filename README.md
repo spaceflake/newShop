@@ -1,5 +1,7 @@
 # Dynamisk Webbutveckling Slutprojekt
 
+<br>
+
 ### School: Medieinsitutet Gothenburg
 
 ### Class: FED21G
@@ -16,6 +18,8 @@
 * *Philip Risberg* (https://github.com/Prisberg)
 
 * *Emil Hagelin* (https://github.com/empafrontend)
+
+<br>
 
 ### Teacher: David Jensen
 
@@ -42,6 +46,8 @@ I denna uppgift skall vi bygga en webbshops-applikation inkluderande en klient o
 - [x] Besökare ska kunna välja ett av flera fraktalternativ (G)
 - [x] Tillgängliga fraktalternativ ska vara hämtade från databasen (G)
 - [x] Checkoutflödet i frontendapplikationen ska ha validering på samtliga fält (G)
+
+<br>
 
 
 ### Clone this repository to your computer and/or open it in your code editor.
