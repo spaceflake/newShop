@@ -1,19 +1,21 @@
-GET http://localhost:3000/api/user
+GET http://localhost:4000/api/user
 
 ###
 
-POST http://localhost:3000/api/user
+POST http://localhost:4000/api/user
 Content-Type: application/json
 
 {
-  "firstName": "David",
-  "lastName": "David",
-  "password": "123"
+  "firstName": "tompa",
+  "lastName": "string",
+  "password": "string",
+  "email": "string",
+  "phone": "string"
 }
 
 ###
 
-PUT http://localhost:3000/api/user/1234
+PUT http://localhost:4000/api/user/1234
 Content-Type: application/json
 
 {
@@ -22,4 +24,4 @@ Content-Type: application/json
 
 ###
 
-DELETE http://localhost:3000/api/user/1234
+DELETE http://localhost:4000/api/user/1234
