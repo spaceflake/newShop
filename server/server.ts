@@ -21,20 +21,6 @@ app.use('/api', userRouter);
 // global error handler
 app.use(errorHandler);
 
-// mongoose.connect(
-//   'mongodb+srv://hatmaker:hatpassword101@hatsonhatsdb.dba57.mongodb.net/?retryWrites=true&w=majority',
-//   (err) => {
-//     if (err) {
-//       console.error(err);
-//     } else {
-//       console.log('Connection to database established!');
-//       app.listen(port, () => {
-//         console.log(`server is running on ${port}`);
-//       });
-//     }
-//   }
-// );
-
 connectDB();
 app.listen(port, () => {
   console.log(`server is running on ${port}`);
