@@ -6,15 +6,15 @@ import {
   Container,
   Grid,
   Typography,
-} from '@mui/material';
-import { Link } from 'react-router-dom';
-import { Categories } from '../../Api/Data';
-import { useProduct } from '../../contexts/ProductsContext';
+} from "@mui/material";
+import { Link } from "react-router-dom";
+import { Categories } from "../../Api/Data";
+import { useProduct } from "../../contexts/ProductsContext";
 
 function CategoriesCard() {
   const { products } = useProduct();
   const displayCategories = Categories.filter(
-    (c) => c !== 'Övriga' && products.findIndex((p) => p.category === c) >= 0
+    (c) => c !== "Övriga" && products.findIndex((p) => p.category === c) >= 0
   );
 
   displayCategories.splice(Math.min(displayCategories.length, 3));
@@ -23,12 +23,12 @@ function CategoriesCard() {
   );
 
   return (
-    <Container sx={{ marginTop: '2rem' }} maxWidth="xl">
+    <Container sx={{ marginTop: "2rem" }} maxWidth="xl">
       <Typography
         sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          fontSize: 'clamp(1.5rem, 2.5vw, 2rem)',
+          display: "flex",
+          justifyContent: "center",
+          fontSize: "clamp(1.5rem, 2.5vw, 2rem)",
         }}
       >
         Kategorier
@@ -37,11 +37,11 @@ function CategoriesCard() {
         justifyContent="center"
         alignItems="center"
         container
-        sx={{ gap: '5rem', margin: '2rem 0' }}
+        sx={{ gap: "5rem", margin: "2rem 0" }}
       >
         {displayCategories.map((c, i) => (
-          <Link key={c} to={'products?category=' + (c as string).toLowerCase()}>
-            <Card sx={{ maxWidth: 300, borderRadius: '1rem' }}>
+          <Link key={c} to={"products?category=" + (c as string).toLowerCase()}>
+            <Card sx={{ maxWidth: 400, borderRadius: "1rem" }}>
               <CardActionArea>
                 <CardMedia
                   component="img"

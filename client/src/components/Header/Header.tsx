@@ -34,9 +34,13 @@ const Header: FC<HeaderProps> = () => {
     <>
       {!!user?.isAdmin && <AdminBar />}
 
-      <Container maxWidth="md" sx={{ padding: "0,2rem", mb:1,mt:2 }}>
+      <Container maxWidth="xl" sx={{ width: "100%" }}>
         <Box sx={{ width: "100%" }}>
-          {!!user && <Typography sx={{color:"#c900c1"}}>Du är nu inloggad som: {user?.username}</Typography>}
+          {!!user && (
+            <Typography sx={{ color: "#c900c1" }}>
+              Du är nu inloggad som: {user?.username}
+            </Typography>
+          )}
         </Box>
         <Box
           sx={{
@@ -44,6 +48,9 @@ const Header: FC<HeaderProps> = () => {
             justifyContent: "space-between",
             alignItems: "center",
             width: "100%",
+            paddingTop: "1.5rem",
+            paddingBottom: "1.5rem",
+            backgroundColor: "#D4E09B",
           }}
         >
           <Tabs
@@ -61,6 +68,8 @@ const Header: FC<HeaderProps> = () => {
           >
             <Tab value="/" label="Hem" />
             <Tab value="/products" label="Produkter" />
+            <Tab label="Om oss" />
+            <Tab label="Kontakta oss" />
           </Tabs>
           <Box
             sx={{
@@ -81,7 +90,7 @@ const Header: FC<HeaderProps> = () => {
                     color: " black",
                     minWidth: "1px",
                     "&:hover": {
-                      bgcolor: "#dadcd9",
+                      bgcolor: "#F6F4D2",
                       border: "none",
                       color: " black",
                     },
@@ -102,11 +111,11 @@ const Header: FC<HeaderProps> = () => {
                         padding: "0",
                         height: "2.5rem",
                         width: "2.5rem",
+                        color: "#CBDFBD",
                         "@media screen and (max-width: 440px)": {
                           marginRight: "-30px",
                         },
                       }}
-                      color="warning"
                     />
                   }
                 >
@@ -116,6 +125,7 @@ const Header: FC<HeaderProps> = () => {
             ) : (
               <Button
                 sx={{
+                  size: "small",
                   bgcolor: "white",
                   border: "none",
                   color: " black",

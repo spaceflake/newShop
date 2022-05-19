@@ -58,12 +58,12 @@ function CartButton() {
         <Badge badgeContent={cart?.length} color="info" showZero>
           <ShoppingCartIcon
             sx={{
-              color: "#0EDFE6",
+              color: "white",
               height: "2.5rem",
               width: "2.5rem",
               border: "none",
               "&:hover": {
-                color: "#eaa0ff",
+                color: "#F6F4D2",
               },
             }}
           />
