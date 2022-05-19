@@ -1,7 +1,9 @@
 import express, { Request, Response, NextFunction, Router } from 'express';
 import mongoose from 'mongoose';
 import connectDB from './config/db';
+import errorHandler from './middleware/errorMiddleware';
 import { userRouter } from './resources/user/user.router';
+
 // import bcrypt from 'bcryptjs';
 // import cors from 'cors';
 
@@ -17,6 +19,7 @@ app.use('/api', userRouter);
 // 404 handler
 
 // global error handler
+app.use(errorHandler);
 
 // mongoose.connect(
 //   'mongodb+srv://hatmaker:hatpassword101@hatsonhatsdb.dba57.mongodb.net/?retryWrites=true&w=majority',
