@@ -1,5 +1,9 @@
 import { NextFunction, Request, Response } from 'express';
-import { UserModel, User } from './user.model';
+import { UserModel, DbUserInterface, UserInterface } from './user.model';
+import bcrypt from 'bcrypt';
+
+
+
 
 export const getAllUsers = async (req: Request, res: Response) => {
   // TODO: Who is allowed to use this endpoint?
@@ -7,18 +11,36 @@ export const getAllUsers = async (req: Request, res: Response) => {
   res.status(200).json(users);
 };
 export const addUser = async (
-  req: Request<{}, {}, User>,
+  req: Request<{}, {}, DbUserInterface>,
   res: Response,
   next: NextFunction
 ) => {
   // TODO: How do we handle errors in async middlewares?
-  try {
-    const user = new UserModel(req.body);
-    await user.save();
-    res.status(200).json(user);
-  } catch (err) {
-    next(err);
+  const { firstName, lastName, password, email } = req?.body;
+  if (!firstName || !lastName || !password || !email || typeof firstName !== 'string' || typeof lastName !== 'string' || typeof password !== 'string' || typeof email !== 'string') {
+    res.send('Improper values')
+    return;
   }
+  UserModel.findOne({email}, async (err: Error, doc: any) => {
+    if (err) throw err;
+    if(doc) res.send('This email has an account already');
+    if(!doc) {
+      try {
+        const hashPassword = await bcrypt.hash(password, 10);
+        const user = new UserModel({
+          firstName,
+          lastName,
+          email,
+          password: hashPassword,
+        });
+        await user.save();
+        res.status(200).json(user);
+      } catch (err) {
+        next(err);
+      }
+    }
+  })
+  
 };
 export const updateUser = (req: Request<{ id: string }>, res: Response) => {
   res.status(200).json('UPDATED USER WITH ID: ' + req.params.id);
