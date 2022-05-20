@@ -39,7 +39,44 @@ app.use(errorHandler);
 
 
 
+const myStrategy = passportLocal.Strategy
 
+  passport.use(new myStrategy((email: string, password: string, done) => {
+    UserModel.findOne({ email: email }, (err: any, user: DbUserInterface) => {
+      if (err) throw err;
+      if (!user) return done(null, false, { message: 'No user found' });
+      bcrypt.compare(password, user.password, (err, result: boolean) => {
+        if (err) throw err;
+        if (result === true) {
+          return done(null, user);
+        } else {
+          return done(null, false, { message: 'Password incorrect' });
+        }
+      });
+    });
+  })
+  );
+  
+  passport.serializeUser((user: any, cb: any) => {
+    cb(null, user._id);
+  });
+  passport.deserializeUser((id: string,  cb) => {
+  UserModel.findOne({ _id: id }, (err: any, user: DbUserInterface) => {
+  const userInformation: UserInterface = {
+    firstName: user?.firstName,
+    lastName: user?.lastName,
+    email: user?.email,
+    isAdmin: user?.isAdmin,
+    id: user?._id
+  };
+  cb(err, userInformation);
+  });
+  });
+
+
+app.post("/api/user/login", passport.authenticate("local"), (req :Request, res:Response) => {
+  res.send("success")
+});
 
 
 connectDB();
