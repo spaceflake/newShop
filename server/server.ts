@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 import connectDB from './config/db';
 import errorHandler from './middleware/errorMiddleware';
 import { userRouter } from './resources/user/user.router';
-
+import { productRouter } from './resources/product/product.router';
 // import bcrypt from 'bcryptjs';
 // import cors from 'cors';
 
@@ -15,6 +15,8 @@ app.use(express.json());
 // Routes
 
 app.use('/api', userRouter);
+app.use('/api', productRouter);
+
 
 // 404 handler
 
