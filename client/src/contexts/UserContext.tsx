@@ -1,7 +1,7 @@
-import React, { useContext, useState } from "react";
-import { FakeUserFetch } from "../Api/Api";
-import { User } from "../Api/Data";
-import { LoginDetails } from "../components/Forms/LoginForm";
+import React, { useContext, useState } from 'react';
+import { FakeUserFetch } from '../Api/Api';
+import { User } from '../Api/Data';
+import { LoginDetails } from '../components/Forms/LoginForm';
 
 interface UserContextValue {
   isLoading: boolean;
@@ -9,10 +9,11 @@ interface UserContextValue {
   login: (loginDetails: LoginDetails) => Promise<boolean>;
   logout: () => void;
 }
+// work with server
 
 export const UserContext = React.createContext<UserContextValue>({
   isLoading: false,
-  user: { username: "", password: "", isAdmin: false },
+  user: { username: '', password: '', isAdmin: false },
   login: (_loginDetails: LoginDetails): Promise<boolean> => {
     return new Promise(() => {});
   },
