@@ -6,13 +6,14 @@ POST http://localhost:4000/api/product
 Content-Type: application/json
 
 {
-  "title": "Bolar hat",
-  "description": "bolar",
-  "price": 2000,
-  "photo": "https://i.imgur.com/in5lkpa.jpeg",
-  "categories": "array",
+  "title": "Tophat",
+  "description": "Keep it classy, not sassy",
+  "price": 1299,
+  "photo": "tophat.jpg",
+  "categories": ["Fancy"],
   "stock": 9
 }
+
 
 ###
 
