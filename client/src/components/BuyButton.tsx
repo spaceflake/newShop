@@ -28,7 +28,7 @@ function BuyButton({ dispatch, product }: any) {
         variant="outlined"
         endIcon={<AddShoppingCartIcon />}
       >
-        Köp nu {product.price}kr
+        Buy {product.price}kr
       </Button>
     </>
   );

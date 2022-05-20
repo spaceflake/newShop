@@ -1,25 +1,25 @@
-import { Link } from 'react-router-dom';
-import { Box, Button, Typography } from '@mui/material';
-import Grid from '@mui/material/Grid';
-import { createTheme } from '@mui/material/styles';
-import { ThemeProvider } from '@emotion/react';
-import FacebookOutlinedIcon from '@mui/icons-material/FacebookOutlined';
-import InstagramIcon from '@mui/icons-material/Instagram';
-import klarna from '../../assets/PaymentLogos/klarna.png';
-import swish from '../../assets/PaymentLogos/swish.svg';
-import visa from '../../assets/PaymentLogos/visa.png';
-import mastercard from '../../assets/PaymentLogos/mastercard.png';
-import maestro from '../../assets/PaymentLogos/maestro.png';
-import instabox from '../../assets/ShippingLogos/instabox-full.jpg';
-import postnord from '../../assets/ShippingLogos/postnord-full.png';
-import schenker from '../../assets/ShippingLogos/schenker-full.png';
-import SubscribeForm from '../Forms/SubscribeForm';
-import duckLogo from '../../assets/ducky2.png';
+import { Link } from "react-router-dom";
+import { Box, Button, Typography } from "@mui/material";
+import Grid from "@mui/material/Grid";
+import { createTheme } from "@mui/material/styles";
+import { ThemeProvider } from "@emotion/react";
+import FacebookOutlinedIcon from "@mui/icons-material/FacebookOutlined";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import klarna from "../../assets/PaymentLogos/klarna.png";
+import swish from "../../assets/PaymentLogos/swish.svg";
+import visa from "../../assets/PaymentLogos/visa.png";
+import mastercard from "../../assets/PaymentLogos/mastercard.png";
+import maestro from "../../assets/PaymentLogos/maestro.png";
+import instabox from "../../assets/ShippingLogos/instabox-full.jpg";
+import postnord from "../../assets/ShippingLogos/postnord-full.png";
+import schenker from "../../assets/ShippingLogos/schenker-full.png";
+import SubscribeForm from "../Forms/SubscribeForm";
+import duckLogo from "../../assets/ducky2.png";
 
 const theme = createTheme({
   palette: {
     secondary: {
-      main: '#1a237e',
+      main: "#1a237e",
     },
   },
   typography: {
@@ -30,10 +30,10 @@ const theme = createTheme({
 const iconSize = createTheme({
   palette: {
     secondary: {
-      main: '#ec407a',
+      main: "#ec407a",
     },
     primary: {
-      main: '#3d5afe',
+      main: "#3d5afe",
     },
   },
   typography: {
@@ -46,7 +46,7 @@ function LinksContainer() {
     <Grid
       container
       spacing={2}
-      sx={{ margin: 'auto', width: '90%', padding: '3rem 0' }}
+      sx={{ margin: "auto", width: "90%", padding: "3rem 0" }}
     >
       <Grid
         item
@@ -54,8 +54,8 @@ function LinksContainer() {
         md={3}
         lg={2}
         sx={{
-          display: 'flex',
-          justifyContent: 'center',
+          display: "flex",
+          justifyContent: "center",
         }}
       >
         <img src={duckLogo} width="200" height="200" alt=""></img>
@@ -65,31 +65,31 @@ function LinksContainer() {
         xs={12}
         md={3}
         lg={2}
-        sx={{ display: 'flex', justifyContent: 'center' }}
+        sx={{ display: "flex", justifyContent: "center" }}
       >
-        <Box sx={{ textAlign: 'center' }}>
+        <Box sx={{ textAlign: "center" }}>
           <Typography gutterBottom variant="h6">
-            Hjälp
+            Help
           </Typography>
           <ThemeProvider theme={theme}>
             <Typography gutterBottom>
               <Link to="faq">
                 <Button color="secondary" variant="text">
-                  Vanliga frågor
+                  FAQ
                 </Button>
               </Link>
             </Typography>
             <Typography gutterBottom>
               <Link to="termsOfUse">
                 <Button color="secondary" variant="text">
-                  Användarvillkor
+                  Terms of use
                 </Button>
               </Link>
             </Typography>
             <Typography>
               <Link to="support">
                 <Button color="secondary" variant="text">
-                  Kundtjänst
+                  Customer support
                 </Button>
               </Link>
             </Typography>
@@ -102,19 +102,19 @@ function LinksContainer() {
         md={3}
         lg={2}
         sx={{
-          display: 'flex',
-          justifyContent: 'center',
+          display: "flex",
+          justifyContent: "center",
         }}
       >
         <Box
           sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
           }}
         >
           <Typography gutterBottom variant="h6">
-            Följ oss
+            Follow us
           </Typography>
           <ThemeProvider theme={iconSize}>
             <FacebookOutlinedIcon color="primary" fontSize="large" />
@@ -127,7 +127,7 @@ function LinksContainer() {
         xs={12}
         md={3}
         lg={2}
-        sx={{ display: 'flex', justifyContent: 'center' }}
+        sx={{ display: "flex", justifyContent: "center" }}
       >
         <Box>
           <SubscribeForm />
@@ -138,9 +138,9 @@ function LinksContainer() {
         xs={12}
         md={6}
         lg={2}
-        sx={{ display: 'flex', justifyContent: 'center' }}
+        sx={{ display: "flex", justifyContent: "center" }}
       >
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+        <Box sx={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
           <img width="75" src={klarna} alt=""></img>
           <img width="75" src={swish} alt=""></img>
           <img width="75" src={visa} alt=""></img>
@@ -153,9 +153,9 @@ function LinksContainer() {
         xs={12}
         md={6}
         lg={2}
-        sx={{ display: 'flex', justifyContent: 'center' }}
+        sx={{ display: "flex", justifyContent: "center" }}
       >
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
           <img width="100" src={instabox} alt=""></img>
           <img width="100" src={postnord} alt=""></img>
           <img width="90" src={schenker} alt=""></img>

@@ -34,7 +34,7 @@ function CheckOutPage() {
           variant="h5"
           sx={{ mt: -2, mb: 2, fontWeight: "bold", padding: "2rem" }}
         >
-          Din varukorg
+          Your cart
         </Typography>
         <List dense>
           {cart?.length &&
@@ -86,14 +86,14 @@ function CheckOutPage() {
       {/* get and print total price of products */}
       <Box sx={{ textAlign: "right" }}>
         <Typography sx={{ mt: 2, fontWeight: "bold" }}>
-          Pris för produkter (inkl 25% moms)
+          Price for products (incl 25% tax)
         </Typography>
         <Typography variant="body2">{`${total} kr`}</Typography>
       </Box>
 
       <Box sx={{ textAlign: "right" }}>
         <Typography sx={{ mt: 2, fontWeight: "bold" }}>
-          Totalpris (inkl moms & frakt)
+          Totalprice (incl tax & delivery)
         </Typography>
         <Typography variant="body2">
           {`${
@@ -124,7 +124,7 @@ function CheckOutPage() {
             },
           }}
         >
-          Tillbaka till kundvagnen
+          Back to cart
         </Button>
       </Box>
 

@@ -28,7 +28,7 @@ function CartList({ handleClose }: any) {
       <List>
         {cart && cart.length > 0 ? (
           cart.map((product: CartType) => (
-            <ListItem key={product.id} sx={{bgcolor:"#fffff"}}>
+            <ListItem key={product.id} sx={{ bgcolor: "#fffff" }}>
               <ListItemAvatar>
                 <img
                   src={product.imgURL}
@@ -140,15 +140,15 @@ function CartList({ handleClose }: any) {
             </ListItem>
           ))
         ) : (
-          <Typography variant="body1">Här var det tomt!</Typography>
+          <Typography variant="body1">Nothing here</Typography>
         )}
       </List>
       <Divider
         light
         textAlign="right"
-        sx={{ "@media screen and (max-width: 440px)": {  } }}
+        sx={{ "@media screen and (max-width: 440px)": {} }}
       >
-        Summa
+        Sum
       </Divider>
       <Box
         maxWidth="md"
@@ -160,7 +160,7 @@ function CartList({ handleClose }: any) {
           },
         }}
       >
-        <Typography variant="h6" textAlign="right" sx={{ mb: 10, mr:4 }}>
+        <Typography variant="h6" textAlign="right" sx={{ mb: 10, mr: 4 }}>
           {total} kr
         </Typography>
         <Link to="/products">
@@ -185,7 +185,7 @@ function CartList({ handleClose }: any) {
             }}
             onClick={handleClose}
           >
-            Fortsätt handla
+            Keep browsing
           </Button>
         </Link>
         <Link to={cart.length ? "/checkoutPage" : ""}>
@@ -209,7 +209,7 @@ function CartList({ handleClose }: any) {
             disabled={cart.length > 0 ? false : true}
             onClick={handleClose}
           >
-            Till betalning
+            To checkout
           </Button>
         </Link>
       </Box>
