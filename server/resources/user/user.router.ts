@@ -4,6 +4,7 @@ import {
   addUser,
   updateUser,
   deleteUser,
+  loggedUser,
 } from './user.controller';
 
 export const userRouter = express
@@ -11,4 +12,5 @@ export const userRouter = express
   .get('/user', /* adminSecure,*/ getAllUsers)
   .post('/user/register', addUser)
   .put('/user/:id', updateUser)
-  .delete('/user/:id', deleteUser);
+  .delete('/user/:id', deleteUser)
+  .get('/', loggedUser);

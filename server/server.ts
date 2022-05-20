@@ -47,10 +47,14 @@ const myStrategy = passportLocal.Strategy;
 passport.use(
   new myStrategy((email: string, password: string, done) => {
     UserModel.findOne({ email: email }, (err: any, user: DbUserInterface) => {
-      if (err) throw err;
+      if (err) {
+        return done(err);
+      }
       if (!user) return done(null, false, { message: 'No user found' });
       bcrypt.compare(password, user.password, (err, result: boolean) => {
-        if (err) throw err;
+        if (err) {
+          return done(err);
+        }
         if (result === true) {
           return done(null, user);
         } else {
@@ -79,9 +83,13 @@ passport.deserializeUser((id: string, cb) => {
 
 app.post(
   '/api/user/login',
-  passport.authenticate('local'),
+  passport.authenticate('local', { failureMessage: true }),
   (req: Request, res: Response) => {
-    res.status(200).json({ success: true, message: 'Successfully logged in' });
+    res.status(200).json({
+      success: true,
+      message: 'Successfully logged in',
+      // user: userData!!!!!!!!
+    });
   }
 );
 

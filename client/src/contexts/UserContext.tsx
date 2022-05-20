@@ -1,4 +1,5 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import axios, { AxiosResponse } from 'axios';
 
 import { UserFetch } from '../Api/Api';
 import { User } from '../Api/Data';
@@ -23,14 +24,19 @@ export const UserContext = React.createContext<UserContextValue>({
 export const UserProvider: React.FC<React.ReactNode> = ({ children }) => {
   const [user, setUser] = React.useState<User | undefined>(undefined);
   const [isLoading, setIsLoading] = useState(false);
-
+  // useEffect(() => {
+  //   axios
+  //     .get('http://localhost:4000/api', { withCredentials: true })
+  //     .then((res: AxiosResponse) => {
+  //       setUser(res.data);
+  //       console.log(user);
+  //     });
+  // }, []);
   const login = async (loginDetails: LoginDetails) => {
     setIsLoading(true);
 
     return UserFetch(loginDetails)
       .then((user) => {
-        console.log(user);
-
         setUser(user);
         setIsLoading(false);
         return true;
@@ -42,8 +48,14 @@ export const UserProvider: React.FC<React.ReactNode> = ({ children }) => {
   };
 
   const logout = async () => {
-    setUser(undefined);
-    setIsLoading(false);
+    // talk to server
+    await axios
+      .get('http://localhost:4000/logout')
+      .then((res: AxiosResponse) => {
+        console.log(res.data.message);
+        setUser(undefined);
+        setIsLoading(false);
+      });
   };
 
   return (
