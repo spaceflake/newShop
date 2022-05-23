@@ -31,7 +31,7 @@ export const UserProvider: React.FC<React.ReactNode> = ({ children }) => {
 
     return UserFetch(loginDetails)
       .then((user) => {
-        // setUser(user);
+        setUser(user);
         setIsLoading(false);
         return true;
       })

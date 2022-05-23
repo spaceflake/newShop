@@ -45,7 +45,6 @@ function LoginForm(_props: Props) {
           .then(() => {
             resetForm()
             nav('/')
-            window.location.reload()
           })
           .catch((e) => {
             setSubmitError(e.message)

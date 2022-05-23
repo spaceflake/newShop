@@ -45,8 +45,9 @@ app.use(errorHandler);
 const myStrategy = passportLocal.Strategy;
 
 passport.use(
-  new myStrategy({usernameField: "email"},  (email, password, done) => {
-    UserModel.findOne({ email: email }, (err: any, user: DbUserInterface) => {
+  new myStrategy({usernameField: "email"}, async (email, password, done) => {
+
+     UserModel.findOne({ email: email },  (err: any, user: DbUserInterface) => {
       if (err) {
         return done(err);
       }
