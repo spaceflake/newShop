@@ -24,6 +24,10 @@ export const ProductsProvider: React.FC = ({ children }) => {
     React.Reducer<ProductType[], ProductActions>
   >(productReducer, initialStateProducts);
 
+  // const getAllProducts = async () => {
+  //   const response = await
+  // }
+
   function createProduct(product: Product) {
     dispatch({
       type: ProductTypes.Create,
