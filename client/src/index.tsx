@@ -7,17 +7,17 @@ import { BrowserRouter } from 'react-router-dom'
 import CartProvider from './contexts/CartContext'
 import { UserProvider } from './contexts/UserContext'
 import ProductsProvider from './contexts/ProductsContext'
-
+ import UserContextProvider from './contexts/UserContext'
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <ProductsProvider>
         <UserProvider>
+      <ProductsProvider>
           <CartProvider>
             <App />
           </CartProvider>
-        </UserProvider>
       </ProductsProvider>
+        </UserProvider>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')

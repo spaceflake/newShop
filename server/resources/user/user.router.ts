@@ -4,11 +4,13 @@ import {
   addUser,
   updateUser,
   deleteUser,
+  loggedUser,
 } from './user.controller';
 
 export const userRouter = express
   .Router()
   .get('/user', /* adminSecure,*/ getAllUsers)
-  .post('/user', addUser)
+  .post('/user/register', addUser)
   .put('/user/:id', updateUser)
-  .delete('/user/:id', deleteUser);
+  .delete('/user/:id', deleteUser)
+  .get('/logged', loggedUser);

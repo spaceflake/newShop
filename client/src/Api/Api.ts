@@ -1,33 +1,28 @@
-import { User, mockedUsers } from '../Api/Data'
+import { UserInterface } from '../InterFaces';
 import { LoginDetails } from '../components/Forms/LoginForm';
+import axios from 'axios';
 
 function wait(time: number) {
   return new Promise<boolean>((resolve) => {
     setTimeout(() => {
-      resolve(true)
-    }, time)
-  })
+      resolve(true);
+    }, time);
+  });
 }
-export async function FakeUserFetch(loginDetails: LoginDetails): Promise<User> {
-  await wait(1000)
-  const foundUsers = mockedUsers.filter((user) => {
-    return user.username === loginDetails.username
-  })
+export async function UserFetch(loginDetails: LoginDetails): Promise<UserInterface> {
+  const res = await axios.post(
+    'http://localhost:4000/api/user/login',
+    loginDetails , { withCredentials: true}
 
-  if (!foundUsers.length) {
-    throw new Error('Tyvärr så finns inte denna användare.')
-  }
+    
+  );
 
-  const foundUser = foundUsers[0]
+  const result = await res.data.user;
+  console.log(result.user);
 
-  if (foundUser.password !== loginDetails.password) {
-    throw new Error('Tyvärr så stämmer ej lösenordet.')
-  }
-
-  return foundUser
+  return result;
 }
-
 
 export async function placeOrderFetch() {
-  return await wait(1000)
+  return await wait(1000);
 }
