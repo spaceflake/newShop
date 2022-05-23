@@ -1,7 +1,7 @@
 import { Box, Container, Typography } from '@mui/material';
-import LoginForm from '../components/Forms/LoginForm';
+import SignUpForm from '../components/Forms/SignUpForm';
 
-function LoginPage() {
+function SignUpPage() {
   return (
     <Container maxWidth="md">
       <Box
@@ -14,11 +14,11 @@ function LoginPage() {
         }}
       >
         <Typography variant="h5" sx={{ fontWeight: 'bold', mb: 3 }}>
-          Logga in
+          Sign up
         </Typography>
 
         {/* Log in form with username and password */}
-        <LoginForm />
+        <SignUpForm />
 
         {/* just for development, remove before "real" launch. */}
         {/* <Box >
@@ -36,4 +36,4 @@ function LoginPage() {
   );
 }
 
-export default LoginPage;
+export default SignUpPage;

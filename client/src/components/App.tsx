@@ -1,16 +1,17 @@
-import { Route, Routes } from 'react-router-dom'
-import ProductListPage from '../pages/ProductListPage'
-import Layout from './Layout'
-import StartPage from '../pages/StartPage'
-import CheckOutPage from '../pages/CheckOutPage'
-import ProductPage from '../pages/ProductPage'
-import CartPage from '../pages/CartPage'
-import LoginPage from '../pages/LoginPage'
-import FaqPage from '../pages/FaqPage'
-import TermsOfUsePage from '../pages/TermsOfUsePage'
-import AdminPage from '../pages/AdminPage'
-import SupportPage from '../pages/SupportPage'
-import ConfirmedOrderPage from '../pages/ConfirmedPage'
+import { Route, Routes } from 'react-router-dom';
+import ProductListPage from '../pages/ProductListPage';
+import Layout from './Layout';
+import StartPage from '../pages/StartPage';
+import CheckOutPage from '../pages/CheckOutPage';
+import ProductPage from '../pages/ProductPage';
+import CartPage from '../pages/CartPage';
+import LoginPage from '../pages/LoginPage';
+import FaqPage from '../pages/FaqPage';
+import TermsOfUsePage from '../pages/TermsOfUsePage';
+import AdminPage from '../pages/AdminPage';
+import SupportPage from '../pages/SupportPage';
+import ConfirmedOrderPage from '../pages/ConfirmedPage';
+import SignUpPage from '../pages/SignUpPage';
 
 function App() {
   return (
@@ -28,10 +29,11 @@ function App() {
         <Route path="termsOfUse" element={<TermsOfUsePage />} />
         <Route path="support" element={<SupportPage />} />
         <Route path="login" element={<LoginPage />} />
+        <Route path="signup" element={<SignUpPage />} />
       </Route>
       <Route path="admin" element={<AdminPage />} />
     </Routes>
-  )
+  );
 }
 
-export default App
+export default App;

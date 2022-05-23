@@ -9,12 +9,12 @@ import InputField from './InputField'
 type LoginDetailsSchemaType = Record<keyof LoginDetails, Yup.AnySchema>
 
 const LoginFormSchema = Yup.object().shape<LoginDetailsSchemaType>({
-  username: Yup.string().required('Vänligen fyll i ditt användarnamn.'),
+  email: Yup.string().required('Vänligen fyll i ditt email.'),
   password: Yup.string().required('Vänligen fyll i ditt lösenord.'),
 })
 
 export interface LoginDetails {
-  username: string
+  email: string
   password: string
 }
 
@@ -23,7 +23,7 @@ interface Props {
 }
 
 const emptyForm: LoginDetails = {
-  username: '',
+  email: '',
   password: '',
 }
 
@@ -41,7 +41,7 @@ function LoginForm(_props: Props) {
 
         // on submit, set user to logged in if successful, navigate back to home
         userContext
-          .login(loginDetails)
+        .login(loginDetails)
           .then(() => {
             resetForm()
             nav('/')
@@ -49,6 +49,7 @@ function LoginForm(_props: Props) {
           .catch((e) => {
             setSubmitError(e.message)
           })
+          console.log(loginDetails);
       },
     })
 
@@ -62,20 +63,20 @@ function LoginForm(_props: Props) {
 
       {/* user name input */}
       <InputField
-        label="Användarnamn: "
-        id="username"
-        name="username"
-        type="text"
-        value={values.username}
+        label="email: "
+        id="email"
+        name="email"
+        type="email"
+        value={values.email}
         onChange={handleChange}
         onBlur={handleBlur}
-        error={touched.username && !!errors.username}
-        helperText={touched.username && errors.username}
+        error={touched.email && !!errors.email}
+        helperText={touched.email && errors.email}
       />
 
       {/* Password input */}
       <InputField
-        label="Lösenord: "
+        label="password: "
         id="password"
         name="password"
         type="password"
