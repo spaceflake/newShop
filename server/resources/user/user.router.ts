@@ -13,4 +13,4 @@ export const userRouter = express
   .post('/user/register', addUser)
   .put('/user/:id', updateUser)
   .delete('/user/:id', deleteUser)
-  .get('/', loggedUser);
+  .get('/logged', loggedUser);

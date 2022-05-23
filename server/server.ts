@@ -45,7 +45,7 @@ app.use(errorHandler);
 const myStrategy = passportLocal.Strategy;
 
 passport.use(
-  new myStrategy((email: string, password: string, done) => {
+  new myStrategy({usernameField: "email"},  (email, password, done) => {
     UserModel.findOne({ email: email }, (err: any, user: DbUserInterface) => {
       if (err) {
         return done(err);
@@ -67,6 +67,8 @@ passport.use(
 
 passport.serializeUser((user: any, cb: any) => {
   cb(null, user._id);
+  console.log(user);
+  
 });
 passport.deserializeUser((id: string, cb) => {
   UserModel.findOne({ _id: id }, (err: any, user: DbUserInterface) => {
@@ -78,8 +80,11 @@ passport.deserializeUser((id: string, cb) => {
       id: user?._id,
     };
     cb(err, userInformation);
+    
+    console.log(userInformation);
   });
 });
+
 
 app.post(
   '/api/user/login',
@@ -88,7 +93,7 @@ app.post(
     res.status(200).json({
       success: true,
       message: 'Successfully logged in',
-      // user: userData!!!!!!!!
+      user: req.user
     });
   }
 );

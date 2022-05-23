@@ -1,4 +1,4 @@
-import { User } from '../Api/Data';
+import { UserInterface } from '../InterFaces';
 import { LoginDetails } from '../components/Forms/LoginForm';
 import axios from 'axios';
 
@@ -9,14 +9,16 @@ function wait(time: number) {
     }, time);
   });
 }
-export async function UserFetch(loginDetails: LoginDetails): Promise<User> {
+export async function UserFetch(loginDetails: LoginDetails): Promise<UserInterface> {
   const res = await axios.post(
     'http://localhost:4000/api/user/login',
-    loginDetails
+    loginDetails , { withCredentials: true}
+
+    
   );
 
-  const result = await res.data;
-  console.log(result);
+  const result = await res.data.user;
+  console.log(result.user);
 
   return result;
 }

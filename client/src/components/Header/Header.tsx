@@ -3,7 +3,7 @@ import { FC, useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import React from 'react';
-import { useUser } from '../../contexts/UserContext';
+import { useUser, UserContext } from '../../contexts/UserContext';
 import AdminBar from './AdminBar';
 import CartButton from './CartButton';
 
@@ -29,7 +29,7 @@ const Header: FC<HeaderProps> = () => {
   };
 
   const { user, logout } = useUser();
-
+  
   return (
     <>
       {!!user?.isAdmin && <AdminBar />}
@@ -38,7 +38,7 @@ const Header: FC<HeaderProps> = () => {
         <Box sx={{ width: '100%' }}>
           {!!user && (
             <Typography sx={{ color: '#c900c1' }}>
-              Du är nu inloggad som: {user?.username}
+              Du är nu inloggad som: {user?.email}
             </Typography>
           )}
         </Box>

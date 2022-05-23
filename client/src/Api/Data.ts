@@ -149,24 +149,24 @@ export const mockedProducts: Product[] = [
   },
 ];
 
-export interface User {
-  username: string;
-  password: string;
-  isAdmin: boolean;
-}
+// export interface User {
+//   username: string;
+//   password: string;
+//   isAdmin: boolean;
+// }
 
-export const mockedUsers: User[] = [
-  {
-    username: 'Regular-User',
-    password: 'User',
-    isAdmin: false,
-  },
-  {
-    username: 'Admin-User',
-    password: 'Admin',
-    isAdmin: true,
-  },
-];
+// export const mockedUsers: User[] = [
+//   {
+//     username: 'Regular-User',
+//     password: 'User',
+//     isAdmin: false,
+//   },
+//   {
+//     username: 'Admin-User',
+//     password: 'Admin',
+//     isAdmin: true,
+//   },
+// ];
 
 export interface Delivery {
   name: string;

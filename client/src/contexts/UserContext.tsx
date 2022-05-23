@@ -1,20 +1,19 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import axios, { AxiosResponse } from 'axios';
 
 import { UserFetch } from '../Api/Api';
-import { User } from '../Api/Data';
+import { UserInterface } from '../InterFaces';
 import { LoginDetails } from '../components/Forms/LoginForm';
 
 interface UserContextValue {
   isLoading: boolean;
-  user?: User;
+  user?: UserInterface;
   login: (loginDetails: LoginDetails) => Promise<boolean>;
   logout: () => void;
 }
-
 export const UserContext = React.createContext<UserContextValue>({
   isLoading: false,
-  user: { username: '', password: '', isAdmin: false },
+  user: { id: '', firstName: '', lastName: '', email: '', isAdmin: false },
   login: (_loginDetails: LoginDetails): Promise<boolean> => {
     return new Promise(() => {});
   },
@@ -22,22 +21,17 @@ export const UserContext = React.createContext<UserContextValue>({
 });
 
 export const UserProvider: React.FC<React.ReactNode> = ({ children }) => {
-  const [user, setUser] = React.useState<User | undefined>(undefined);
+  const [user, setUser] = React.useState<UserInterface>();
   const [isLoading, setIsLoading] = useState(false);
-  // useEffect(() => {
-  //   axios
-  //     .get('http://localhost:4000/api', { withCredentials: true })
-  //     .then((res: AxiosResponse) => {
-  //       setUser(res.data);
-  //       console.log(user);
-  //     });
-  // }, []);
+
+
+ 
   const login = async (loginDetails: LoginDetails) => {
     setIsLoading(true);
 
     return UserFetch(loginDetails)
       .then((user) => {
-        setUser(user);
+        // setUser(user);
         setIsLoading(false);
         return true;
       })
@@ -46,7 +40,11 @@ export const UserProvider: React.FC<React.ReactNode> = ({ children }) => {
         throw e;
       });
   };
-
+  useEffect(() => {
+    axios.get("http://localhost:4000/api/logged", { withCredentials: true }).then((res: AxiosResponse) => {
+      setUser(res.data);
+    })
+}, []);
   const logout = async () => {
     // talk to server
     await axios
