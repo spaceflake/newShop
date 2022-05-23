@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { createContext, useContext, useReducer, useEffect } from 'react';
 import { mockedProducts, Product } from '../Api/Data';
 // import useLocalStorage from '../Hooks/useLocalStorage'
@@ -24,9 +25,11 @@ export const ProductsProvider: React.FC = ({ children }) => {
     React.Reducer<ProductType[], ProductActions>
   >(productReducer, initialStateProducts);
 
-  // const getAllProducts = async () => {
-  //   const response = await
-  // }
+  const getAllProducts = async () => {
+    const response = await axios.get('http://localhost:4000/api/product');
+    const res = await response.data;
+    console.log(res);
+  };
 
   function createProduct(product: Product) {
     dispatch({
@@ -48,6 +51,10 @@ export const ProductsProvider: React.FC = ({ children }) => {
       payload: { id },
     });
   }
+
+  useEffect(() => {
+    getAllProducts();
+  }, []);
 
   useEffect(() => {
     localStorage.setItem('products', JSON.stringify(products));
