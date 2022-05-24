@@ -7,78 +7,44 @@ import {
   Typography,
   useMediaQuery,
 } from '@mui/material';
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { Categories, MockedCategories } from '../Api/Data';
 import ProductCard from '../components/Cards/ProductCard';
-import { useProduct, ProductType } from '../contexts/ProductsContext';
-
-interface CategoryState {
-  [key: string]: any;
-}
-
-function createCategoryState(categoryParam: string | null) {
-  const categoryParamValues =
-    categoryParam === null ? [] : categoryParam.split(',');
-
-  const categories = Categories.filter(
-    (a) =>
-      categoryParamValues.findIndex(
-        (b) => a.toLowerCase() === b.toLowerCase()
-      ) >= 0
-  );
-
-  const categoryState: CategoryState = {
-    all: categories.length === 0,
-  };
-
-  Categories.map(
-    (category) => (categoryState[category] = categories.includes(category))
-  );
-
-  return categoryState;
-}
-
-function handleCategoryAllClick(setCategoryState: (arg0: any) => void) {
-  const newState: CategoryState = {
-    all: true,
-  };
-
-  Categories.map((category) => (newState[category] = false));
-
-  setCategoryState(newState);
-}
-
-function handleCategoryClick(
-  categoryState: CategoryState,
-  setCategoryState: (arg0: any) => void,
-  category: MockedCategories
-) {
-  const newCategoryState = {
-    ...categoryState,
-    [category]: !categoryState[category],
-  };
-
-  setCategoryState({
-    ...newCategoryState,
-    all: !Object.values(newCategoryState).some((x: boolean) => x),
-  });
-}
+import { useProduct } from '../contexts/ProductsContext';
+import { Product } from '../InterFaces';
 
 function ProductListPage() {
-  const { products } = useProduct();
-  const [searchParams] = useSearchParams();
-  const categoryParam = searchParams.get('category');
-
-  const [categoryState, setCategoryState] = useState(
-    createCategoryState(categoryParam)
-  );
+  const { prods, categories } = useProduct();
+  // const [categories, setCategories] = useState<string[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const selectedCategory = searchParams.get('category');
+  console.log(selectedCategory);
 
   const matches = useMediaQuery('(max-width: 440px)');
 
-  const filteredCategories = categoryState.all
-    ? Categories
-    : Categories.filter((category) => categoryState[category]);
+  const filterCategories = useCallback(
+    (category: string = selectedCategory || 'All') => {
+      if (category === 'All') {
+        setSearchParams({});
+        setFilteredProducts(prods);
+        return;
+      }
+
+      const prodFilter = prods.filter((prod) => {
+        return prod.categories.some((cat) => cat === category);
+      });
+
+      setSearchParams({ category });
+      setFilteredProducts(prodFilter);
+      console.log(category);
+    },
+    [prods, selectedCategory, setSearchParams]
+  );
+
+  useEffect(() => {
+    filterCategories();
+  }, [prods, filterCategories]);
 
   return (
     <Container maxWidth="lg">
@@ -96,19 +62,11 @@ function ProductListPage() {
           orientation={matches ? 'vertical' : 'horizontal'}
           aria-label="button group"
         >
-          <Button
-            variant={categoryState.all ? 'contained' : 'outlined'}
-            onClick={() => handleCategoryAllClick(setCategoryState)}
-          >
-            Alla
-          </Button>
-          {Categories.map((category, index) => (
+          {categories.map((category, index) => (
             <Button
               key={index}
-              variant={categoryState[category] ? 'contained' : 'outlined'}
-              onClick={() =>
-                handleCategoryClick(categoryState, setCategoryState, category)
-              }
+              variant="contained"
+              onClick={() => filterCategories(category)}
             >
               {category}
             </Button>
@@ -116,15 +74,11 @@ function ProductListPage() {
         </ButtonGroup>
       </Box>
       <Grid container spacing={2}>
-        {products
-          .filter((product) =>
-            filteredCategories.includes(product.category as MockedCategories)
-          )
-          .map((product: ProductType) => (
-            <Grid key={product.id} item xs={12} sm={6} md={4} lg={3}>
-              <ProductCard key={product.id} product={product} />
-            </Grid>
-          ))}
+        {filteredProducts.map((product) => (
+          <Grid key={product._id} item xs={12} sm={6} md={4} lg={3}>
+            <ProductCard key={product._id} product={product} />
+          </Grid>
+        ))}
       </Grid>
     </Container>
   );

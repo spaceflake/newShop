@@ -1,11 +1,11 @@
-import CategoriesCard from '../components/Cards/CategoriesCard';
+//import CategoriesCard from '../components/Cards/CategoriesCard';
 import StartPageDesription from '../components/StartPageDescription';
 
 function StartPage() {
   return (
     <div>
       <StartPageDesription />
-      <CategoriesCard />
+      {/* <CategoriesCard /> */}
     </div>
   );
 }

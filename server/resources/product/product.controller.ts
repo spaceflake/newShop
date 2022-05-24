@@ -6,6 +6,19 @@ export const getAllProducts = async (req: Request, res: Response) => {
   const products = await ProductModel.find({});
   res.status(200).json(products);
 };
+
+export const getCategories = async (req: Request, res: Response) => {
+  const products = await ProductModel.find({}).select('categories');
+
+  const categories = products.reduce<string[]>((categories, product) => {
+    categories.push(...product.categories);
+    return categories;
+  }, []);
+
+  const uniqueCategories = Array.from(new Set(categories));
+  res.status(200).json(uniqueCategories);
+};
+
 export const addProduct = async (
   req: Request<{}, {}, Product>,
   res: Response,
