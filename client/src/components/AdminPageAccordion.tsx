@@ -11,7 +11,8 @@ import {
   useMediaQuery,
 } from '@mui/material';
 import { useEffect, useReducer, useRef, useState } from 'react';
-import { Product, Categories } from '../Api/Data';
+import { Product } from '../../../server/resources/product/product.model';
+
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import EditIcon from '@mui/icons-material/Edit';
 import Save from '@mui/icons-material/Save';
@@ -23,15 +24,16 @@ import {
   ProductEditReducerType,
   ProductEditState,
 } from '../contexts/Reducers';
+import { useProduct } from '../contexts/ProductsContext';
 
 function createProductEditState(product: Product): ProductEditState {
   const productEditState: ProductEditState = {
     ...product,
     titleValid: product.title !== '',
-    informationValid: product.information !== '',
-    categoryValid: product.category !== '',
+    informationValid: product.description !== '',
+    categoryValid: product.categories !== [''],
     priceValid: !isNaN(product.price),
-    imgURLValid: product.imgURL !== '',
+    imgURLValid: product.photo !== '',
   };
 
   return productEditState;
@@ -39,10 +41,10 @@ function createProductEditState(product: Product): ProductEditState {
 
 const isProductEdited = (product: Product, productState: ProductEditState) =>
   productState.title !== product.title ||
-  productState.information !== product.information ||
-  productState.category !== product.category ||
+  productState.description !== product.description ||
+  productState.categories !== product.categories ||
   productState.price !== product.price ||
-  productState.imgURL !== product.imgURL;
+  productState.photo !== product.photo;
 
 const isFormValid = (productState: ProductEditState) =>
   productState.titleValid &&
@@ -66,6 +68,7 @@ function AdminPageAccordion({
 }: AdminPageAccordionProps) {
   const [open, setOpen] = useState(expanded ?? false);
   const [openModal, setOpenModal] = useState(false);
+  const { categories } = useProduct();
 
   const [productState, dispatch] = useReducer<
     React.Reducer<ProductEditState, ProductEditAction>
@@ -117,7 +120,7 @@ function AdminPageAccordion({
               },
             }}
           >
-            <img src={productState.imgURL} width="48px" alt=""></img>
+            <img src={productState.photo} width="48px" alt=""></img>
             {open ? (
               <>
                 <input
@@ -157,14 +160,14 @@ function AdminPageAccordion({
         <Box sx={{ margin: '1rem 0' }}>
           <img
             style={{ width: 100, height: 100 }}
-            src={productState.imgURL}
+            src={productState.photo}
             alt=""
           ></img>
         </Box>
         <Typography sx={{ marginBottom: '2ex' }}>Bild URL:&nbsp;</Typography>
         <input
           type="url"
-          value={productState.imgURL}
+          value={productState.photo}
           onChange={(e) => {
             dispatch({
               type: ProductEditReducerType.Update,
@@ -186,7 +189,7 @@ function AdminPageAccordion({
                 payload: { key: 'information', value: e.target.value },
               });
             }}
-            value={productState.information}
+            value={productState.description}
           />
           {!productState.informationValid && (
             <Typography sx={{ color: 'red' }}>
@@ -231,14 +234,14 @@ function AdminPageAccordion({
               }}
               aria-label="button group"
             >
-              {Categories.map((category, index) => (
+              {categories.map((category, index) => (
                 <Button
                   key={index}
-                  variant={
-                    category === productState.category
-                      ? 'contained'
-                      : 'outlined'
-                  }
+                  // variant={
+                  //   category === productState.categories
+                  //     ? 'contained'
+                  //     : 'outlined'
+                  // }
                   onClick={() =>
                     dispatch({
                       type: ProductEditReducerType.Update,
@@ -308,16 +311,16 @@ function AdminPageAccordion({
               <Typography>
                 Är du säker på att du vill ta bort produkten?
               </Typography>
-              <Button
+              {/* <Button
                 onClick={(e) => {
-                  deleteAction(product.id);
+                  deleteAction(product?._id);
                   setOpenModal(false);
                   setOpen(false);
                   e.stopPropagation();
                 }}
               >
                 Ja
-              </Button>
+              </Button> */}
               <Button onClick={() => setOpenModal(false)}>Nej</Button>
             </Box>
           </Modal>
