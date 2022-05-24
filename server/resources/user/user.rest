@@ -6,7 +6,7 @@ POST http://localhost:4000/api/user
 Content-Type: application/json
 
 {
-  "firstName": "tompa",
+  "firstName": "philip",
   "lastName": "string",
   "password": "string",
   "email": "string",

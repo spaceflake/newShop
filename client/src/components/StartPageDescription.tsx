@@ -38,7 +38,7 @@ function StartPageDesription() {
             fontSize: 'clamp(1.5rem, 2.5vw, 2rem)',
           }}
         >
-          Välkommen till Ducky - affären där du köper dina badankor
+          Welcome to Hats on Hats, we got the hats you need!
         </Typography>
       </Box>
       <Box
@@ -50,12 +50,10 @@ function StartPageDesription() {
         }}
       >
         <Typography sx={{ fontSize: 'clamp(1rem, 2.5vw, 1.1rem)' }}>
-          Håll humöret flytande med hjälp av våra osänkbara badankor! Badankor
-          är levnadsglada filurer med truten formad som ett naturligt leende. Vi
-          på Ducky har också lagt näbben i blöt och våra efterforskningar ger
-          starka belägg för att det är svårt att sura när du ser en badanka i
-          ögonen. Badankor bör därför inte saknas i badrummet och alla våra
-          badankor har riktigt starka personligheter
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt
+          dolore officia impedit dolorem temporibus ratione beatae hic ad
+          quisquam ut enim, quos at sed aut nesciunt architecto nam nisi
+          accusamus!
         </Typography>
       </Box>
       <ShowCarousel />
@@ -63,7 +61,7 @@ function StartPageDesription() {
         <Typography
           sx={{ marginBottom: '2rem', fontSize: 'clamp(1.5rem, 2.5vw, 2rem)' }}
         >
-          Se våra produkter
+          See our products
         </Typography>
         <PopularDucks />
         <Link to="products">
@@ -83,7 +81,7 @@ function StartPageDesription() {
             }}
             variant="outlined"
           >
-            Visa alla produkter
+            Show all products
           </Button>
         </Link>
       </Box>

@@ -2,27 +2,30 @@ import { Box, Button, Container, List } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 import { Link } from 'react-router-dom';
-import { Product } from '../Api/Data';
+// import { Product } from '../Api/Data';
+import { Product } from '../../../server/resources/product/product.model';
+
 import { useProduct } from '../contexts/ProductsContext';
 import AdminPageAccordion from '../components/AdminPageAccordion';
 import { useState } from 'react';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 
 function AdminPage() {
-  const { products, createProduct, updateProduct, deleteProduct } =
-    useProduct();
+  const { prods, createProduct, updateProduct, deleteProduct } = useProduct();
   const [addingProduct, setAddingProduct] = useState(false);
+  console.log(prods);
 
   const newProduct = () => {
-    const id = Math.max(...products.map((p) => p.id)) + 1;
+    // const id = Math.max(...products.map((p) => p._id)) + 1;
 
     const product: Product = {
+      _id: '',
       title: '',
-      information: '',
-      id,
-      category: '',
+      description: '',
+      categories: [],
       price: 0,
-      imgURL: '',
+      photo: '',
+      stock: 0,
     };
 
     return product;
@@ -46,7 +49,7 @@ function AdminPage() {
         }}
       >
         <List>
-          {products.map((p, i) => {
+          {prods.map((p, i) => {
             return (
               <AdminPageAccordion
                 key={i}
