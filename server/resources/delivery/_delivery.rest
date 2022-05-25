@@ -9,12 +9,12 @@ POST http://localhost:4000/api/delivery
 Content-Type: application/json
 
 {
-  "name": "Postnord",
-  "altText": "Leverans i brevlådan, 1-3 arbetsdagar",
-  "shippingTime": 3,
+  "name": "Instabox",
+  "altText": "Leverans till box, 1-2 arbetsdagar",
+  "shippingTime": 2,
   "price": 29,
   "logo": "deliveryLogo",
-  "id": "1234"
+  "id": "instabox"
 }
 
 
