@@ -9,7 +9,7 @@ POST http://localhost:4000/api/delivery
 Content-Type: application/json
 
 {
-  "name": "Instabox",
+  "name": "test",
   "altText": "Leverans till box, 1-2 arbetsdagar",
   "shippingTime": 2,
   "price": 29,
@@ -29,4 +29,4 @@ Content-Type: application/json
 
 ###
 
-DELETE http://localhost:4000/api/delivery/1234
+DELETE http://localhost:4000/api/delivery/628df6b4a75c039582ae0bd7
