@@ -6,6 +6,6 @@ const upload = multer();
 
 export const mediaRouter = express
   .Router()
-  .get("/media:id", getMedia)
+  .get("/media/:id", getMedia)
   .post("/media", upload.single("media"), addMedia)
   .delete("/media/:id", deleteMedia);
