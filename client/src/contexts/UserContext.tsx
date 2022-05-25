@@ -10,10 +10,12 @@ interface UserContextValue {
   user?: UserInterface;
   login: (loginDetails: LoginDetails) => Promise<boolean>;
   logout: () => void;
+  allUsers: any;
 }
 export const UserContext = React.createContext<UserContextValue>({
   isLoading: false,
-  user: { id: '', firstName: '', lastName: '', email: '', isAdmin: false },
+  user: {id: '',firstName: '', lastName: '', email: '', isAdmin: false },
+  allUsers: [],
   login: (_loginDetails: LoginDetails): Promise<boolean> => {
     return new Promise(() => {});
   },
@@ -22,6 +24,7 @@ export const UserContext = React.createContext<UserContextValue>({
 
 export const UserProvider: React.FC<React.ReactNode> = ({ children }) => {
   const [user, setUser] = React.useState<UserInterface>();
+  const [allUsers, setAllUsers] = React.useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
 
@@ -55,9 +58,17 @@ export const UserProvider: React.FC<React.ReactNode> = ({ children }) => {
         setIsLoading(false);
       });
   };
-
+  const getAllProducts = async () => {
+    const response = await axios.get('http://localhost:4000/api/user');
+    const res = await response.data;
+    setAllUsers(res)
+    console.log(res);
+  };
+  useEffect(() => {
+    getAllProducts()
+  }, []);
   return (
-    <UserContext.Provider value={{ user, isLoading, login, logout }}>
+    <UserContext.Provider value={{ allUsers, user, isLoading, login, logout }}>
       {children}
     </UserContext.Provider>
   );
