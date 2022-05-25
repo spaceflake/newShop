@@ -13,7 +13,7 @@ import format from 'date-fns/format';
 import sv from 'date-fns/locale/sv';
 import { FormikProps } from 'formik';
 import React, { useEffect, useState } from 'react';
-import { Delivery, deliveryOptions } from '../../Api/Data';
+import { Delivery } from '../../Api/Data';
 import { OrderData } from './OrderForm';
 
 interface Props {
