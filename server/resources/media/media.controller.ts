@@ -1,11 +1,26 @@
 import { NextFunction, Request, Response } from "express";
 import { GridFSFile } from "mongodb";
+import { Types } from "mongoose";
 import { Readable } from "stream";
 import { bucket } from "./media.model";
 
 export const getMedia = async (req: Request, res: Response) => {
-    res.status(200).json("ONE IMAGE");
+    const _id = new Types.ObjectId(req.params.id);
+    const file = await bucket.find({ _id }).next();
+    if (!file || !file.contentType) {
+      return res
+        .status(404)
+        .json(`File with ID: ${req.params.id} does not exist`);
+    }
+  
+    res.setHeader("Content-Type", file.contentType);
+  
+    const readableStream = bucket.openDownloadStream(_id);
+    readableStream.pipe(res);
+
 };
+
+
 
 export const addMedia = async (req: Request, res: Response, next: NextFunction) => {
     if (!req.file) {
