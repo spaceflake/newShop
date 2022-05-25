@@ -16,6 +16,7 @@ import passport from 'passport';
 import passportLocal from 'passport-local';
 import bcrypt from 'bcrypt';
 import cors from 'cors';
+import { deliveryRouter } from './resources/delivery';
 
 const app = express();
 const port = 4000;
@@ -38,6 +39,7 @@ app.use(passport.session());
 
 app.use('/api', userRouter);
 app.use('/api', productRouter);
+app.use('/api', deliveryRouter);
 
 // 404 handler
 

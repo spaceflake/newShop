@@ -1,0 +1,32 @@
+GET http://localhost:4000/api/delivery
+
+###
+GET http://localhost:4000/api/delivery/628ddf2c2304eb3857ad2799
+
+###
+
+POST http://localhost:4000/api/delivery
+Content-Type: application/json
+
+{
+  "name": "Postnord",
+  "altText": "Leverans i brevlådan, 1-3 arbetsdagar",
+  "shippingTime": 3,
+  "price": 29,
+  "logo": "deliveryLogo",
+  "id": "1234"
+}
+
+
+###
+
+PUT http://localhost:4000/api/delivery/6287834d1a573fec1e165629
+Content-Type: application/json
+
+{
+  
+}
+
+###
+
+DELETE http://localhost:4000/api/delivery/1234
