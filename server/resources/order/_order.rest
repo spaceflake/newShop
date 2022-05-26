@@ -13,7 +13,20 @@ Content-Type: application/json
   "orderId": "string",
   "user": "628791d388894f9f9162ee80",
   "isSent": false,
-  "products": ["6287834d1a573fec1e165629"],
+  "products": [{
+    "_id": "6287834d1a573fec1e165629",
+    "title": "winter",
+    "description": "bla",
+    "price": 499,
+    "photo": "bowlerHat.jpeg",
+    "categories": [
+      "Old school",
+      "Fancy"
+    ],
+    "stock": 0,
+    "__v": 0,
+    "id": "6287834d1a573fec1e165629"
+  }],
   "deliveryAddress": [{
     "firstName": "tomas",
     "lastName": "fridekrans",
