@@ -1,7 +1,7 @@
 GET http://localhost:4000/api/delivery
 
 ###
-GET http://localhost:4000/api/delivery/628ddf2c2304eb3857ad2799
+GET http://localhost:4000/api/delivery/628f3cd691ffef25d261f3a3
 
 ###
 
@@ -20,13 +20,18 @@ Content-Type: application/json
 
 ###
 
-PUT http://localhost:4000/api/delivery/6287834d1a573fec1e165629
+PUT http://localhost:4000/api/delivery/628f40d8e63229379b584aac
 Content-Type: application/json
 
 {
-  
+  "name": "testar",
+  "altText": "Leverans till box, 1-2 arbetsdagar",
+  "shippingTime": 2,
+  "price": 29,
+  "logo": "deliveryLogo",
+  "id": "instabox"
 }
 
 ###
 
-DELETE http://localhost:4000/api/delivery/628df6b4a75c039582ae0bd7
+DELETE http://localhost:4000/api/delivery/628f40d8e63229379b584aac

@@ -23,9 +23,34 @@ export const addDelivery = async (
     next(err);
   }
 };
-export const updateDelivery = async (req: Request, res: Response) => {
-  const deliverys = await DeliveryModel.find({});
-  res.status(200).json(deliverys);
+export const updateDelivery = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { id } = req.params;
+  try {
+    const deliveryOption = await DeliveryModel.findById(id);
+
+    if (!deliveryOption) {
+      // res.status(400).json('Delivery option not found');
+      throw new Error('Delivery option not found');
+    }
+
+    const updatedDeliveryOption = await DeliveryModel.findByIdAndUpdate(
+      id,
+      req.body,
+      { new: true }
+    );
+
+    res.status(200).json({
+      success: true,
+      msg: 'Delivery option updated',
+      data: updatedDeliveryOption,
+    });
+  } catch (error) {
+    next(error);
+  }
 };
 export const deleteDelivery = async (req: Request, res: Response) => {
   const { id } = req.params;
