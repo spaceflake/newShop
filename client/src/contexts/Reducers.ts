@@ -120,7 +120,7 @@ export const productReducer = (state: Data, action: ProductActions) => {
     case ProductTypes.Update:
       const products = [...state];
       let productIndex = products.findIndex(
-        (product) => product._id === action.payload.product._id
+        (product) => product.id === action.payload.product.id
       );
       if (productIndex !== -1) {
         products[productIndex] = action.payload.product;
@@ -129,7 +129,7 @@ export const productReducer = (state: Data, action: ProductActions) => {
       return products;
     case ProductTypes.Delete:
       const productsAfterDeletion = state.filter(
-        (product) => product._id !== action.payload.id.toString()
+        (product) => product.id !== action.payload.id.toString()
       );
 
       return productsAfterDeletion;
