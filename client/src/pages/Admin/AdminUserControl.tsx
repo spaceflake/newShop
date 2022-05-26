@@ -1,15 +1,11 @@
 import { Container, Button, Box, List, Paper, Typography, Drawer, IconButton, styled } from '@mui/material';
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom';
-import { useUser, UserContext } from '../../contexts/UserContext';
-import AdminPageAccordion from '../../components/AdminPageAccordion';
+import React, { useEffect, useState } from 'react'
+import { useUser } from '../../contexts/UserContext';
 
-import { UserInterface } from '../../InterFaces'
 import axios, { AxiosResponse } from 'axios';
 
 const AdminUserControl = () => {
   const [selectedUser, setSelectedUser] = useState()
-  const [isAdmin, setIsAdmin] = useState(false)
   const [openDelete, setOpenDelete] = React.useState(false);
   const [openEdit, setOpenEdit] = React.useState(false);
 
@@ -28,6 +24,11 @@ const handleDeleteDrawerClose = () => {
 const handleEditDrawerClose = () => {
   setOpenEdit(false);
 };
+  
+  useEffect(() => {
+    
+  })
+
   const  editUser = async () => {
     await axios.put("http://localhost:4000/api/user/" + selectedUser,  {
      isAdmin: true
@@ -54,7 +55,7 @@ const handleEditDrawerClose = () => {
  
 
   return (
-    <Container maxWidth="xl" sx={{ height: '100%' }}>
+    <Container maxWidth="xl" sx={{ height: '100%'}}>
         <List>
         {allUsers.map((user: any) => (
                 <Box  key={user._id}>

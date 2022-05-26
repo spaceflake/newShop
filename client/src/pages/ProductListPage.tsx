@@ -11,7 +11,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import ProductCard from '../components/Cards/ProductCard';
 import { useProduct } from '../contexts/ProductsContext';
-import { Product } from '../InterFaces';
+import { Product } from '../../../server/resources/product/product.model';
 
 function ProductListPage() {
   const { prods, categories } = useProduct();

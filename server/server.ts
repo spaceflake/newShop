@@ -98,7 +98,7 @@ app.post(
   }
 );
 
-app.get('/logout', (req: Request, res: Response) => {
+app.get('/api/user/logout', (req: Request, res: Response) => {
   req.logout();
   res.status(200).json({ success: true, message: 'Logged out successfully' });
 });

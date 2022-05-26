@@ -16,7 +16,6 @@ export interface ProductType extends Product {}
 
 type PContext = {
   prods: Product[];
-  products: Product[];
   categories: string[];
   dispatch: React.Dispatch<ProductActions>;
   createProduct: (product: Product) => void;
@@ -95,7 +94,6 @@ export const ProductsProvider: React.FC = ({ children }) => {
   return (
     <ProductContext.Provider
       value={{
-        products,
         prods,
         categories,
         dispatch,

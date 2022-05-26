@@ -313,7 +313,7 @@ function AdminPageAccordion({
               </Typography>
               {/* <Button
                 onClick={(e) => {
-                  deleteAction(product?._id);
+                  deleteAction(prods?._id);
                   setOpenModal(false);
                   setOpen(false);
                   e.stopPropagation();
