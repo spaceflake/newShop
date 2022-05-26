@@ -9,6 +9,7 @@ import passportLocal from 'passport-local';
 import connectDB from './config/db';
 import errorHandler from './middleware/errorMiddleware';
 import { deliveryRouter } from './resources/delivery';
+import { orderRouter } from './resources/order/order.router';
 import { productRouter } from './resources/product/product.router';
 import { User, UserModel } from './resources/user/user.model';
 import { userRouter } from './resources/user/user.router';
@@ -35,6 +36,7 @@ app.use(passport.session());
 app.use('/api', userRouter);
 app.use('/api', productRouter);
 app.use('/api', deliveryRouter);
+app.use('/api', orderRouter);
 
 // TODO: 404 handler
 

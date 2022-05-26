@@ -1,4 +1,4 @@
-import mongoose, { Query, Schema } from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 import { Product, ProductSchema } from '../product';
 import { User } from '../user';
 import { Address, AddressSchema } from './address.schema';

@@ -1,0 +1,43 @@
+GET http://localhost:4000/api/order
+
+###
+GET http://localhost:4000/api/order/628f3cd691ffef25d261f3a3
+
+###
+
+POST http://localhost:4000/api/order
+Content-Type: application/json
+
+{
+  "id": "string",
+  "orderId": "string",
+  "user": "628791d388894f9f9162ee80",
+  "isSent": false,
+  "products": ["6287834d1a573fec1e165629"],
+  "deliveryAddress": [{
+    "firstName": "tomas",
+    "lastName": "fridekrans",
+    "phone": "077-0304003",
+    "street": "gatan 1",
+    "city": "staden",
+    "zipcode": "12345"
+    }],
+  "orderSum": 399,
+  "createdAt": "2022-05-26"
+}
+
+
+###
+
+PUT http://localhost:4000/api/order/628f40d8e63229379b584aac
+Content-Type: application/json
+
+{
+  "name": "testar",
+  "altText": "Leverans till box, 1-2 arbetsdagar",
+  "shippingTime": 2,
+  "price": 29,
+  "logo": "orderLogo",
+  "id": "instabox"
+}
+
