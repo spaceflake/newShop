@@ -4,11 +4,7 @@ import connectDB from './config/db';
 import errorHandler from './middleware/errorMiddleware';
 import { userRouter } from './resources/user/user.router';
 import { productRouter } from './resources/product/product.router';
-import {
-  UserModel,
-  DbUserInterface,
-  UserInterface,
-} from './resources/user/user.model';
+import { UserModel, User, UserInterface } from './resources/user/user.model';
 import session from 'express-session';
 import cookieParser from 'cookie-parser';
 //passport
@@ -50,7 +46,7 @@ const myStrategy = passportLocal.Strategy;
 
 passport.use(
   new myStrategy({ usernameField: 'email' }, async (email, password, done) => {
-    UserModel.findOne({ email: email }, (err: any, user: DbUserInterface) => {
+    UserModel.findOne({ email: email }, (err: any, user: User) => {
       if (err) {
         return done(err);
       }
@@ -74,7 +70,7 @@ passport.serializeUser((user: any, cb: any) => {
   console.log(user);
 });
 passport.deserializeUser((id: string, cb) => {
-  UserModel.findOne({ _id: id }, (err: any, user: DbUserInterface) => {
+  UserModel.findOne({ _id: id }, (err: any, user: User) => {
     const userInformation: UserInterface = {
       firstName: user?.firstName,
       lastName: user?.lastName,
