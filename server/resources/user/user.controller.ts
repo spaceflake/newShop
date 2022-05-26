@@ -1,6 +1,6 @@
-import { NextFunction, Request, Response } from 'express';
-import { UserModel, DbUserInterface, UserInterface } from './user.model';
 import bcrypt from 'bcrypt';
+import { NextFunction, Request, Response } from 'express';
+import { User, UserModel } from './user.model';
 
 export const getAllUsers = async (req: Request, res: Response) => {
   // TODO: Who is allowed to use this endpoint?
@@ -8,7 +8,7 @@ export const getAllUsers = async (req: Request, res: Response) => {
   res.status(200).json(users);
 };
 export const addUser = async (
-  req: Request<{}, {}, DbUserInterface>,
+  req: Request<{}, {}, User>,
   res: Response,
   next: NextFunction
 ) => {
