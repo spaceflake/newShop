@@ -29,13 +29,13 @@ const OrderSchema = new mongoose.Schema<Order>(
   }
 );
 
-OrderSchema.post('find', function (next: Function) {
-  this.populate('user');
-  next();
-});
-OrderSchema.post('findOne', function (next: Function) {
-  this.populate('user');
-  next();
-});
+// OrderSchema.post('find', function (next: Function) {
+//   this.populate('user');
+//   next();
+// });
+// OrderSchema.post('findOne', function (next: Function) {
+//   this.populate('user');
+//   next();
+// });
 
 export const OrderModel = mongoose.model('order', OrderSchema);

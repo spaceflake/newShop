@@ -11,4 +11,4 @@ export const orderRouter = express
   .get('/order', /* adminSecure,*/ getAllOrders)
   .get('/order/:id', /* adminSecure,*/ getOrder)
   .post('/order', addOrder)
-  .put('/order/:id', updateOrder);
+  .put('/order/:id', /* adminSecure,*/ updateOrder);
