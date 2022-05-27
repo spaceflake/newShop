@@ -19,7 +19,7 @@ function AdminPage() {
     // const id = Math.max(...products.map((p) => p._id)) + 1;
 
     const product: Product = {
-      _id: '',
+      id: '',
       title: '',
       description: '',
       categories: [],

@@ -1,22 +1,18 @@
-import express, { Request, Response, NextFunction, Router } from 'express';
-import mongoose from 'mongoose';
-import connectDB from './config/db';
-import errorHandler from './middleware/errorMiddleware';
-import { userRouter } from './resources/user/user.router';
-import { productRouter } from './resources/product/product.router';
-import {
-  UserModel,
-  DbUserInterface,
-  UserInterface,
-} from './resources/user/user.model';
-import session from 'express-session';
+import bcrypt from 'bcrypt';
 import cookieParser from 'cookie-parser';
+import cors from 'cors';
+import express, { Request, Response } from 'express';
+import session from 'express-session';
 //passport
 import passport from 'passport';
 import passportLocal from 'passport-local';
-import bcrypt from 'bcrypt';
-import cors from 'cors';
 import { mediaRouter } from './resources/media';
+import connectDB from './config/db';
+import errorHandler from './middleware/errorMiddleware';
+import { deliveryRouter } from './resources/delivery';
+import { productRouter } from './resources/product/product.router';
+import { User, UserModel } from './resources/user/user.model';
+import { userRouter } from './resources/user/user.router';
 
 const app = express();
 const port = 4000;
@@ -40,17 +36,20 @@ app.use(passport.session());
 app.use('/api', userRouter);
 app.use('/api', productRouter);
 app.use('/api', mediaRouter);
+app.use('/api', deliveryRouter);
 
-// 404 handler
+// TODO: 404 handler
 
 // global error handler
 app.use(errorHandler);
+
+// TODO: We need to get this passport below out of here.
 
 const myStrategy = passportLocal.Strategy;
 
 passport.use(
   new myStrategy({ usernameField: 'email' }, async (email, password, done) => {
-    UserModel.findOne({ email: email }, (err: any, user: DbUserInterface) => {
+    UserModel.findOne({ email: email }, (err: any, user: User) => {
       if (err) {
         return done(err);
       }
@@ -74,13 +73,17 @@ passport.serializeUser((user: any, cb: any) => {
   console.log(user);
 });
 passport.deserializeUser((id: string, cb) => {
-  UserModel.findOne({ _id: id }, (err: any, user: DbUserInterface) => {
-    const userInformation: UserInterface = {
+  UserModel.findOne({ _id: id }, (err: any, user: User) => {
+    const userInformation: User = {
       firstName: user?.firstName,
       lastName: user?.lastName,
+      password: user?.password,
+      phone: user.phone,
       email: user?.email,
       isAdmin: user?.isAdmin,
-      id: user?._id,
+      id: user?.id,
+      createdAt: user.createdAt,
+      updateAt: user.updateAt,
     };
     cb(err, userInformation);
 
@@ -105,7 +108,10 @@ app.get('/logout', (req: Request, res: Response) => {
   res.status(200).json({ success: true, message: 'Logged out successfully' });
 });
 
+// Connect to database
 connectDB();
+
+// Start server
 app.listen(port, () => {
   console.log(`server is running on ${port}`);
 });

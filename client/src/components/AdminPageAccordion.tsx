@@ -9,31 +9,31 @@ import {
   Modal,
   Chip,
   useMediaQuery,
-} from '@mui/material';
-import { useEffect, useReducer, useRef, useState } from 'react';
-import { Product } from '../../../server/resources/product/product.model';
+} from "@mui/material";
+import { useEffect, useReducer, useRef, useState } from "react";
+import { Product } from "../../../server/resources/product/product.model";
 
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import EditIcon from '@mui/icons-material/Edit';
-import Save from '@mui/icons-material/Save';
-import RestartAltIcon from '@mui/icons-material/RestartAlt';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import EditIcon from "@mui/icons-material/Edit";
+import Save from "@mui/icons-material/Save";
+import RestartAltIcon from "@mui/icons-material/RestartAlt";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import {
   ProductEditAction,
   ProductEditReducer,
   ProductEditReducerType,
   ProductEditState,
-} from '../contexts/Reducers';
-import { useProduct } from '../contexts/ProductsContext';
+} from "../contexts/Reducers";
+import { useProduct } from "../contexts/ProductsContext";
 
 function createProductEditState(product: Product): ProductEditState {
   const productEditState: ProductEditState = {
     ...product,
-    titleValid: product.title !== '',
-    informationValid: product.description !== '',
-    categoryValid: product.categories !== [''],
+    titleValid: product.title !== "",
+    informationValid: product.description !== "",
+    categoryValid: product.categories !== [""],
     priceValid: !isNaN(product.price),
-    imgURLValid: product.photo !== '',
+    imgURLValid: product.photo !== "",
   };
 
   return productEditState;
@@ -93,30 +93,30 @@ function AdminPageAccordion({
   ) => setOpen(!open);
 
   const formValid = isFormValid(productState);
-  const matches = useMediaQuery('(max-width: 440px)');
+  const matches = useMediaQuery("(max-width: 440px)");
 
   return (
     <Accordion onChange={handleOpen} expanded={open}>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         <Box
           sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            width: '100%',
-            margin: '1rem 0',
+            display: "flex",
+            justifyContent: "space-between",
+            width: "100%",
+            margin: "1rem 0",
           }}
         >
           <Box
             sx={{
-              gap: '0.5rem',
-              display: 'flex',
-              flexDirection: 'row',
-              bgcolor: '#fffff',
-              borderColor: '#0EDFE6',
-              color: ' black',
+              gap: "0.5rem",
+              display: "flex",
+              flexDirection: "row",
+              bgcolor: "#fffff",
+              borderColor: "#0EDFE6",
+              color: " black",
 
-              '@media screen and (max-width: 440px)': {
-                flexDirection: 'column',
+              "@media screen and (max-width: 440px)": {
+                flexDirection: "column",
               },
             }}
           >
@@ -129,13 +129,13 @@ function AdminPageAccordion({
                   onChange={(e) => {
                     dispatch({
                       type: ProductEditReducerType.Update,
-                      payload: { key: 'title', value: e.target.value },
+                      payload: { key: "title", value: e.target.value },
                     });
                   }}
                   onClick={(e) => e.stopPropagation()}
                 />
                 {!productState.titleValid && (
-                  <Typography sx={{ color: 'red' }}>
+                  <Typography sx={{ color: "red" }}>
                     Vänligen ange en titel.
                   </Typography>
                 )}
@@ -157,26 +157,25 @@ function AdminPageAccordion({
         </Box>
       </AccordionSummary>
       <AccordionDetails>
-        <Box sx={{ margin: '1rem 0' }}>
+        <Box sx={{ margin: "1rem 0" }}>
           <img
             style={{ width: 100, height: 100 }}
             src={productState.photo}
             alt=""
           ></img>
         </Box>
-        <Typography sx={{ marginBottom: '2ex' }}>Bild URL:&nbsp;</Typography>
+        <Typography sx={{ marginBottom: "2ex" }}>Bild URL:&nbsp;</Typography>
         <input
-          type="url"
           value={productState.photo}
           onChange={(e) => {
             dispatch({
               type: ProductEditReducerType.Update,
-              payload: { key: 'imgURL', value: e.target.value },
+              payload: { key: "imgURL", value: e.target.value },
             });
           }}
         />
         {!productState.imgURLValid && (
-          <Typography sx={{ color: 'red' }}>
+          <Typography sx={{ color: "red" }}>
             Vänligen ange en bildadress.
           </Typography>
         )}
@@ -186,28 +185,28 @@ function AdminPageAccordion({
             onChange={(e) => {
               dispatch({
                 type: ProductEditReducerType.Update,
-                payload: { key: 'information', value: e.target.value },
+                payload: { key: "information", value: e.target.value },
               });
             }}
             value={productState.description}
           />
           {!productState.informationValid && (
-            <Typography sx={{ color: 'red' }}>
+            <Typography sx={{ color: "red" }}>
               Vänligen ange en beskrivning.
             </Typography>
           )}
-          <Box sx={{ margin: '1rem 0' }}>
+          <Box sx={{ margin: "1rem 0" }}>
             <Typography>Redigera pris</Typography>
             <input
               type="number"
               min="1"
-              value={!isNaN(productState.price) ? productState.price : ''}
+              value={!isNaN(productState.price) ? productState.price : ""}
               onChange={(e) => {
                 const price = parseFloat(e.target.value);
                 dispatch({
                   type: ProductEditReducerType.Update,
                   payload: {
-                    key: 'price',
+                    key: "price",
                     value: price > 0 ? price : NaN,
                   },
                 });
@@ -218,18 +217,18 @@ function AdminPageAccordion({
             )}
           </Box>
         </Box>
-        <Box sx={{ margin: '1rem 0' }}>
+        <Box sx={{ margin: "1rem 0" }}>
           <Typography>Redigera kategori</Typography>
-          <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+          <Box sx={{ display: "flex", flexDirection: "column" }}>
             <ButtonGroup
-              orientation={matches ? 'vertical' : 'horizontal'}
+              orientation={matches ? "vertical" : "horizontal"}
               sx={{
-                bgcolor: '#fffff',
-                borderColor: '#0EDFE6',
-                color: ' black',
+                bgcolor: "#fffff",
+                borderColor: "#0EDFE6",
+                color: " black",
 
-                '@media screen and (max-width: 440px)': {
-                  flexDirection: 'column',
+                "@media screen and (max-width: 440px)": {
+                  flexDirection: "column",
                 },
               }}
               aria-label="button group"
@@ -245,7 +244,7 @@ function AdminPageAccordion({
                   onClick={() =>
                     dispatch({
                       type: ProductEditReducerType.Update,
-                      payload: { key: 'category', value: category },
+                      payload: { key: "category", value: category },
                     })
                   }
                 >
@@ -255,7 +254,7 @@ function AdminPageAccordion({
             </ButtonGroup>
           </Box>
           {!productState.categoryValid && (
-            <Typography sx={{ color: 'red' }}>
+            <Typography sx={{ color: "red" }}>
               Vänligen välj kategori.
             </Typography>
           )}
@@ -297,13 +296,13 @@ function AdminPageAccordion({
           >
             <Box
               sx={{
-                position: 'absolute',
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
                 width: 250,
-                bgcolor: 'background.paper',
-                border: '2px solid #000',
+                bgcolor: "background.paper",
+                border: "2px solid #000",
                 boxShadow: 24,
                 p: 4,
               }}
