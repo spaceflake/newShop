@@ -25,12 +25,13 @@ import {
   ProductEditState,
 } from '../contexts/Reducers';
 import { useProduct } from '../contexts/ProductsContext';
+import axios, { AxiosResponse } from 'axios';
 
 function createProductEditState(product: Product): ProductEditState {
   const productEditState: ProductEditState = {
     ...product,
     titleValid: product.title !== '',
-    informationValid: product.description !== '',
+    descriptionValid: product.description !== '',
     categoryValid: product.categories !== [''],
     priceValid: !isNaN(product.price),
     imgURLValid: product.photo !== '',
@@ -48,7 +49,7 @@ const isProductEdited = (product: Product, productState: ProductEditState) =>
 
 const isFormValid = (productState: ProductEditState) =>
   productState.titleValid &&
-  productState.informationValid &&
+  productState.descriptionValid &&
   productState.categoryValid &&
   productState.priceValid &&
   productState.imgURLValid;
@@ -69,6 +70,13 @@ function AdminPageAccordion({
   const [open, setOpen] = useState(expanded ?? false);
   const [openModal, setOpenModal] = useState(false);
   const { categories } = useProduct();
+  const [selectedPost, setSelectedPost] = useState<string | undefined>('')
+  const [description, setDescription] = useState<string>("")
+  const [title, setTitle] = useState<string>("")
+  const [img, setImg] = useState<string>("")
+  const [price, setPrice] = useState<number>()
+  const [category, setCategory] = useState<string[]>([''])
+  const [stock, setStock] = useState(0)
 
   const [productState, dispatch] = useReducer<
     React.Reducer<ProductEditState, ProductEditAction>
@@ -95,6 +103,36 @@ function AdminPageAccordion({
   const formValid = isFormValid(productState);
   const matches = useMediaQuery('(max-width: 440px)');
 
+  const updateProduct = async () => {
+    await axios.put("http://localhost:4000/api/product/" + selectedPost, {
+    title,
+    description,
+    price,
+    img,
+    stock,
+    category
+    }, {
+      withCredentials: true
+    }).then((res: AxiosResponse) => {
+        // window.location.reload();
+        console.log('suc');
+    }, () => {
+      console.log("Failure");
+    })
+    console.log(selectedPost);
+    console.log(description);
+  }
+  const deleteProduct = async () => {
+    await axios.delete("http://localhost:4000/api/product/" + selectedPost, 
+    ).then((res: AxiosResponse) => {
+        // window.location.href = "/"
+        console.log('suc');
+        console.log(selectedPost); 
+      }, () => {
+        console.log("Failure");
+      })
+       console.log(selectedPost);
+  }
   return (
     <Accordion onChange={handleOpen} expanded={open}>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
@@ -120,19 +158,25 @@ function AdminPageAccordion({
               },
             }}
           >
+           
             <img src={productState.photo} width="48px" alt=""></img>
             {open ? (
               <>
                 <input
                   type="text"
-                  value={productState.title}
+                  // value={productState.title}
                   onChange={(e) => {
-                    dispatch({
-                      type: ProductEditReducerType.Update,
-                      payload: { key: 'title', value: e.target.value },
-                    });
+                    setTitle(e.target.value)
+                    // dispatch({
+                    //   type: ProductEditReducerType.Update,
+                    //   payload: { key: 'title', value: e.target.value },
+                    // });
                   }}
-                  onClick={(e) => e.stopPropagation()}
+                  onClick={(e) =>{
+                    e.stopPropagation()
+                    setSelectedPost(product._id)
+                    
+                  }}
                 />
                 {!productState.titleValid && (
                   <Typography sx={{ color: 'red' }}>
@@ -151,7 +195,15 @@ function AdminPageAccordion({
               {isProductEdited(product, productState) ? (
                 <Chip label="OSPARAD" variant="outlined" />
               ) : null}
-              <Button startIcon={<EditIcon />}>Redigera</Button>
+              <Button  
+              onClick={() => {
+                console.log(product._id);
+                
+              }} 
+              startIcon={<EditIcon />}
+              >
+                Edit
+              </Button>
             </Box>
           )}
         </Box>
@@ -169,10 +221,11 @@ function AdminPageAccordion({
           type="url"
           value={productState.photo}
           onChange={(e) => {
-            dispatch({
-              type: ProductEditReducerType.Update,
-              payload: { key: 'imgURL', value: e.target.value },
-            });
+            setImg(e.target.value)
+            // dispatch({
+            //   type: ProductEditReducerType.Update,
+            //   payload: { key: 'imgURL', value: e.target.value },
+            // });
           }}
         />
         {!productState.imgURLValid && (
@@ -184,14 +237,15 @@ function AdminPageAccordion({
           <Typography>Beskrivning</Typography>
           <textarea
             onChange={(e) => {
-              dispatch({
-                type: ProductEditReducerType.Update,
-                payload: { key: 'information', value: e.target.value },
-              });
+              setDescription(e.target.value)
+              // dispatch({
+              //   type: ProductEditReducerType.Update,
+              //   payload: { key: 'information', value: e.target.value },
+              // });
             }}
-            value={productState.description}
+            // value={productState.description}
           />
-          {!productState.informationValid && (
+          {!productState.descriptionValid && (
             <Typography sx={{ color: 'red' }}>
               Vänligen ange en beskrivning.
             </Typography>
@@ -204,13 +258,14 @@ function AdminPageAccordion({
               value={!isNaN(productState.price) ? productState.price : ''}
               onChange={(e) => {
                 const price = parseFloat(e.target.value);
-                dispatch({
-                  type: ProductEditReducerType.Update,
-                  payload: {
-                    key: 'price',
-                    value: price > 0 ? price : NaN,
-                  },
-                });
+                setPrice(price)
+                // dispatch({
+                //   type: ProductEditReducerType.Update,
+                //   payload: {
+                //     key: 'price',
+                //     value: price > 0 ? price : NaN,
+                //   },
+                // });
               }}
             />
             {!productState.priceValid && (
@@ -265,11 +320,11 @@ function AdminPageAccordion({
             disabled={!formValid}
             startIcon={<Save />}
             onClick={() => {
-              saveAction(productState);
+              updateProduct()
               setOpen(false);
             }}
           >
-            Spara
+            Save
           </Button>
           <Button
             disabled={!formValid}
@@ -279,13 +334,16 @@ function AdminPageAccordion({
                 type: ProductEditReducerType.Reset,
                 payload: { product: product },
               })
+              
             }
           >
             Återställ
           </Button>
           <Button
             startIcon={<DeleteForeverIcon />}
-            onClick={() => setOpenModal(true)}
+            onClick={() => {
+              setSelectedPost(product._id)
+              setOpenModal(true)}}
           >
             Ta bort produkt
           </Button>
@@ -309,18 +367,18 @@ function AdminPageAccordion({
               }}
             >
               <Typography>
-                Är du säker på att du vill ta bort produkten?
+                Are you sure you want to delete this product?
               </Typography>
-              {/* <Button
+              <Button
                 onClick={(e) => {
-                  deleteAction(prods?._id);
+                  deleteProduct();
                   setOpenModal(false);
                   setOpen(false);
                   e.stopPropagation();
                 }}
               >
                 Ja
-              </Button> */}
+              </Button>
               <Button onClick={() => setOpenModal(false)}>Nej</Button>
             </Box>
           </Modal>

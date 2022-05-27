@@ -61,14 +61,23 @@ export const ProductsProvider: React.FC = ({ children }) => {
 
   function createProduct(product: Product) {
     // TODO: add product to database
+    const newProduct = {
+      title: { type: String, required: true },
+      description: { type: String, required: true },
+      price: { type: Number, required: true },
+      photo: { type: String, required: true },
+      categories: { type: [String], required: true },
+      stock: { type: Number, required: true },
+    }
     dispatch({
       type: ProductTypes.Create,
       payload: { product },
     });
   }
 
-  function updateProduct(product: Product) {
+  async function  updateProduct(product: Product) {
     // TODO: send PUT/PATCH to server, update database
+   
     dispatch({
       type: ProductTypes.Update,
       payload: { product },
