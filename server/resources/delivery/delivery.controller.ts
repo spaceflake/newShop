@@ -29,29 +29,26 @@ export const updateDelivery = async (
   next: NextFunction
 ) => {
   const { id } = req.params;
-  try {
-    const deliveryOption = await DeliveryModel.findById(id);
+  const deliveryOption = await DeliveryModel.findById(id);
 
-    if (!deliveryOption) {
-      // res.status(400).json('Delivery option not found');
-      throw new Error('Delivery option not found');
-    }
-
-    const updatedDeliveryOption = await DeliveryModel.findByIdAndUpdate(
-      id,
-      req.body,
-      { new: true }
-    );
-
-    res.status(200).json({
-      success: true,
-      msg: 'Delivery option updated',
-      data: updatedDeliveryOption,
-    });
-  } catch (error) {
-    next(error);
+  if (!deliveryOption) {
+    res.status(400).json('Delivery option not found');
+//    throw new Error('Delivery option not found');
   }
+
+  const updatedDeliveryOption = await DeliveryModel.findByIdAndUpdate(
+    id,
+    req.body,
+    { new: true }
+  );
+
+  res.status(200).json({
+    success: true,
+    msg: 'Delivery option updated',
+    data: updatedDeliveryOption,
+  });
 };
+
 export const deleteDelivery = async (req: Request, res: Response) => {
   const { id } = req.params;
   if (id || req.body.isAdmin) {

@@ -1,19 +1,37 @@
 import { NextFunction, Request, Response } from 'express';
+import { Error as MongooseError } from "mongoose";
 
-export const errorHandler = (
+
+export class HttpError extends Error {
+  constructor(public status: number, public message: string) {
+    super(message);
+  }
+}
+
+export default function errorHandler(
   err: any,
   req: Request,
   res: Response,
-  next: NextFunction
-) => {
-  const statusCode = res.statusCode ? res.statusCode : 500;
+  _: NextFunction
+) {
+  console.error(req.method, req.path, err)
 
-  res.status(statusCode);
+  if (res.writableEnded) {
+    return console.error(
+      "Response has been sent to client even though there was an error"
+    );
+  }
 
-  res.json({
-    msg: err.message,
-    stack: err.stack,
-  });
+  if (err instanceof MongooseError.StrictModeError || err instanceof MongooseError.ValidationError) {
+    return res.status(400).json(err.message);
+  }
+
+  if (err instanceof HttpError) {
+    return res.status(err.status).json(err.message);
+  }
+
+  if (err instanceof Error) {
+//status/statuscode doesnt exist on type Error?    let status = err.status || err.statusCode || 500;
+    return res.status(500).json(err.message);
+  }
 };
-
-export default errorHandler;

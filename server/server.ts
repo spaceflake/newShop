@@ -1,8 +1,10 @@
+import express, { Request, Response } from 'express';
+require('express-async-errors');
 import bcrypt from 'bcrypt';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
-import express, { Request, Response } from 'express';
 import session from 'express-session';
+
 //passport
 import passport from 'passport';
 import passportLocal from 'passport-local';
@@ -35,8 +37,6 @@ app.use(passport.session());
 app.use('/api', userRouter);
 app.use('/api', productRouter);
 app.use('/api', deliveryRouter);
-
-// TODO: 404 handler
 
 // global error handler
 app.use(errorHandler);
