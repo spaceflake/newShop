@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 function AdminPage() {
-  const [activePage, setActivePage] = useState('')
+  const [activePage, setActivePage] = useState('products')
   return (
     <><Container maxWidth="lg">
         <Link to="/">
