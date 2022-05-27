@@ -57,34 +57,28 @@ const isFormValid = (productState: ProductEditState) =>
 interface AdminPageAccordionProps {
   product: Product;
   expanded?: boolean;
-  saveAction: (product: Product) => void;
-  deleteAction: (productId: number) => void;
 }
 
-function AdminPageAccordion({
-  product,
-  expanded,
-  saveAction,
-  deleteAction,
-}: AdminPageAccordionProps) {
+function AdminPageAccordion({ product, expanded }: AdminPageAccordionProps) {
   const { updateProduct, categories } = useProduct();
   const [open, setOpen] = useState(expanded ?? false);
   const [openModal, setOpenModal] = useState(false);
-  const [selectedProduct, setSelectedPost] = useState('')
-  const [description, setDescription] = useState<string>("")
-  const [title, setTitle] = useState<string>("")
-  const [photo, setPhoto] = useState<string>("")
-  const [price, setPrice] = useState<number>()
-  const [categorie, setCategorie] = useState<string[]>([''])
-  const [stock, setStock] = useState(0)
+  const [selectedProduct, setSelectedPost] = useState('');
+  const [description, setDescription] = useState<string>('');
+  const [title, setTitle] = useState<string>('');
+  const [photo, setPhoto] = useState<string>('');
+  const [price, setPrice] = useState<number>(0);
+  const [categorie, setCategorie] = useState<string[]>(['']);
+  const [stock, setStock] = useState(0);
   const [productDetails, setsetImgProductDetails] = useState<Product>({
+    id: selectedProduct,
     title,
     description,
     price,
     photo,
     categories,
-    stock
-  })
+    stock,
+  });
 
   const [productState, dispatch] = useReducer<
     React.Reducer<ProductEditState, ProductEditAction>
@@ -131,16 +125,20 @@ function AdminPageAccordion({
   //   console.log(description);
   // }
   const deleteProduct = async () => {
-    await axios.delete("http://localhost:4000/api/product/" + selectedProduct, 
-    ).then((res: AxiosResponse) => {
-        // window.location.href = "/"
-        console.log('suc');
-        console.log(selectedProduct); 
-      }, () => {
-        console.log("Failure");
-      })
-       console.log(selectedProduct);
-  }
+    await axios
+      .delete('http://localhost:4000/api/product/' + selectedProduct)
+      .then(
+        (res: AxiosResponse) => {
+          // window.location.href = "/"
+          console.log('suc');
+          console.log(selectedProduct);
+        },
+        () => {
+          console.log('Failure');
+        }
+      );
+    console.log(selectedProduct);
+  };
   return (
     <Accordion onChange={handleOpen} expanded={open}>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
@@ -166,7 +164,6 @@ function AdminPageAccordion({
               },
             }}
           >
-           
             <img src={productState.photo} width="48px" alt=""></img>
             {open ? (
               <>
@@ -174,16 +171,15 @@ function AdminPageAccordion({
                   type="text"
                   value={productState.title}
                   onChange={(e) => {
-                    setTitle(e.target.value)
+                    setTitle(e.target.value);
                     dispatch({
                       type: ProductEditReducerType.Update,
                       payload: { key: 'title', value: e.target.value },
                     });
                   }}
-                  onClick={(e) =>{
-                    e.stopPropagation()
-                    setSelectedPost(product._id)
-                    
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setSelectedPost(product.id);
                   }}
                 />
                 {!productState.titleValid && (
@@ -203,12 +199,11 @@ function AdminPageAccordion({
               {isProductEdited(product, productState) ? (
                 <Chip label="OSPARAD" variant="outlined" />
               ) : null}
-              <Button  
-              onClick={() => {
-                console.log(product._id);
-                
-              }} 
-              startIcon={<EditIcon />}
+              <Button
+                onClick={() => {
+                  console.log(product.id);
+                }}
+                startIcon={<EditIcon />}
               >
                 Edit
               </Button>
@@ -229,7 +224,7 @@ function AdminPageAccordion({
           type="url"
           value={productState.photo}
           onChange={(e) => {
-            setPhoto(e.target.value)
+            setPhoto(e.target.value);
             dispatch({
               type: ProductEditReducerType.Update,
               payload: { key: 'imgURL', value: e.target.value },
@@ -246,7 +241,7 @@ function AdminPageAccordion({
           <textarea
             value={productState.description}
             onChange={(e) => {
-              setDescription(e.target.value)
+              setDescription(e.target.value);
               dispatch({
                 type: ProductEditReducerType.Update,
                 payload: { key: 'information', value: e.target.value },
@@ -266,7 +261,7 @@ function AdminPageAccordion({
               value={!isNaN(productState.price) ? productState.price : ''}
               onChange={(e) => {
                 const price = parseFloat(e.target.value);
-                setPrice(price)
+                setPrice(price);
                 dispatch({
                   type: ProductEditReducerType.Update,
                   payload: {
@@ -328,7 +323,7 @@ function AdminPageAccordion({
             disabled={!formValid}
             startIcon={<Save />}
             onClick={() => {
-              updateProduct(selectedProduct ,productDetails)
+              updateProduct(selectedProduct, productDetails);
               setOpen(false);
             }}
           >
@@ -342,7 +337,6 @@ function AdminPageAccordion({
                 type: ProductEditReducerType.Reset,
                 payload: { product: product },
               })
-              
             }
           >
             Återställ
@@ -350,8 +344,9 @@ function AdminPageAccordion({
           <Button
             startIcon={<DeleteForeverIcon />}
             onClick={() => {
-              setSelectedPost(product._id)
-              setOpenModal(true)}}
+              setSelectedPost(product.id);
+              setOpenModal(true);
+            }}
           >
             Ta bort produkt
           </Button>

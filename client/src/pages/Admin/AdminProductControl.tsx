@@ -7,85 +7,72 @@ import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOu
 import axios, { AxiosResponse } from 'axios';
 
 const AdminProductControl = () => {
-  const { prods, createProduct, updateProduct, deleteProduct } =
-  useProduct();
-const [addingProduct, setAddingProduct] = useState(false);
-// console.log(prods);
+  const { prods } = useProduct();
+  const [addingProduct, setAddingProduct] = useState(false);
+  // console.log(prods);
 
-const newProduct = () => {
-//    const id = Math.max(...products.map((p) => p.id)) + 1;
+  const newProduct = () => {
+    //    const id = Math.max(...products.map((p) => p.id)) + 1;
 
-const product: Product = {
-  _id: '',
-  title: '',
-  description: '',
-  categories: [],
-  price: 0,
-  photo: '',
-  stock: 0,
-};
+    const product: Product = {
+      id: '',
+      title: '',
+      description: '',
+      categories: [],
+      price: 0,
+      photo: '',
+      stock: 0,
+    };
 
-  return product;
-};
+    return product;
+  };
 
-const createNewProduct = async (product: Product) => {
-  setAddingProduct(false);
-  createProduct(product);
-  await axios.post("http://localhost:4000/api/product/", 
-  {
+  // const createNewProduct = async (product: Product) => {
+  //   setAddingProduct(false);
+  //   createProduct(product);
+  //   await axios.post('http://localhost:4000/api/product/', {}).then(
+  //     (res: AxiosResponse) => {
+  //       // window.location.href = "/"
+  //       console.log('suc');
+  //     },
+  //     () => {
+  //       console.log('Failure');
+  //     }
+  //   );
+  // };
 
-  }
-  ).then((res: AxiosResponse) => {
-      // window.location.href = "/"
-      console.log('suc');
-    }, () => {
-      console.log("Failure");
-    })
-};
+  const deleteNewProduct = () => setAddingProduct(false);
 
-const deleteNewProduct = () => setAddingProduct(false);
-
-return (
-  <Container maxWidth="xl" sx={{ height: '100%' }}>
-  
-    <Box
-      sx={{
-        height: '100%',
-      }}
-    >
-   
-      <List>
-        {prods.map((p, i) => {
-          return (
+  return (
+    <Container maxWidth="xl" sx={{ height: '100%' }}>
+      <Box
+        sx={{
+          height: '100%',
+        }}
+      >
+        <List>
+          {prods.map((p, i) => {
+            return <AdminPageAccordion key={i} product={p} />;
+          })}
+          {addingProduct && (
             <AdminPageAccordion
-              key={i}
-              product={p}
-              saveAction={updateProduct}
-              deleteAction={deleteProduct}
+              key="new"
+              expanded={true}
+              product={newProduct()}
             />
-          );
-        })}
-        {addingProduct && (
-          <AdminPageAccordion
-            key="new"
-            expanded={true}
-            product={newProduct()}
-            saveAction={createNewProduct}
-            deleteAction={deleteNewProduct}
-          />
+          )}
+        </List>
+        {!addingProduct && (
+          <Button
+            startIcon={<AddCircleOutlineOutlinedIcon />}
+            onClick={() => setAddingProduct(true)}
+          >
+            Add a new product
+          </Button>
         )}
-      </List>
-      {!addingProduct && (
-        <Button
-          startIcon={<AddCircleOutlineOutlinedIcon />}
-          onClick={() => setAddingProduct(true)}
-        >
-          Add a new product
-        </Button>
-      )}
-    </Box>
-  </Container>
-);
-}
+      </Box>
+    </Container>
+  );
+};
 
-export default AdminProductControl
+export default AdminProductControl;

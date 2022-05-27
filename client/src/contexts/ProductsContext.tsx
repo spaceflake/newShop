@@ -68,30 +68,39 @@ export const ProductsProvider: React.FC = ({ children }) => {
       photo: { type: String, required: true },
       categories: { type: [String], required: true },
       stock: { type: Number, required: true },
-    }
+    };
     dispatch({
       type: ProductTypes.Create,
       payload: { product },
     });
   }
 
-  async function  updateProduct(productId: string, product: Product) {
-    await axios.put("http://localhost:4000/api/product/" + productId, {
-      ...product
-      }, {
-        withCredentials: true
-      }).then((res: AxiosResponse) => {
+  const updateProduct = async (productId: string, product: Product) => {
+    await axios
+      .put(
+        'http://localhost:4000/api/product/' + productId,
+        {
+          ...product,
+        },
+        {
+          withCredentials: true,
+        }
+      )
+      .then(
+        (res: AxiosResponse) => {
           // window.location.reload();
           console.log('suc');
-      }, () => {
-        console.log("Failure");
-      })
-      console.log(productId);
+        },
+        () => {
+          console.log('Failure');
+        }
+      );
+    console.log(productId);
     dispatch({
       type: ProductTypes.Update,
       payload: { product },
     });
-  }
+  };
 
   function deleteProduct(id: number) {
     // TODO: Delete product from database
