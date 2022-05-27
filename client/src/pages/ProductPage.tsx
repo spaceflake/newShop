@@ -18,7 +18,7 @@ function ProductPage() {
   let { id } = useParams();
   const { cart, dispatch } = useCart();
   const { prods } = useProduct();
-  const product = prods.find((item) => item._id?.toString() === id);
+  const product = prods.find((item) => item.id?.toString() === id);
 
   return (
     <Container maxWidth="md">
@@ -60,7 +60,7 @@ function ProductPage() {
                 {/* <Rating name="read-only" value={ratingValue} readOnly /> */}
               </CardContent>
               <CardActions>
-                {cart.some((p: any) => p.id === product._id) ? (
+                {cart.some((p: any) => p.id === product.id) ? (
                   <Button>I kundkorgen</Button>
                 ) : (
                   <BuyButton dispatch={dispatch} product={product} />

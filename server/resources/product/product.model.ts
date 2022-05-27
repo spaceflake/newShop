@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 export interface Product {
-  _id?: string;
+  id: string;
   title: string;
   description: string;
   price: number;
@@ -10,13 +10,19 @@ export interface Product {
   stock: number;
 }
 
-const productSchema = new mongoose.Schema({
-  title: { type: String, required: true },
-  description: { type: String, required: true },
-  price: { type: Number, required: true },
-  photo: { type: String, required: true },
-  categories: { type: [String], required: true },
-  stock: { type: Number, required: true },
-});
+export const ProductSchema = new mongoose.Schema<Product>(
+  {
+    title: { type: String, required: true },
+    description: { type: String, required: true },
+    price: { type: Number, required: true },
+    photo: { type: String, required: true },
+    categories: { type: [String], required: true },
+    stock: { type: Number, required: true },
+  },
+  {
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
+  }
+);
 
-export const ProductModel = mongoose.model<Product>('product', productSchema);
+export const ProductModel = mongoose.model('product', ProductSchema);
