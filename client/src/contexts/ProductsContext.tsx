@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import React, {
   createContext,
   useContext,
@@ -19,7 +19,7 @@ type PContext = {
   categories: string[];
   dispatch: React.Dispatch<ProductActions>;
   createProduct: (product: Product) => void;
-  updateProduct: (product: Product) => void;
+  updateProduct: (productId: string, product: Product) => void;
   deleteProduct: (id: number) => void;
 };
 
@@ -75,9 +75,18 @@ export const ProductsProvider: React.FC = ({ children }) => {
     });
   }
 
-  async function  updateProduct(product: Product) {
-    // TODO: send PUT/PATCH to server, update database
-   
+  async function  updateProduct(productId: string, product: Product) {
+    await axios.put("http://localhost:4000/api/product/" + productId, {
+      ...product
+      }, {
+        withCredentials: true
+      }).then((res: AxiosResponse) => {
+          // window.location.reload();
+          console.log('suc');
+      }, () => {
+        console.log("Failure");
+      })
+      console.log(productId);
     dispatch({
       type: ProductTypes.Update,
       payload: { product },

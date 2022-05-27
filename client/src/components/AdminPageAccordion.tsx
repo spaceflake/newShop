@@ -67,16 +67,24 @@ function AdminPageAccordion({
   saveAction,
   deleteAction,
 }: AdminPageAccordionProps) {
+  const { updateProduct, categories } = useProduct();
   const [open, setOpen] = useState(expanded ?? false);
   const [openModal, setOpenModal] = useState(false);
-  const { categories } = useProduct();
-  const [selectedPost, setSelectedPost] = useState<string | undefined>('')
+  const [selectedProduct, setSelectedPost] = useState('')
   const [description, setDescription] = useState<string>("")
   const [title, setTitle] = useState<string>("")
-  const [img, setImg] = useState<string>("")
+  const [photo, setPhoto] = useState<string>("")
   const [price, setPrice] = useState<number>()
-  const [category, setCategory] = useState<string[]>([''])
+  const [categorie, setCategorie] = useState<string[]>([''])
   const [stock, setStock] = useState(0)
+  const [productDetails, setsetImgProductDetails] = useState<Product>({
+    title,
+    description,
+    price,
+    photo,
+    categories,
+    stock
+  })
 
   const [productState, dispatch] = useReducer<
     React.Reducer<ProductEditState, ProductEditAction>
@@ -103,35 +111,35 @@ function AdminPageAccordion({
   const formValid = isFormValid(productState);
   const matches = useMediaQuery('(max-width: 440px)');
 
-  const updateProduct = async () => {
-    await axios.put("http://localhost:4000/api/product/" + selectedPost, {
-    title,
-    description,
-    price,
-    img,
-    stock,
-    category
-    }, {
-      withCredentials: true
-    }).then((res: AxiosResponse) => {
-        // window.location.reload();
-        console.log('suc');
-    }, () => {
-      console.log("Failure");
-    })
-    console.log(selectedPost);
-    console.log(description);
-  }
+  // const updateProduct = async () => {
+  //   await axios.put("http://localhost:4000/api/product/" + selectedProduct, {
+  //   title,
+  //   description,
+  //   price,
+  //   img,
+  //   stock,
+  //   category
+  //   }, {
+  //     withCredentials: true
+  //   }).then((res: AxiosResponse) => {
+  //       // window.location.reload();
+  //       console.log('suc');
+  //   }, () => {
+  //     console.log("Failure");
+  //   })
+  //   console.log(selectedProduct);
+  //   console.log(description);
+  // }
   const deleteProduct = async () => {
-    await axios.delete("http://localhost:4000/api/product/" + selectedPost, 
+    await axios.delete("http://localhost:4000/api/product/" + selectedProduct, 
     ).then((res: AxiosResponse) => {
         // window.location.href = "/"
         console.log('suc');
-        console.log(selectedPost); 
+        console.log(selectedProduct); 
       }, () => {
         console.log("Failure");
       })
-       console.log(selectedPost);
+       console.log(selectedProduct);
   }
   return (
     <Accordion onChange={handleOpen} expanded={open}>
@@ -164,13 +172,13 @@ function AdminPageAccordion({
               <>
                 <input
                   type="text"
-                  // value={productState.title}
+                  value={productState.title}
                   onChange={(e) => {
                     setTitle(e.target.value)
-                    // dispatch({
-                    //   type: ProductEditReducerType.Update,
-                    //   payload: { key: 'title', value: e.target.value },
-                    // });
+                    dispatch({
+                      type: ProductEditReducerType.Update,
+                      payload: { key: 'title', value: e.target.value },
+                    });
                   }}
                   onClick={(e) =>{
                     e.stopPropagation()
@@ -221,11 +229,11 @@ function AdminPageAccordion({
           type="url"
           value={productState.photo}
           onChange={(e) => {
-            setImg(e.target.value)
-            // dispatch({
-            //   type: ProductEditReducerType.Update,
-            //   payload: { key: 'imgURL', value: e.target.value },
-            // });
+            setPhoto(e.target.value)
+            dispatch({
+              type: ProductEditReducerType.Update,
+              payload: { key: 'imgURL', value: e.target.value },
+            });
           }}
         />
         {!productState.imgURLValid && (
@@ -236,14 +244,14 @@ function AdminPageAccordion({
         <Box>
           <Typography>Beskrivning</Typography>
           <textarea
+            value={productState.description}
             onChange={(e) => {
               setDescription(e.target.value)
-              // dispatch({
-              //   type: ProductEditReducerType.Update,
-              //   payload: { key: 'information', value: e.target.value },
-              // });
+              dispatch({
+                type: ProductEditReducerType.Update,
+                payload: { key: 'information', value: e.target.value },
+              });
             }}
-            // value={productState.description}
           />
           {!productState.descriptionValid && (
             <Typography sx={{ color: 'red' }}>
@@ -259,13 +267,13 @@ function AdminPageAccordion({
               onChange={(e) => {
                 const price = parseFloat(e.target.value);
                 setPrice(price)
-                // dispatch({
-                //   type: ProductEditReducerType.Update,
-                //   payload: {
-                //     key: 'price',
-                //     value: price > 0 ? price : NaN,
-                //   },
-                // });
+                dispatch({
+                  type: ProductEditReducerType.Update,
+                  payload: {
+                    key: 'price',
+                    value: price > 0 ? price : NaN,
+                  },
+                });
               }}
             />
             {!productState.priceValid && (
@@ -320,7 +328,7 @@ function AdminPageAccordion({
             disabled={!formValid}
             startIcon={<Save />}
             onClick={() => {
-              updateProduct()
+              updateProduct(selectedProduct ,productDetails)
               setOpen(false);
             }}
           >
