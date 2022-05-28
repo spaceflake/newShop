@@ -1,5 +1,8 @@
-GET http://localhost:4000/api/media/628f734c935cfa730c97cd8b
-Content-Type: image/jpeg
+GET http://localhost:4000/api/media/6292302aaf99ce6febb77670
+
+###
+
+GET http://localhost:4000/api/media/files
 
 ###
 
@@ -24,4 +27,4 @@ Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0g
 
 ###
 
-DELETE http://localhost:4000/api/media/628f7207935cfa730c97cd87
+DELETE http://localhost:4000/api/media/628dfaa3cd220a4afdab7904
