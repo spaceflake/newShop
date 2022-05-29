@@ -1,10 +1,10 @@
 import { Box, Button, Container, List } from '@mui/material';
 import { Product } from '../../../../server/resources/product/product.model';
 import { useProduct } from '../../contexts/ProductsContext';
-import AdminPageAccordion from '../../components/AdminPageAccordion';
 import { useState } from 'react';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import axios, { AxiosResponse } from 'axios';
+import AdminEditProduct from './AdminEditProduct';
 
 const AdminProductControl = () => {
   const { prods } = useProduct();
@@ -50,18 +50,9 @@ const AdminProductControl = () => {
           height: '100%',
         }}
       >
-        <List>
-          {prods.map((p, i) => {
-            return <AdminPageAccordion key={i} product={p} />;
-          })}
-          {addingProduct && (
-            <AdminPageAccordion
-              key="new"
-              expanded={true}
-              product={newProduct()}
-            />
-          )}
-        </List>
+   
+          <AdminEditProduct />
+    
         {!addingProduct && (
           <Button
             startIcon={<AddCircleOutlineOutlinedIcon />}

@@ -5,6 +5,8 @@ import Container from '@mui/material/Container/Container'
 import AdminUserControl from "./AdminUserControl";
 import { Link } from "react-router-dom";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import EditProductForm from "../../components/Forms/EditProductForm";
+import { Product } from "../../../../server/resources/product/product.model";
 
 function AdminPage() {
   const [activePage, setActivePage] = useState('products')

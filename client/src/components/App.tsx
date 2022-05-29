@@ -1,20 +1,22 @@
 import { Route, Routes } from 'react-router-dom';
-import ProductListPage from '../pages/ProductListPage';
-import Layout from './Layout';
-import StartPage from '../pages/StartPage';
-import CheckOutPage from '../pages/CheckOutPage';
-import ProductPage from '../pages/ProductPage';
-import CartPage from '../pages/CartPage';
-import LoginPage from '../pages/LoginPage';
-import FaqPage from '../pages/FaqPage';
-import TermsOfUsePage from '../pages/TermsOfUsePage';
+import { useUser } from '../contexts/UserContext';
 import AdminPage from '../pages/Admin/AdminPage';
-import SupportPage from '../pages/SupportPage';
-import ConfirmedOrderPage from '../pages/ConfirmedPage';
-import SignUpPage from '../pages/SignUpPage';
+import AdminProductControl from '../pages/Admin/AdminProductControl';
 import AdminUserControl from '../pages/Admin/AdminUserControl';
-import { useUser, UserContext } from '../contexts/UserContext';
 import NotAdmin from '../pages/Admin/NotAdmin';
+import CartPage from '../pages/CartPage';
+import CheckOutPage from '../pages/CheckOutPage';
+import ConfirmedOrderPage from '../pages/ConfirmedPage';
+import FaqPage from '../pages/FaqPage';
+import LoginPage from '../pages/LoginPage';
+import ProductListPage from '../pages/ProductListPage';
+import ProductPage from '../pages/ProductPage';
+import SignUpPage from '../pages/SignUpPage';
+import StartPage from '../pages/StartPage';
+import SupportPage from '../pages/SupportPage';
+import TermsOfUsePage from '../pages/TermsOfUsePage';
+import EditProductForm from './Forms/EditProductForm';
+import Layout from './Layout';
 
 function App() {
   const {user}  = useUser();
@@ -37,7 +39,20 @@ function App() {
         <Route path="signup" element={<SignUpPage />} />
       </Route>
       {user && user?.isAdmin === true ? (
-      <><Route path="admin" element={<AdminPage />} /><Route path="adminUser" element={<AdminUserControl />} /></> 
+      <Route path="admin" element={<AdminPage />}>
+        <Route path="adminUser" element={<AdminUserControl />} />
+        <Route path="adminProducts" element={<AdminProductControl />}>
+        <Route path=":productId" element={<EditProductForm />} />
+        </Route>
+        <Route
+      path="*"
+      element={
+        <main style={{ padding: "1rem" }}>
+          <p>There's nothing here!</p>
+        </main>
+      }
+    />
+      </Route>
       ) : (
         <Route path="*" element={<NotAdmin />} />
       )}

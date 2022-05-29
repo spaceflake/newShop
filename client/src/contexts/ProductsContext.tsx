@@ -1,16 +1,10 @@
 import axios, { AxiosResponse } from 'axios';
 import React, {
   createContext,
-  useContext,
-  useReducer,
-  useEffect,
-  useState,
+  useContext, useEffect, useReducer, useState
 } from 'react';
-// import { mockedProducts } from '../Api/Data';
-// import useLocalStorage from '../Hooks/useLocalStorage'
+import type { Product } from '@shared/types';
 import { ProductActions, productReducer, ProductTypes } from './Reducers';
-import { Product } from '../../../server/resources/product/product.model';
-// import { Product } from '../InterFaces';
 
 export interface ProductType extends Product {}
 
