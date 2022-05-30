@@ -1,7 +1,7 @@
-import React, { Fragment } from 'react'
-import { useProduct } from '../../contexts/ProductsContext';
-import ProductAdminCard from '../../components/Cards/ProductAdminCard';
 import { Grid } from '@mui/material';
+import React from 'react';
+import ProductAdminCard from '../../components/Cards/AdminEditProductCard';
+import { useProduct } from '../../contexts/ProductsContext';
 
 const AdminProductEdit = () => {
   const { prods } = useProduct()

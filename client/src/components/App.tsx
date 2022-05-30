@@ -15,7 +15,6 @@ import SignUpPage from '../pages/SignUpPage';
 import StartPage from '../pages/StartPage';
 import SupportPage from '../pages/SupportPage';
 import TermsOfUsePage from '../pages/TermsOfUsePage';
-import EditProductForm from './Forms/EditProductForm';
 import Layout from './Layout';
 
 function App() {
@@ -42,7 +41,6 @@ function App() {
       <Route path="admin" element={<AdminPage />}>
         <Route path="adminUser" element={<AdminUserControl />} />
         <Route path="adminProducts" element={<AdminProductControl />}>
-        <Route path=":productId" element={<EditProductForm />} />
         </Route>
         <Route
       path="*"

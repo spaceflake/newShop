@@ -14,7 +14,7 @@ type PContext = {
   dispatch: React.Dispatch<ProductActions>;
   createProduct: (product: Product) => void;
   updateProduct: (productId: string, product: Product) => void;
-  deleteProduct: (id: number) => void;
+  deleteProduct: (productId: string) => void;
 };
 
 export const ProductContext = createContext<PContext>({} as PContext);
@@ -50,23 +50,21 @@ export const ProductsProvider: React.FC = ({ children }) => {
       setProds(res);
     }
   };
-
+  
   console.log(prods);
 
-  function createProduct(product: Product) {
+  const createProduct = async ( product: Product) => {
     // TODO: add product to database
-    const newProduct = {
-      title: { type: String, required: true },
-      description: { type: String, required: true },
-      price: { type: Number, required: true },
-      photo: { type: String, required: true },
-      categories: { type: [String], required: true },
-      stock: { type: Number, required: true },
-    };
-    dispatch({
-      type: ProductTypes.Create,
-      payload: { product },
-    });
+    await axios.post('http://localhost:4000/api/product/', {
+      ...product,
+    }).then(
+          (res: AxiosResponse) => {
+            // window.location.href = "/"
+            console.log('suc');
+          },
+          () => {
+            console.log('Failure');
+          })
   }
 
   const updateProduct = async (productId: string, product: Product) => {
@@ -82,7 +80,6 @@ export const ProductsProvider: React.FC = ({ children }) => {
       )
       .then(
         (res: AxiosResponse) => {
-          // window.location.reload();
           console.log('suc');
         },
         () => {
@@ -90,21 +87,26 @@ export const ProductsProvider: React.FC = ({ children }) => {
         }
       );
     console.log(productId);
-    dispatch({
-      type: ProductTypes.Update,
-      payload: { product },
-    });
+    console.log();
   };
 
-  function deleteProduct(id: number) {
-    // TODO: Delete product from database
-    dispatch({
-      type: ProductTypes.Delete,
-      payload: { id },
-    });
+  const  deleteProduct = async (productId: string) => {
+    await axios
+          .delete('http://localhost:4000/api/product/' + productId)
+          .then(
+            (res: AxiosResponse) => {
+              // window.location.href = "/"
+              console.log('suc');
+              console.log(productId);
+            },
+            () => {
+              console.log('Failure');
+            }
+          );
+   
   }
 
-  useEffect(() => {
+useEffect(() => {
     getAllProducts();
   }, []);
 
