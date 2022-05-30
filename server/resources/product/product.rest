@@ -9,12 +9,12 @@ POST http://localhost:4000/api/product
 Content-Type: application/json
 
 {
-  "title": "test",
-  "description": "test",
-  "price": 1299,
+  "title": ,
+  "description": "One of those days",
+  "price": 2,
   "photo": "tophat.jpg",
-  "categories": ["Fancy"],
-  "stock": 9
+  "categories": ["Other"],
+  "stock": 1
 }
 
 

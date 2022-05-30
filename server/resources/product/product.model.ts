@@ -12,12 +12,12 @@ export interface Product {
 
 export const ProductSchema = new mongoose.Schema<Product>(
   {
-    title: { type: String, required: true },
-    description: { type: String, required: true },
-    price: { type: Number, required: true },
+    title: { type: String, minLength: 3, maxlength: 40, required: true },
+    description: { type: String, minLength: 3, maxlength: 50, required: true },
+    price: { type: Number, min: 0, maxlength: 6, required: true },
     photo: { type: String, required: true },
     categories: { type: [String], required: true },
-    stock: { type: Number, required: true },
+    stock: { type: Number, min: 0, maxlength: 3, required: true },
   },
   {
     toJSON: { virtuals: true },

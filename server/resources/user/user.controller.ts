@@ -31,20 +31,25 @@ export const addUser = async (
     if (err) throw err;
     if (doc) res.json({ msg: 'This email has an account already' });
     if (!doc) {
-      try {
         const hashPassword = await bcrypt.hash(password, 10);
+
+        if (!hashPassword) {
+          throw new Error('Could not hash the password')
+        }
+
         const user = new UserModel({
           firstName,
           lastName,
           email,
           password: hashPassword,
         });
+
+        if (!user) {
+          throw new Error('Could not create new user')
+        }
         await user.save();
         res.status(200).json(user);
         console.log(user);
-      } catch (err) {
-        next(err);
-      }
     }
   });
 };
