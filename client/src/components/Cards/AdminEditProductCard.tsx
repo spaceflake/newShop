@@ -37,6 +37,7 @@ const validate = (values: Product) => {
   if (!values.photo) {
     errors.photo = 'Required';
   }
+  
 
   return errors;
 };

@@ -59,7 +59,6 @@ export const ProductsProvider: React.FC = ({ children }) => {
       ...product,
     }).then(
           (res: AxiosResponse) => {
-            // window.location.href = "/"
             console.log('suc');
           },
           () => {
@@ -95,7 +94,6 @@ export const ProductsProvider: React.FC = ({ children }) => {
           .delete('http://localhost:4000/api/product/' + productId)
           .then(
             (res: AxiosResponse) => {
-              // window.location.href = "/"
               console.log('suc');
               console.log(productId);
             },

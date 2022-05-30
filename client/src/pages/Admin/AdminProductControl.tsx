@@ -34,6 +34,9 @@ const validate = (values: Product) => {
   if (!values.photo) {
     errors.photo = 'Required';
   }
+  // if (!values.stock) {
+  //   errors.stock = 'Required';
+  // }
 
   return errors;
 };
@@ -78,7 +81,7 @@ const AdminProductControl = () => {
     console.log(newProduct);
     
     createProduct(newProduct)
-    // window.location.reload()
+    window.location.reload()
   }
 });
 
@@ -134,6 +137,8 @@ const AdminProductControl = () => {
                 type="title"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
+                value={formik.values.title}
+
               />
               {formik.touched.title && formik.errors.title ? <div >{formik.errors.title}</div> : null}
             </div>
@@ -146,18 +151,22 @@ const AdminProductControl = () => {
                 type="price"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
+                value={formik.values.price}
+
               />
               {formik.touched.price && formik.errors.price ? <div >{formik.errors.price}</div> : null}
             </div>
 
             <div >
-              <label htmlFor="image">Add Image</label>
+              <label htmlFor="photo">Add Image</label>
               <TextField
-                id="image"
-                name="image"
+                id="photo"
+                name="photo"
                 type="text"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
+                value={formik.values.photo}
+
               />
               {/* {formik.touched.photo && formik.errors.photo ? <div >{formik.errors.photo}</div> : null} */}
             </div>
@@ -170,6 +179,8 @@ const AdminProductControl = () => {
                 name="description"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
+                value={formik.values.description}
+
               />
               {formik.touched.description && formik.errors.description ? <div >{formik.errors.description}</div> : null}
             </div>
@@ -181,6 +192,7 @@ const AdminProductControl = () => {
                 name="Stock"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
+                value={formik.values.stock}
                 />
                 {/* {product.stock <= 2 ? <p>This prosduct almost finished</p> : null} */}
               {formik.touched.stock && formik.errors.stock ? <div >{formik.errors.stock}</div> : null}
@@ -189,7 +201,6 @@ const AdminProductControl = () => {
             <div >
               <button 
               type="submit"
-              onClick={() => console.log(formik.values.title)}
               >
                 SAVE 
               </button>
