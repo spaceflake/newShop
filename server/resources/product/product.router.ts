@@ -9,8 +9,8 @@ import {
 
 export const productRouter = express
   .Router()
-  .get('/product', /* adminSecure,*/ getAllProducts)
+  .get('/product', getAllProducts)
   .get('/product/categories', getCategories)
-  .post('/product', addProduct)
-  .put('/product/:id', updateProduct)
-  .delete('/product/:id', deleteProduct);
+  .post('/product',  /* adminSecure,*/ addProduct)
+  .put('/product/:id',  /* adminSecure,*/ updateProduct)
+  .delete('/product/:id',  /* adminSecure,*/ deleteProduct);

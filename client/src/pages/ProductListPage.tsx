@@ -11,7 +11,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import ProductCard from '../components/Cards/ProductCard';
 import { useProduct } from '../contexts/ProductsContext';
-import { Product } from '../InterFaces';
+import type { Product } from '@shared/types';
 
 function ProductListPage() {
   const { prods, categories } = useProduct();
@@ -75,8 +75,8 @@ function ProductListPage() {
       </Box>
       <Grid container spacing={2}>
         {filteredProducts.map((product) => (
-          <Grid key={product._id} item xs={12} sm={6} md={4} lg={3}>
-            <ProductCard key={product._id} product={product} />
+          <Grid key={product.id} item xs={12} sm={6} md={4} lg={3}>
+            <ProductCard key={product.id} product={product} />
           </Grid>
         ))}
       </Grid>

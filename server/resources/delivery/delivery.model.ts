@@ -12,10 +12,10 @@ export interface Delivery {
 
 const deliverySchema = new mongoose.Schema<Delivery>(
   {
-    name: { type: String, required: true },
-    altText: { type: String, required: true },
-    shippingTime: { type: Number, required: true },
-    price: { type: Number, required: true },
+    name: { type: String, minlength: 6, required: true },
+    altText: { type: String, minlength: 2, required: true },
+    shippingTime: { type: Number, minlength: 1, required: true },
+    price: { type: Number, minlength: 1, required: true },
     // logoId: { type: Schema.Types.ObjectId, required: true },
     id: { type: String, required: true },
   },

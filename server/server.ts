@@ -1,9 +1,9 @@
+import express, { Request, Response } from 'express';
+require('express-async-errors');
 import bcrypt from 'bcrypt';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
-import express, { Request, Response } from 'express';
 import session from 'express-session';
-//passport
 import passport from 'passport';
 import passportLocal from 'passport-local';
 import connectDB from './config/db';
@@ -37,11 +37,6 @@ app.use('/api', userRouter);
 app.use('/api', productRouter);
 app.use('/api', deliveryRouter);
 app.use('/api', orderRouter);
-
-// TODO: 404 handler
-
-// global error handler
-app.use(errorHandler);
 
 // TODO: We need to get this passport below out of here.
 
@@ -103,7 +98,7 @@ app.post(
   }
 );
 
-app.get('/logout', (req: Request, res: Response) => {
+app.get('/api/user/logout', (req: Request, res: Response) => {
   req.logout();
   res.status(200).json({ success: true, message: 'Logged out successfully' });
 });
@@ -115,3 +110,6 @@ connectDB();
 app.listen(port, () => {
   console.log(`server is running on ${port}`);
 });
+
+// global error handler
+app.use(errorHandler);

@@ -17,8 +17,8 @@ import { useCart } from '../contexts/CartContext';
 function ProductPage() {
   let { id } = useParams();
   const { cart, dispatch } = useCart();
-  const { products } = useProduct();
-  const product = products.find((item) => item.id?.toString() === id);
+  const { prods } = useProduct();
+  const product = prods.find((item) => item.id?.toString() === id);
 
   return (
     <Container maxWidth="md">

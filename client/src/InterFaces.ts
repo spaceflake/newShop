@@ -6,7 +6,7 @@ export interface UserInterface {
   isAdmin: boolean;
 }
 export interface Product {
-  _id?: string;
+  id?: string;
   title: string;
   description: string;
   price: number;
