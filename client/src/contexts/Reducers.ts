@@ -141,7 +141,7 @@ export const productReducer = (state: Data, action: ProductActions) => {
 
 export interface ProductEditState extends Product {
   titleValid: boolean;
-  informationValid: boolean;
+  descriptionValid: boolean;
   categoryValid: boolean;
   priceValid: boolean;
   imgURLValid: boolean;
@@ -173,6 +173,8 @@ export function ProductEditReducer(
     case ProductEditReducerType.Update:
       const key = action.payload.key;
       const value = action.payload.value;
+      console.log("key", key);
+      
       return {
         ...state,
         [key]: action.payload.value,

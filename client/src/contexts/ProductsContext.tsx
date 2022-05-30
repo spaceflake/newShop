@@ -1,27 +1,23 @@
-import axios from 'axios';
+import type { Product } from '@shared/types';
+import axios, { AxiosResponse } from 'axios';
 import React, {
   createContext,
   useContext,
-  useReducer,
   useEffect,
+  useReducer,
   useState,
 } from 'react';
-// import { mockedProducts } from '../Api/Data';
-// import useLocalStorage from '../Hooks/useLocalStorage'
-import { ProductActions, productReducer, ProductTypes } from './Reducers';
-import { Product } from '../../../server/resources/product/product.model';
-// import { Product } from '../InterFaces';
+import { ProductActions, productReducer } from './Reducers';
 
 export interface ProductType extends Product {}
 
 type PContext = {
   prods: Product[];
-  products: Product[];
   categories: string[];
   dispatch: React.Dispatch<ProductActions>;
   createProduct: (product: Product) => void;
-  updateProduct: (product: Product) => void;
-  deleteProduct: (id: number) => void;
+  updateProduct: (productId: string, product: Product) => void;
+  deleteProduct: (productId: string) => void;
 };
 
 export const ProductContext = createContext<PContext>({} as PContext);
@@ -60,29 +56,56 @@ export const ProductsProvider: React.FC = ({ children }) => {
 
   console.log(prods);
 
-  function createProduct(product: Product) {
+  const createProduct = async (product: Product) => {
     // TODO: add product to database
-    dispatch({
-      type: ProductTypes.Create,
-      payload: { product },
-    });
-  }
+    await axios
+      .post('http://localhost:4000/api/product/', {
+        ...product,
+      })
+      .then(
+        (res: AxiosResponse) => {
+          console.log('suc');
+        },
+        () => {
+          console.log('Failure');
+        }
+      );
+  };
 
-  function updateProduct(product: Product) {
-    // TODO: send PUT/PATCH to server, update database
-    dispatch({
-      type: ProductTypes.Update,
-      payload: { product },
-    });
-  }
+  const updateProduct = async (productId: string, product: Product) => {
+    await axios
+      .put(
+        'http://localhost:4000/api/product/' + productId,
+        {
+          ...product,
+        },
+        {
+          withCredentials: true,
+        }
+      )
+      .then(
+        (res: AxiosResponse) => {
+          console.log('suc');
+        },
+        () => {
+          console.log('Failure');
+        }
+      );
+    console.log(productId);
+    console.log();
+  };
 
-  function deleteProduct(id: number) {
-    // TODO: Delete product from database
-    dispatch({
-      type: ProductTypes.Delete,
-      payload: { id },
-    });
-  }
+  const deleteProduct = async (productId: string) => {
+    await axios.delete('http://localhost:4000/api/product/' + productId).then(
+      (res: AxiosResponse) => {
+        console.log('suc');
+        console.log(productId);
+      },
+      () => {
+        console.log('Failure');
+      }
+    );
+  };
 
   useEffect(() => {
     getAllProducts();
@@ -95,7 +118,6 @@ export const ProductsProvider: React.FC = ({ children }) => {
   return (
     <ProductContext.Provider
       value={{
-        products,
         prods,
         categories,
         dispatch,

@@ -42,11 +42,23 @@ export const addProduct = async (
   await product.save();
   res.status(200).json(product);
 };
-
-export const updateProduct = (req: Request<{ id: string }>, res: Response) => {
-  res.status(200).json('UPDATED PRODUCT WITH ID: ' + req.params.id);
+export const updateProduct = async (req: Request<{ id: string }>, res: Response) => {
+  try {
+    const product = await ProductModel.findById(req.params.id);
+      await product?.updateOne({ $set: req.body });
+      res.status(200).json('UPDATED PRODUCT WITH ID: ' + req.params.id);
+    
+  } catch (err) {
+    res.status(500).json(err);
+  }
+ 
 };
-
-export const deleteProduct = (_req: Request, res: Response) => {
-  res.status(200).json('DELETED PRODUCT');
+export const deleteProduct = async (req: Request, res: Response) => {
+  try { 
+    const product = await  ProductModel.findById(req.params.id);
+    await product?.deleteOne({$set:req.body})
+    res.status(200).json('DELETED PRODUCT with ID: ' + req.params.id);
+ } catch (err: any) {
+  res.status(500).json('error: ' + err.message)
+ }
 };
