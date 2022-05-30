@@ -4,8 +4,6 @@ import bcrypt from 'bcrypt';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import session from 'express-session';
-
-//passport
 import passport from 'passport';
 import passportLocal from 'passport-local';
 import connectDB from './config/db';
@@ -37,9 +35,6 @@ app.use(passport.session());
 app.use('/api', userRouter);
 app.use('/api', productRouter);
 app.use('/api', deliveryRouter);
-
-// global error handler
-app.use(errorHandler);
 
 // TODO: We need to get this passport below out of here.
 
@@ -113,3 +108,6 @@ connectDB();
 app.listen(port, () => {
   console.log(`server is running on ${port}`);
 });
+
+// global error handler
+app.use(errorHandler);
