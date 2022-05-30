@@ -1,10 +1,13 @@
+import type { Product } from '@shared/types';
 import axios, { AxiosResponse } from 'axios';
 import React, {
   createContext,
-  useContext, useEffect, useReducer, useState
+  useContext,
+  useEffect,
+  useReducer,
+  useState,
 } from 'react';
-import type { Product } from '@shared/types';
-import { ProductActions, productReducer, ProductTypes } from './Reducers';
+import { ProductActions, productReducer } from './Reducers';
 
 export interface ProductType extends Product {}
 
@@ -50,21 +53,24 @@ export const ProductsProvider: React.FC = ({ children }) => {
       setProds(res);
     }
   };
-  
+
   console.log(prods);
 
-  const createProduct = async ( product: Product) => {
+  const createProduct = async (product: Product) => {
     // TODO: add product to database
-    await axios.post('http://localhost:4000/api/product/', {
-      ...product,
-    }).then(
-          (res: AxiosResponse) => {
-            console.log('suc');
-          },
-          () => {
-            console.log('Failure');
-          })
-  }
+    await axios
+      .post('http://localhost:4000/api/product/', {
+        ...product,
+      })
+      .then(
+        (res: AxiosResponse) => {
+          console.log('suc');
+        },
+        () => {
+          console.log('Failure');
+        }
+      );
+  };
 
   const updateProduct = async (productId: string, product: Product) => {
     await axios
@@ -89,22 +95,19 @@ export const ProductsProvider: React.FC = ({ children }) => {
     console.log();
   };
 
-  const  deleteProduct = async (productId: string) => {
-    await axios
-          .delete('http://localhost:4000/api/product/' + productId)
-          .then(
-            (res: AxiosResponse) => {
-              console.log('suc');
-              console.log(productId);
-            },
-            () => {
-              console.log('Failure');
-            }
-          );
-   
-  }
+  const deleteProduct = async (productId: string) => {
+    await axios.delete('http://localhost:4000/api/product/' + productId).then(
+      (res: AxiosResponse) => {
+        console.log('suc');
+        console.log(productId);
+      },
+      () => {
+        console.log('Failure');
+      }
+    );
+  };
 
-useEffect(() => {
+  useEffect(() => {
     getAllProducts();
   }, []);
 
