@@ -108,19 +108,23 @@ function OrderForm(props: Props) {
 
     // fetch api and navigate to confirmed-order page if successful
     // const success = await placeOrderFetch();
-    const res = await axios.post('api/order', order);
+    try {
+      const res = await axios.post('/api/order', order);
 
-    const result = res.data;
+      const result = await res.data;
 
-    console.log(result);
+      console.log(result);
 
-    if (result.success) {
-      dispatch({
-        type: Types.ResetCart,
-        payload: {},
-      });
-      setLoading(false);
-      navigate('/confirmed-order');
+      if (result.success) {
+        dispatch({
+          type: Types.ResetCart,
+          payload: {},
+        });
+        setLoading(false);
+        navigate('/confirmed-order');
+      }
+    } catch (error) {
+      console.log(error);
     }
   }
 
