@@ -16,9 +16,15 @@ export const addOrder = async (
   next: NextFunction
 ) => {
   try {
-    const order = new OrderModel(req.body);
+    const order = new OrderModel({
+      ...req.body,
+      user: req.user, // TODO....
+    });
+    // const order = req.body;
+    console.log(order);
+
     await order.save();
-    res.status(200).json(order);
+    res.status(200).json({ success: true, order });
   } catch (err) {
     next(err);
   }
