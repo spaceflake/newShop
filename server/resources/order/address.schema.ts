@@ -7,6 +7,7 @@ export interface Address {
   street: string;
   city: string;
   zipcode: string;
+  email: string;
 }
 
 export const AddressSchema = new mongoose.Schema<Address>(
@@ -17,6 +18,7 @@ export const AddressSchema = new mongoose.Schema<Address>(
     street: { type: String, minlength: 5, maxLength: 25, required: true },
     city: { type: String, minlength: 2, maxLength: 25, required: true },
     zipcode: { type: String, minlength: 5, maxlength: 5, required: true },
+    email: { type: String, required: true },
   },
   {
     _id: false,
