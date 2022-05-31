@@ -11,7 +11,7 @@ import errorHandler from './middleware/errorMiddleware';
 import { deliveryRouter } from './resources/delivery';
 import { orderRouter } from './resources/order/order.router';
 import { productRouter } from './resources/product/product.router';
-import { User, UserModel } from './resources/user/user.model';
+import { User, UserDocument, UserModel } from './resources/user/user.model';
 import { userRouter } from './resources/user/user.router';
 import { mediaRouter } from './resources/media';
 
@@ -72,26 +72,13 @@ passport.use(
   })
 );
 
-passport.serializeUser((user: any, cb: any) => {
+passport.serializeUser<UserDocument>((user: any, cb) => {
   cb(null, user._id);
   console.log(user);
 });
 passport.deserializeUser((id: string, cb) => {
   UserModel.findOne({ _id: id }, (err: any, user: User) => {
-    const userInformation: User = {
-      firstName: user?.firstName,
-      lastName: user?.lastName,
-      password: user?.password,
-      phone: user.phone,
-      email: user?.email,
-      isAdmin: user?.isAdmin,
-      id: user?.id,
-      createdAt: user.createdAt,
-      updateAt: user.updateAt,
-    };
-    cb(err, userInformation);
-
-    console.log(userInformation);
+    cb(err, user);
   });
 });
 

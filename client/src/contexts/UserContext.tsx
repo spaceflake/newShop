@@ -1,13 +1,13 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import { User } from '@shared/types';
 import axios, { AxiosResponse } from 'axios';
-
+import React, { useContext, useEffect, useState } from 'react';
 import { UserFetch } from '../Api/Api';
-import { UserInterface } from '../InterFaces';
 import { LoginDetails } from '../components/Forms/LoginForm';
+
 
 interface UserContextValue {
   isLoading: boolean;
-  user?: UserInterface;
+  user?: User;
   login: (loginDetails: LoginDetails) => Promise<boolean>;
   logout: () => void;
   getAllUsers: () => void;
@@ -15,7 +15,7 @@ interface UserContextValue {
 }
 export const UserContext = React.createContext<UserContextValue>({
   isLoading: false,
-  user: { id: '', firstName: '', lastName: '', email: '', isAdmin: false },
+  user: { id: '', firstName: '', lastName: '', email: '', isAdmin: false, phone: '', password: '', createdAt: new Date(), updateAt:  new Date()},
   allUsers: [],
   login: (_loginDetails: LoginDetails): Promise<boolean> => {
     return new Promise(() => {});
@@ -25,7 +25,7 @@ export const UserContext = React.createContext<UserContextValue>({
 });
 
 export const UserProvider: React.FC<React.ReactNode> = ({ children }) => {
-  const [user, setUser] = React.useState<UserInterface>();
+  const [user, setUser] = React.useState<User>();
   const [allUsers, setAllUsers] = React.useState([]);
   const [isLoading, setIsLoading] = useState(false);
 

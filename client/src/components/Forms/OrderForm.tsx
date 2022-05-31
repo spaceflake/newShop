@@ -22,6 +22,7 @@ import ShippingForm, {
   AdressFormSchema,
   emptyShippingForm,
 } from './ShippingForm';
+import { useUser } from '../../contexts/UserContext';
 
 export interface OrderData {
   deliveryAddress: Address;
@@ -85,6 +86,8 @@ interface Props {
 }
 
 function OrderForm(props: Props) {
+  const { user } = useUser();
+
   let navigate = useNavigate();
   const { dispatch } = useCart();
   const [isLoading, setLoading] = React.useState<boolean>(false);

@@ -1,4 +1,4 @@
-import { UserInterface } from '../InterFaces';
+import { User } from '@shared/types';
 import { LoginDetails } from '../components/Forms/LoginForm';
 import axios from 'axios';
 
@@ -11,7 +11,7 @@ function wait(time: number) {
 }
 export async function UserFetch(
   loginDetails: LoginDetails
-): Promise<UserInterface> {
+): Promise<User> {
   const res = await axios.post('/api/user/login', loginDetails);
 
   const result = await res.data.user;
