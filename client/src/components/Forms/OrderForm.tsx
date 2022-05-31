@@ -88,51 +88,27 @@ function OrderForm(props: Props) {
   let navigate = useNavigate();
   const { dispatch } = useCart();
   const [isLoading, setLoading] = React.useState<boolean>(false);
-  let [allOrderDetails, setAllDetails] = useLocalStorage<AllOrderData>(
-    'orderDetails',
-    ''
-  );
+  // let [allOrderDetails, setAllDetails] = useLocalStorage<AllOrderData>(
+  //   'orderDetails',
+  //   ''
+  // );
   let [sumDetails] = useLocalStorage<number>('cartSum', '');
   let [productsDetails] = useLocalStorage<CartType[]>('cart', '');
 
   // successful submit
-  function handleSubmit(orderData: OrderData) {
+  async function handleSubmit(orderData: OrderData) {
     setLoading(true);
-    setOrderDetails(orderData);
+    const { deliveryAddress /* shippingMethod */ } = orderData;
 
-    // fetch api and navigate to confirmed-order page if successful
-    confirmOrder(orderData);
-  }
-
-  //populate a full Local storage key with all order details
-  function setOrderDetails(orderDetails: OrderData) {
-    allOrderDetails = {
-      orderDetails: orderDetails,
-      orderTotal:
-        sumDetails +
-        (typeof orderDetails.shippingMethod === 'number'
-          ? deliveryOptions[orderDetails.shippingMethod].price
-          : 0),
+    const order = {
+      deliveryAddress,
       products: productsDetails,
+      // shippingMethod,
     };
 
-    setAllDetails(allOrderDetails);
-  }
-
-  const formikProps = useFormik<OrderData>({
-    initialValues: emptyForm,
-    validationSchema: OrderFormSchema,
-    onSubmit: (orderData) => {
-      handleSubmit(orderData);
-    },
-  });
-
-  // fetches api to check if order went through, navigates to confirmed-order if successful
-  async function confirmOrder(orderData: OrderData) {
+    // fetch api and navigate to confirmed-order page if successful
     // const success = await placeOrderFetch();
-    const res = await axios.post('http://localhost:4000/api/order', orderData, {
-      withCredentials: true,
-    });
+    const res = await axios.post('api/order', order);
 
     const result = res.data;
 
@@ -147,6 +123,29 @@ function OrderForm(props: Props) {
       navigate('/confirmed-order');
     }
   }
+
+  //populate a full Local storage key with all order details
+  // function setOrderDetails(orderDetails: OrderData) {
+  //   allOrderDetails = {
+  //     orderDetails: orderDetails,
+  //     orderTotal:
+  //       sumDetails +
+  //       (typeof orderDetails.shippingMethod === 'number'
+  //         ? deliveryOptions[orderDetails.shippingMethod].price
+  //         : 0),
+  //     products: productsDetails,
+  //   };
+
+  //   setAllDetails(allOrderDetails);
+  // }
+
+  const formikProps = useFormik<OrderData>({
+    initialValues: emptyForm,
+    validationSchema: OrderFormSchema,
+    onSubmit: (orderData) => {
+      handleSubmit(orderData);
+    },
+  });
 
   return (
     <>

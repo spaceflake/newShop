@@ -14,9 +14,9 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { Product } from '@shared/types';
 import { FormikErrors, useFormik } from 'formik';
 import React, { useState } from 'react';
+import { Product } from '@shared/types';
 import { useProduct } from '../../contexts/ProductsContext';
 
 const validate = (values: Product) => {
@@ -47,7 +47,12 @@ const validate = (values: Product) => {
 
   return errors;
 };
-function ProductCard({ product }: any) {
+
+interface Props {
+  product: Product;
+}
+
+function ProductCard({ product }: Props) {
   const [openEditProduct, setOpenEditProduct] = useState(false);
   const [openDelete, setOpenDelete] = React.useState(false);
 
@@ -79,34 +84,29 @@ function ProductCard({ product }: any) {
   } else {
     drawerHeight = '100%';
   }
-  const formik = useFormik({
-    initialValues: {
-      id: product?.id,
-      title: product.title,
-      price: product.price,
-      description: product.description,
-      photo: product.photo,
-      categories: product.categories,
-      stock: product.stock,
-    },
+  const formik = useFormik<Product>({
+    initialValues: product,
     validate,
     onSubmit: (values) => {
       const updatedProduct = {
         ...values,
       };
-      updateProduct(product?.id, updatedProduct);
+      updateProduct({
+        ...updatedProduct,
+        photoId: '',
+      });
       window.location.reload();
     },
   });
 
   return (
-    <Card key={product?.id} sx={{ borderRadius: '1rem', padding: '1rem' }}>
+    <Card key={product.id} sx={{ borderRadius: '1rem', padding: '1rem' }}>
       <CardActionArea>
         <CardContent sx={{ padding: '0' }}>
           <CardMedia
             component="img"
             height="240"
-            image={product?.imgURL}
+            image={product.photoUrl}
             sx={{ objectFit: 'contain', objectPosition: 'center top' }}
           />
           <Box

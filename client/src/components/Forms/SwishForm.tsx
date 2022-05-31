@@ -1,6 +1,6 @@
-import { FormikProps } from "formik";
-import InputField from "./InputField";
-import { OrderData } from "./OrderForm";
+import { FormikProps } from 'formik';
+import InputField from './InputField';
+import { OrderData } from './OrderForm';
 
 interface Props {
   formikProps: FormikProps<OrderData>;
@@ -15,14 +15,14 @@ function SwishForm(props: Props) {
       {/* phone number input */}
       <InputField
         label="telefonnummer: "
-        id="phoneNumber"
-        name="phoneNumber"
+        id="phone"
+        name="phone"
         type="text"
-        value={values.phoneNumber}
+        value={values.phone}
         onChange={handleChange}
         onBlur={handleBlur}
-        error={touched.phoneNumber && !!errors.phoneNumber}
-        helperText={touched.phoneNumber && errors.phoneNumber}
+        error={touched.phone && !!errors.phone}
+        helperText={touched.phone && errors.phone}
       />
     </>
   );

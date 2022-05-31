@@ -9,14 +9,14 @@ import React, {
 } from 'react';
 import { ProductActions, productReducer } from './Reducers';
 
-export interface ProductType extends Product {}
+export type ProductCreate = Omit<Product, 'id' | 'photoUrl'>;
 
 type PContext = {
   prods: Product[];
   categories: string[];
   dispatch: React.Dispatch<ProductActions>;
-  createProduct: (product: Product) => void;
-  updateProduct: (productId: string, product: Product) => void;
+  createProduct: (product: ProductCreate) => void;
+  updateProduct: (product: Product) => void;
   deleteProduct: (productId: string) => void;
 };
 
@@ -56,7 +56,7 @@ export const ProductsProvider: React.FC = ({ children }) => {
 
   console.log(prods);
 
-  const createProduct = async (product: Product) => {
+  const createProduct = async (product: ProductCreate) => {
     // TODO: add product to database
     await axios
       .post('http://localhost:4000/api/product/', {
@@ -72,10 +72,10 @@ export const ProductsProvider: React.FC = ({ children }) => {
       );
   };
 
-  const updateProduct = async (productId: string, product: Product) => {
+  const updateProduct = async (product: Product) => {
     await axios
       .put(
-        'http://localhost:4000/api/product/' + productId,
+        'http://localhost:4000/api/product/' + product.id,
         {
           ...product,
         },
@@ -91,7 +91,7 @@ export const ProductsProvider: React.FC = ({ children }) => {
           console.log('Failure');
         }
       );
-    console.log(productId);
+    console.log(product.id);
     console.log();
   };
 
