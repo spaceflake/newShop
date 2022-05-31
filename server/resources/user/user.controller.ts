@@ -31,29 +31,64 @@ export const addUser = async (
     if (err) throw err;
     if (doc) res.json({ msg: 'This email has an account already' });
     if (!doc) {
-      try {
         const hashPassword = await bcrypt.hash(password, 10);
+
+        if (!hashPassword) {
+          throw new Error('Could not hash the password')
+        }
+
         const user = new UserModel({
           firstName,
           lastName,
           email,
           password: hashPassword,
         });
+
+        if (!user) {
+          throw new Error('Could not create new user')
+        }
         await user.save();
         res.status(200).json(user);
         console.log(user);
-      } catch (err) {
-        next(err);
-      }
     }
   });
 };
-export const updateUser = (req: Request<{ id: string }>, res: Response) => {
-  res.status(200).json('UPDATED USER WITH ID: ' + req.params.id);
+export const updateUser = async (req: Request<{ id: string }>, res: Response) => {
+  if(req.body.userId === req.params.id || req.body.isAdmin) {
+    if (req.body.password) {
+              try {
+                const salt = await bcrypt.genSalt(10);
+                return req.body.password = await bcrypt.hash(req.body.password, salt)
+              } catch (err) {
+                return res.status(500).json(err)
+              }
+            }
+    try {
+            const user = await UserModel.findByIdAndUpdate(req.params.id, { 
+               $set: req.body
+            });
+            res.status(200).json('UPDATED USER WITH ID: ' + req.params.id);
+          } catch (err) {
+            return res.status(500).json('error')
+          }
+        } else {
+          return res.status(403).json('can not update ')
+        }
+ 
 };
-export const deleteUser = (req: Request, res: Response) => {
-  res.status(200).json('DELETED USER');
-};
+export const deleteUser = async (req: Request, res: Response) => {
+  if(req.body.userId === req.params.id || req.body.isAdmin) {
+    try {
+      const user = await UserModel.findByIdAndDelete(req.params.id);
+      return res.status(200).json('DELETED USER');
+    } catch (err) {
+      return  res.status(500).json('error')
+    }
+  } else {
+    return res.status(403).json('can not delete ')
+  }
+}
+  
 
 export const loggedUser = async (req: Request, res: Response) => {
   res.send(req.user);

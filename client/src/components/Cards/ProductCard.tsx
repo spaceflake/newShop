@@ -8,26 +8,31 @@ import {
   CardActions,
   Button,
   CardActionArea,
-} from '@mui/material'
-import { Link } from 'react-router-dom'
-import { useState } from 'react'
-import { useCart } from '../../contexts/CartContext'
-import BuyButton from '../BuyButton'
-import { CartType } from '../../contexts/Reducers'
+} from '@mui/material';
+import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { useCart } from '../../contexts/CartContext';
+import BuyButton from '../BuyButton';
+import { CartType } from '../../contexts/Reducers';
+import type { Product } from '@shared/types';
 
-function ProductCard({ product }: any) {
-  const { cart, dispatch } = useCart()
-  const [ratingValue] = useState(5)
+interface Props {
+  product: Product;
+}
+
+function ProductCard({ product }: Props) {
+  const { cart, dispatch } = useCart();
+  const [ratingValue] = useState(5);
 
   return (
-    <Card key={product.id} sx={{ borderRadius: '1rem', padding: '1rem'}}>
+    <Card key={product.id} sx={{ borderRadius: '1rem', padding: '1rem' }}>
       <CardActionArea>
         <Link to={`/products/${product.id}`}>
           <CardContent sx={{ padding: '0' }}>
             <CardMedia
               component="img"
               height="240"
-              image={product.imgURL}
+              src={product.photoUrl}
               sx={{ objectFit: 'contain', objectPosition: 'center top' }}
             />
             <Box
@@ -38,7 +43,7 @@ function ProductCard({ product }: any) {
                 flexWrap: 'wrap-reverse',
                 alignItems: 'center',
                 marginBlock: '1rem',
-                flexDirection:"column"
+                flexDirection: 'column',
               }}
             >
               <Typography
@@ -64,19 +69,24 @@ function ProductCard({ product }: any) {
         }}
       >
         <Link to={`/products/${product.id}`}>
-          <Button sx={{
+          <Button
+            sx={{
               mt: 2,
               mb: 2,
-              height: "3rem",
-              bgcolor: "#ffffff",
-              border: "1",
-              borderColor:"#c6c6c6",
-              color: " black",
-              "&:hover": {
-                bgcolor: "#c6c6c6",
-                borderColor:"#c6c6c6",
+              height: '3rem',
+              bgcolor: '#ffffff',
+              border: '1',
+              borderColor: '#c6c6c6',
+              color: ' black',
+              '&:hover': {
+                bgcolor: '#c6c6c6',
+                borderColor: '#c6c6c6',
               },
-            }}variant="outlined">Visa</Button>
+            }}
+            variant="outlined"
+          >
+            Visa
+          </Button>
         </Link>
         {cart && cart.some((p: CartType) => p.id === product.id) ? (
           <Button>I kundkorgen</Button>
@@ -85,7 +95,7 @@ function ProductCard({ product }: any) {
         )}
       </CardActions>
     </Card>
-  )
+  );
 }
 
-export default ProductCard
+export default ProductCard;

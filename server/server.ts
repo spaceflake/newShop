@@ -1,18 +1,19 @@
+import express, { Request, Response } from 'express';
+require('express-async-errors');
 import bcrypt from 'bcrypt';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
-import express, { Request, Response } from 'express';
 import session from 'express-session';
-//passport
 import passport from 'passport';
 import passportLocal from 'passport-local';
-import { mediaRouter } from './resources/media';
 import connectDB from './config/db';
 import errorHandler from './middleware/errorMiddleware';
 import { deliveryRouter } from './resources/delivery';
+import { orderRouter } from './resources/order/order.router';
 import { productRouter } from './resources/product/product.router';
 import { User, UserModel } from './resources/user/user.model';
 import { userRouter } from './resources/user/user.router';
+import { mediaRouter } from './resources/media';
 
 const app = express();
 const port = 4000;
@@ -37,11 +38,14 @@ app.use('/api', userRouter);
 app.use('/api', productRouter);
 app.use('/api', mediaRouter);
 app.use('/api', deliveryRouter);
+app.use('/api', orderRouter);
 
 // TODO: 404 handler
 
 // global error handler
 app.use(errorHandler);
+
+// TODO: We need to get this passport below out of here.
 
 // TODO: We need to get this passport below out of here.
 
@@ -103,7 +107,7 @@ app.post(
   }
 );
 
-app.get('/logout', (req: Request, res: Response) => {
+app.get('/api/user/logout', (req: Request, res: Response) => {
   req.logout();
   res.status(200).json({ success: true, message: 'Logged out successfully' });
 });
@@ -115,3 +119,6 @@ connectDB();
 app.listen(port, () => {
   console.log(`server is running on ${port}`);
 });
+
+// global error handler
+app.use(errorHandler);

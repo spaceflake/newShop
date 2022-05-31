@@ -9,24 +9,24 @@ POST http://localhost:4000/api/product
 Content-Type: application/json
 
 {
-  "title": "Tophat",
-  "description": "Keep it classy, not sassy",
-  "price": 1299,
+  "title": ,
+  "description": "One of those days",
+  "price": 2,
   "photo": "tophat.jpg",
-  "categories": ["Fancy"],
-  "stock": 9
+  "categories": ["Other"],
+  "stock": 1
 }
 
 
 ###
 
-PUT http://localhost:4000/api/product/6287834d1a573fec1e165629
+PUT http://localhost:4000/api/product/628df3f4d8ee2cc23700f343
 Content-Type: application/json
 
 {
-  
+  "photoId": "628dfb84cd220a4afdab7908"
 }
 
 ###
 
-DELETE http://localhost:4000/api/product/1234
+DELETE http://localhost:4000/api/product/6287834d1a573fec1e165629

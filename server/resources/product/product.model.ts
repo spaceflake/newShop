@@ -1,28 +1,36 @@
-import mongoose from 'mongoose';
+import mongoose, { Schema, Types } from 'mongoose';
 
 export interface Product {
   id: string;
   title: string;
   description: string;
   price: number;
-  photo: string;
+  photo?: string;
+  photoId: Types.ObjectId;
   categories: string[];
   stock: number;
+  qty: number;
+  /** Virtual */ photoUrl: string;
 }
 
-export const ProductSchema = new mongoose.Schema<Product>(
+export const ProductSchema = new Schema<Product>(
   {
-    title: { type: String, required: true },
-    description: { type: String, required: true },
-    price: { type: Number, required: true },
-    photo: { type: String, required: true },
+    title: { type: String, minLength: 3, maxlength: 40, required: true },
+    description: { type: String, minLength: 3, maxlength: 50, required: true },
+    price: { type: Number, min: 0, maxlength: 6, required: true },
+    photoId: { type: Schema.Types.ObjectId, required: true },
     categories: { type: [String], required: true },
-    stock: { type: Number, required: true },
+    stock: { type: Number, min: 0, required: true },
+    qty: { type: Number, min: 0, required: true },
   },
   {
     toJSON: { virtuals: true },
     toObject: { virtuals: true },
   }
 );
+
+ProductSchema.virtual('photoUrl').get(function () {
+  return '/api/media/' + this.photoId;
+});
 
 export const ProductModel = mongoose.model('product', ProductSchema);

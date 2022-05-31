@@ -1,9 +1,7 @@
 // import { initialState } from './ProductsInCartContext'
 
 // import { Product } from '../Api/Data'
-import { Product } from '../../../server/resources/product/product.model';
-
-import { ProductType } from './ProductsContext';
+import type { Product } from '@shared/types';
 
 type ActionMap<M extends { [index: string]: any }> = {
   [Key in keyof M]: M[Key] extends undefined
@@ -24,32 +22,12 @@ export enum Types {
   ResetCart = 'RESET_CART',
 }
 
-export type CartType = {
-  id: number;
-  title: string;
-  description: string;
-  price: number;
-  qty: number;
-  imgURL: string;
-};
+export type CartType = Product;
 
 type CartPayload = {
-  [Types.AddToCart]: {
-    id: number;
-    title: string;
-    description: string;
-    price: number;
-    qty: number;
-    imgURL: string;
-  };
-
-  [Types.DeleteFromCart]: {
-    id: number;
-  };
-  [Types.UpdateQty]: {
-    id: number;
-    qty: number;
-  };
+  [Types.AddToCart]: CartType;
+  [Types.DeleteFromCart]: CartType;
+  [Types.UpdateQty]: Pick<CartType, 'id' | 'qty'>;
   [Types.ResetCart]: {};
 };
 
@@ -63,7 +41,7 @@ export const cartReducer = (state: State, action: CartActions) => {
     case Types.AddToCart:
       return [...state, { ...action.payload, qty: 1 }];
     case Types.DeleteFromCart:
-      return state.filter((c: { id: number }) => c.id !== action.payload.id);
+      return state.filter((c) => c.id !== action.payload.id);
     case Types.UpdateQty:
       return [
         ...state.filter((cartItem: CartType) => {
@@ -141,7 +119,7 @@ export const productReducer = (state: Data, action: ProductActions) => {
 
 export interface ProductEditState extends Product {
   titleValid: boolean;
-  informationValid: boolean;
+  descriptionValid: boolean;
   categoryValid: boolean;
   priceValid: boolean;
   imgURLValid: boolean;
@@ -173,6 +151,8 @@ export function ProductEditReducer(
     case ProductEditReducerType.Update:
       const key = action.payload.key;
       const value = action.payload.value;
+      console.log('key', key);
+
       return {
         ...state,
         [key]: action.payload.value,
