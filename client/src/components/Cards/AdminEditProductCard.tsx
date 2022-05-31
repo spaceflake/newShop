@@ -251,7 +251,15 @@ function ProductCard({ product }: Props) {
                 <div>
                   <ButtonGroup>
                     {categories.map((categori) => (
-                      <Button>{categori}</Button>
+                      <Button
+                        variant={
+                          product.categories.includes(categori)
+                            ? 'contained'
+                            : 'outlined'
+                        }
+                      >
+                        {categori}
+                      </Button>
                     ))}
                   </ButtonGroup>
                   {/* <label htmlFor="categories">Categories</label>
