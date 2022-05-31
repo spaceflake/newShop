@@ -15,7 +15,7 @@ interface UserContextValue {
 }
 export const UserContext = React.createContext<UserContextValue>({
   isLoading: false,
-  user: {id: '',firstName: '', lastName: '', email: '', isAdmin: false },
+  user: { id: '', firstName: '', lastName: '', email: '', isAdmin: false },
   allUsers: [],
   login: (_loginDetails: LoginDetails): Promise<boolean> => {
     return new Promise(() => {});
@@ -29,8 +29,6 @@ export const UserProvider: React.FC<React.ReactNode> = ({ children }) => {
   const [allUsers, setAllUsers] = React.useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-
- 
   const login = async (loginDetails: LoginDetails) => {
     setIsLoading(true);
 
@@ -46,32 +44,31 @@ export const UserProvider: React.FC<React.ReactNode> = ({ children }) => {
       });
   };
   useEffect(() => {
-    axios.get("http://localhost:4000/api/logged", { withCredentials: true }).then((res: AxiosResponse) => {
+    axios.get('/api/logged').then((res: AxiosResponse) => {
       setUser(res.data);
-    })
-}, []);
+    });
+  }, []);
   const logout = async () => {
     // talk to server
-    await axios
-      .get('http://localhost:4000/api/user/logout', {
-        withCredentials: true
-    }).then((res: AxiosResponse) => {
-        console.log(res.data.message);
-        setUser(undefined);
-        setIsLoading(false);
-      });
+    await axios.get('/api/user/logout').then((res: AxiosResponse) => {
+      console.log(res.data.message);
+      setUser(undefined);
+      setIsLoading(false);
+    });
   };
   const getAllUsers = async () => {
-    const response = await axios.get('http://localhost:4000/api/user');
+    const response = await axios.get('/api/user');
     const res = await response.data;
-    setAllUsers(res)
+    setAllUsers(res);
     console.log(res);
   };
   useEffect(() => {
-    getAllUsers()
+    getAllUsers();
   }, []);
   return (
-    <UserContext.Provider value={{ getAllUsers, allUsers, user, isLoading, login, logout }}>
+    <UserContext.Provider
+      value={{ getAllUsers, allUsers, user, isLoading, login, logout }}
+    >
       {children}
     </UserContext.Provider>
   );

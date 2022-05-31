@@ -9,13 +9,10 @@ function wait(time: number) {
     }, time);
   });
 }
-export async function UserFetch(loginDetails: LoginDetails): Promise<UserInterface> {
-  const res = await axios.post(
-    'http://localhost:4000/api/user/login',
-    loginDetails , { withCredentials: true}
-
-    
-  );
+export async function UserFetch(
+  loginDetails: LoginDetails
+): Promise<UserInterface> {
+  const res = await axios.post('/api/user/login', loginDetails);
 
   const result = await res.data.user;
   console.log(result.user);
