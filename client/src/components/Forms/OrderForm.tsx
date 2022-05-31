@@ -124,7 +124,7 @@ function OrderForm(props: Props) {
           payload: {},
         });
         setLoading(false);
-        navigate('/confirmed-order');
+        navigate(`/confirmed-order/${result.order.id}`);
       }
     } catch (error) {
       console.log(error);
