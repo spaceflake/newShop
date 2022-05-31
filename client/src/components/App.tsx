@@ -18,7 +18,7 @@ import TermsOfUsePage from '../pages/TermsOfUsePage';
 import Layout from './Layout';
 
 function App() {
-  const {user}  = useUser();
+  const { user } = useUser();
 
   return (
     <Routes>
@@ -30,7 +30,7 @@ function App() {
         </Route>
         <Route path="cartPage" element={<CartPage />} />
         <Route path="checkoutPage" element={<CheckOutPage />} />
-        <Route path="confirmed-order" element={<ConfirmedOrderPage />} />
+        <Route path="confirmed-order/:id" element={<ConfirmedOrderPage />} />
         <Route path="faq" element={<FaqPage />} />
         <Route path="termsOfUse" element={<TermsOfUsePage />} />
         <Route path="support" element={<SupportPage />} />
@@ -38,23 +38,21 @@ function App() {
         <Route path="signup" element={<SignUpPage />} />
       </Route>
       {user && user?.isAdmin === true ? (
-      <Route path="admin" element={<AdminPage />}>
-        <Route path="adminUser" element={<AdminUserControl />} />
-        <Route path="adminProducts" element={<AdminProductControl />}>
+        <Route path="admin" element={<AdminPage />}>
+          <Route path="adminUser" element={<AdminUserControl />} />
+          <Route path="adminProducts" element={<AdminProductControl />}></Route>
+          <Route
+            path="*"
+            element={
+              <main style={{ padding: '1rem' }}>
+                <p>There's nothing here!</p>
+              </main>
+            }
+          />
         </Route>
-        <Route
-      path="*"
-      element={
-        <main style={{ padding: "1rem" }}>
-          <p>There's nothing here!</p>
-        </main>
-      }
-    />
-      </Route>
       ) : (
         <Route path="*" element={<NotAdmin />} />
       )}
-    
     </Routes>
   );
 }
