@@ -6,22 +6,26 @@ import {
   ListItem,
   ListItemAvatar,
   ListItemText,
-  Typography,
 } from '@mui/material';
-import { deliveryOptions, paymentOptions } from '../Api/Data';
-import { AllOrderData } from '../components/Forms/OrderForm';
-import { CartType } from '../contexts/Reducers';
-import useLocalStorage from '../Hooks/useLocalStorage';
-
-// randomizes a 6 digit order number
-function RandomOrderNumber() {
-  return Math.floor(Math.random() * 1000000);
-}
+import { Order } from '@shared/types';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 function ConfirmedOrderPage() {
-  // get cart, total cartsum, all orderdetails and shippingdetails from local storage
+  const { id } = useParams();
+  const [order, setOrder] = useState<Order>();
 
-  const [orderDetails] = useLocalStorage<AllOrderData>('orderDetails', '');
+  useEffect(() => {
+    const getOrder = async () => {
+      const res = await axios.get(`/api/order/${id}`);
+      const orderData = res.data;
+
+      setOrder(orderData);
+    };
+
+    getOrder();
+  }, [id]);
 
   return (
     <Container maxWidth="md">
@@ -33,82 +37,80 @@ function ConfirmedOrderPage() {
           Nedan är en sammanfattning på din beställning;
         </p>
         <Divider />
-        {/* get the randomized order number */}
-        <h3>Ordernummer: #{RandomOrderNumber()}</h3>
+        <h3>Ordernummer: {order?.orderId}</h3>
         <h3>Produkter:</h3>
-        {/* get the summary of bought products, loops thought cart array */}
         <List dense>
-          {orderDetails.products?.length &&
-            orderDetails.products.map((c: CartType) => (
-              <ListItem key={c.id}>
-                <ListItemAvatar>
-                  <img
-                    src={c.photoUrl}
-                    alt={c.title}
-                    style={{
-                      width: '70px',
-                      height: '70px',
-                      borderRadius: '50%',
-                    }}
+          {order
+            ? order.products.map((product) => (
+                <ListItem key={product.id}>
+                  <ListItemAvatar>
+                    <img
+                      src={product.photoUrl}
+                      alt={product.title}
+                      style={{
+                        width: '70px',
+                        height: '70px',
+                        borderRadius: '50%',
+                      }}
+                    />
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary={product.title}
+                    secondary={`Antal: ${product.qty} Pris: ${product.price} kr/st`}
                   />
-                </ListItemAvatar>
-                <ListItemText
-                  primary={c.title}
-                  secondary={`Antal: ${c.qty} Pris: ${c.price} kr/st`}
-                />
-                <ListItemText
-                  primary={`${c.qty * c.price} kr`}
-                  sx={{ textAlign: 'right' }}
-                />
-              </ListItem>
-            ))}
+                  <ListItemText
+                    primary={`${product.qty * product.price} kr`}
+                    sx={{ textAlign: 'right' }}
+                  />
+                </ListItem>
+              ))
+            : 'fuc'}
         </List>
         <Divider />
         {/* get and print total price of products */}
         {/* the second "total" should be shipping cost */}
-        <Typography variant="body1" sx={{ textAlign: 'right' }}>
-          Totalpris (inkl moms & frakt) : {`${orderDetails.orderTotal}`} kr
-        </Typography>
+        {/* <Typography variant="body1" sx={{ textAlign: 'right' }}>
+          Totalpris (inkl moms & frakt) : {`${order?.orderTotal}`} kr
+        </Typography> */}
 
         {/* Get shipping adress from local storage  */}
         <h3>Leveransadress:</h3>
         {/* first and last name */}
         <>
-          {orderDetails.orderDetails.deliveryAddress.firstName}{' '}
-          {orderDetails.orderDetails.deliveryAddress.lastName}
+          {order?.deliveryAddress[0].firstName}{' '}
+          {order?.deliveryAddress[0].lastName}
         </>
         <br />
         {/* shipping adress */}
-        <>{orderDetails.orderDetails.deliveryAddress.street}</>
+        <>{order?.deliveryAddress[0].street}</>
         <br />
         {/* post code and city */}
         <>
-          {orderDetails.orderDetails.deliveryAddress.zipcode}{' '}
-          {orderDetails.orderDetails.deliveryAddress.city}
+          {order?.deliveryAddress[0].zipcode} {order?.deliveryAddress[0].city}
         </>
         <br />
         {/* phone number */}
-        <>Telefonnummer: {orderDetails.orderDetails.deliveryAddress.phone}</>
+        <>Telefonnummer: {order?.deliveryAddress[0].phone}</>
         <br />
         {/* e-mailadress */}
-        <>e-postadress: {orderDetails.orderDetails.deliveryAddress.email}</>
+        <>e-postadress: {order?.deliveryAddress[0].email}</>
         <br />
         <Divider />
-        {/* Get shipping method from local storage  */}
-        <h3>Leveransmetod:</h3>
+        {/* Get shipping method  TODO  */}
+        {/* <h3>Leveransmetod:</h3>
         <>
-          {typeof orderDetails.orderDetails.shippingMethod === 'number'
-            ? deliveryOptions[orderDetails.orderDetails.shippingMethod].name
+          {typeof order.order.shippingMethod === 'number'
+            ? deliveryOptions[order.order.shippingMethod].name
             : ''}
-        </>
+        </> */}
         <Divider />
-        {/* Get payment method from local storage  */}
-        <h3>Betalningsmetod:</h3>
+        {/* Get payment method  Todo  */}
+        {/* <h3>Betalningsmetod:</h3>
         <>
-          {typeof orderDetails.orderDetails.paymentMethod === 'number'
-            ? paymentOptions[orderDetails.orderDetails.paymentMethod].name
+          {typeof order.order.paymentMethod === 'number'
+            ? paymentOptions[order.order.paymentMethod].name
             : ''}
-        </>
+        </> */}
         <Divider />
         <p>
           Skulle någonting inte stämma, eller om du har övriga frågor är du
