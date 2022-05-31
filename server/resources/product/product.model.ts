@@ -16,7 +16,7 @@ export interface Product {
 export const ProductSchema = new Schema<Product>(
   {
     title: { type: String, minLength: 3, maxlength: 40, required: true },
-    description: { type: String, minLength: 3, maxlength: 50, required: true },
+    description: { type: String, minLength: 3, required: true },
     price: { type: Number, min: 0, maxlength: 6, required: true },
     photoId: { type: Schema.Types.ObjectId, required: true },
     categories: { type: [String], required: true },

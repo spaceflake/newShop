@@ -1,5 +1,14 @@
+import { Types } from 'mongoose';
 import { NextFunction, Request, Response } from 'express';
 import { OrderModel } from './order.model';
+
+declare global {
+  namespace Express {
+    interface User {
+      id: string;
+    }
+  }
+}
 
 export const getAllOrders = async (req: Request, res: Response) => {
   const orders = await OrderModel.find({});
@@ -18,9 +27,8 @@ export const addOrder = async (
   try {
     const order = new OrderModel({
       ...req.body,
-      user: req.user, // TODO....
+      user: req.user,
     });
-    // const order = req.body;
     console.log(order);
 
     await order.save();
