@@ -7,12 +7,12 @@ import {
   CardMedia,
   Container,
   Typography,
-} from '@mui/material';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { Link, useParams } from 'react-router-dom';
-import BuyButton from '../components/BuyButton';
-import { useProduct } from '../contexts/ProductsContext';
-import { useCart } from '../contexts/CartContext';
+} from "@mui/material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { Link, useParams } from "react-router-dom";
+import BuyButton from "../components/BuyButton";
+import { useProduct } from "../contexts/ProductsContext";
+import { useCart } from "../contexts/CartContext";
 
 function ProductPage() {
   let { id } = useParams();
@@ -23,17 +23,15 @@ function ProductPage() {
   return (
     <Container maxWidth="md">
       <Link to="/products">
-        <Button startIcon={<ArrowBackIcon />}>
-          Tillbaka till produktsidan
-        </Button>
+        <Button startIcon={<ArrowBackIcon />}>Back to products</Button>
       </Link>
       {product && (
-        <Card sx={{ height: '100%' }}>
+        <Card sx={{ height: "100%" }}>
           <Box
             sx={{
-              display: 'flex',
-              alignItems: 'stretch',
-              flexWrap: 'wrap',
+              display: "flex",
+              alignItems: "stretch",
+              flexWrap: "wrap",
             }}
           >
             <CardMedia
@@ -44,13 +42,13 @@ function ProductPage() {
             />
             <Box
               sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                flexGrow: '1',
-                alignItems: 'center',
+                display: "flex",
+                flexDirection: "column",
+                flexGrow: "1",
+                alignItems: "center",
               }}
             >
-              <CardContent sx={{ flexGrow: '1' }}>
+              <CardContent sx={{ flexGrow: "1" }}>
                 <Typography variant="h5" component="div" gutterBottom>
                   {product.title}
                 </Typography>
@@ -61,7 +59,7 @@ function ProductPage() {
               </CardContent>
               <CardActions>
                 {cart.some((p: any) => p.id === product.id) ? (
-                  <Button>I kundkorgen</Button>
+                  <Button>In cart</Button>
                 ) : (
                   <BuyButton dispatch={dispatch} product={product} />
                 )}

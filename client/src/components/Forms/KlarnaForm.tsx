@@ -14,7 +14,7 @@ function KlarnaForm(props: Props) {
     <>
       {/* Personal number input */}
       <InputField
-        label="personnummer: "
+        label="Birth number: "
         id="personalNumber"
         name="personalNumber"
         type="text"

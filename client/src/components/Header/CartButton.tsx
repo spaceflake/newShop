@@ -86,7 +86,7 @@ function CartButton() {
         {cart?.length > 0 ? (
           <CartList handleClose={handleClose} />
         ) : (
-          <Typography variant="body2">Du har inget i kundkorgen.</Typography>
+          <Typography variant="body2">Your cart is empty.</Typography>
         )}
 
         {cart.length > 0 && (
@@ -110,7 +110,7 @@ function CartButton() {
               variant="contained"
               fullWidth
             >
-              Till kundkorgen
+              Go to cart
             </Button>
           </Link>
         )}

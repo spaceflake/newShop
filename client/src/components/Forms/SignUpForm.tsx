@@ -1,19 +1,19 @@
-import { Button, Typography } from '@mui/material';
-import { useFormik } from 'formik';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import * as Yup from 'yup';
-import { useUser } from '../../contexts/UserContext';
-import InputField from './InputField';
-import axios, { AxiosResponse } from 'axios';
+import { Button, Typography } from "@mui/material";
+import { useFormik } from "formik";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import * as Yup from "yup";
+import { useUser } from "../../contexts/UserContext";
+import InputField from "./InputField";
+import axios, { AxiosResponse } from "axios";
 
 type SignUpDetailsSchemaType = Record<keyof SignUpDetails, Yup.AnySchema>;
 
 const SignUpFormSchema = Yup.object().shape<SignUpDetailsSchemaType>({
-  firstName: Yup.string().required('pleas inter your first name.'),
-  lastName: Yup.string().required('pleas inter your last name.'),
-  email: Yup.string().required('pleas inter your email.'),
-  password: Yup.string().required('pleas inter your password.'),
+  firstName: Yup.string().required("Please enter your firstname."),
+  lastName: Yup.string().required("Please enter your lastname."),
+  email: Yup.string().required("Please enter your email."),
+  password: Yup.string().required("Please enter your password."),
 });
 
 export interface SignUpDetails {
@@ -28,10 +28,10 @@ interface Props {
 }
 
 const emptyForm: SignUpDetails = {
-  firstName: '',
-  lastName: '',
-  email: '',
-  password: '',
+  firstName: "",
+  lastName: "",
+  email: "",
+  password: "",
 };
 
 function SignUpForm(_props: Props) {
@@ -48,7 +48,7 @@ function SignUpForm(_props: Props) {
         const userRegister = async () => {
           await axios
             .post(
-              'http://localhost:4000/api/user/register',
+              "http://localhost:4000/api/user/register",
               {
                 ...SignUpDetails,
               },
@@ -58,15 +58,15 @@ function SignUpForm(_props: Props) {
             )
             .then(
               (res: AxiosResponse) => {
-                console.log('user has been registerd ');
+                console.log("user has been registerd ");
                 console.log(res);
                 console.log(SignUpDetails);
 
-                nav('/');
+                nav("/");
                 resetForm();
               },
               () => {
-                console.log('failed to register');
+                console.log("failed to register");
               }
             );
         };
@@ -79,12 +79,12 @@ function SignUpForm(_props: Props) {
     <form onSubmit={handleSubmit}>
       {/* Display error if invalid input */}
       {!!submitError && (
-        <Typography sx={{ color: 'red' }}>{submitError}</Typography>
+        <Typography sx={{ color: "red" }}>{submitError}</Typography>
       )}
 
       {/* firstName name input */}
       <InputField
-        label="First name: "
+        label="Firstname: "
         id="firstName"
         name="firstName"
         type="text"
@@ -97,7 +97,7 @@ function SignUpForm(_props: Props) {
       />
       {/* lastName input */}
       <InputField
-        label="Last name: "
+        label="Lastname: "
         id="lastName"
         name="lastName"
         type="text"
@@ -110,7 +110,7 @@ function SignUpForm(_props: Props) {
       />
       {/* email input */}
       <InputField
-        label="email: "
+        label="Email: "
         id="email"
         name="email"
         type="text"
@@ -142,17 +142,17 @@ function SignUpForm(_props: Props) {
         sx={{
           mt: 2,
           mb: 2,
-          height: '3rem',
-          bgcolor: '#0EDFE6',
-          border: 'none',
-          color: ' black',
-          '&:hover': {
-            bgcolor: '#eaa0ff',
-            border: 'none',
-            color: 'black',
+          height: "3rem",
+          bgcolor: "#0EDFE6",
+          border: "none",
+          color: " black",
+          "&:hover": {
+            bgcolor: "#eaa0ff",
+            border: "none",
+            color: "black",
           },
-          '@media screen and (max-width: 440px)': {
-            borderRadius: '0',
+          "@media screen and (max-width: 440px)": {
+            borderRadius: "0",
             mt: 2,
             mb: 0,
           },

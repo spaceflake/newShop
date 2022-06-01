@@ -15,159 +15,6 @@ export interface Product {
   imgURL: string;
 }
 
-export enum MockedCategories {
-  Famous = 'Kända',
-  Animals = 'Djur',
-  Hobby = 'Hobby',
-  Misc = 'Övriga',
-}
-
-export const Categories: MockedCategories[] = [
-  MockedCategories.Famous,
-  MockedCategories.Animals,
-  MockedCategories.Hobby,
-  MockedCategories.Misc,
-];
-
-export const mockedProducts: Product[] = [
-  {
-    title: 'Ducktrix',
-    information: 'Lorem ipsum jdksjdksajdajkd jdksaljdkasjdklas jdlsjdsajdlsa',
-    category: MockedCategories.Famous,
-    price: 99,
-    id: 1,
-    imgURL:
-      'https://www.amsterdamduckstore.com/wp-content/uploads/2019/08/Ducktrix-rubber-duck-front-Amsterdam-Duck-Store-1.jpg',
-  },
-  {
-    title: 'Unicorn',
-    information: 'Lorem ipsum jdksjdksajdajkd jdksaljdkasjdklas jdlsjdsajdlsa',
-    category: MockedCategories.Animals,
-    price: 79,
-    id: 2,
-    imgURL:
-      'https://amsterdamduckstore.com/wp-content/uploads/2016/05/unicorn-rubber-duck-front.jpg',
-  },
-  {
-    title: 'Corona',
-    information: 'Lorem ipsum jdksjdksajdajkd jdksaljdkasjdklas jdlsjdsajdlsa',
-    category: MockedCategories.Misc,
-    price: 89,
-    id: 3,
-    imgURL:
-      'https://www.amsterdamduckstore.com/wp-content/uploads/2021/07/Corona-Rubber-Duck-Pink-front-Amsterdam-Duck-Store-III.jpg',
-  },
-  {
-    title: 'Eskimo',
-    information: 'Lorem ipsum jdksjdksajdajkd jdksaljdkasjdklas jdlsjdsajdlsa',
-    category: MockedCategories.Misc,
-    price: 75,
-    id: 4,
-    imgURL:
-      'https://amsterdamduckstore.com/wp-content/uploads/2019/12/Eskimo-with-baby-rubber-duck-front-Amsterdam-Duck-Store.jpg',
-  },
-  {
-    title: 'Cow',
-    information: 'Lorem ipsum jdksjdksajdajkd jdksaljdkasjdklas jdlsjdsajdlsa',
-    category: MockedCategories.Animals,
-    price: 49,
-    id: 5,
-    imgURL:
-      'https://www.amsterdamduckstore.com/wp-content/uploads/2015/07/cow-black-and-white-rubber-duck-front-e1569759638189.jpg',
-  },
-  {
-    title: 'Fitness',
-    information: 'Lorem ipsum jdksjdksajdajkd jdksaljdkasjdklas jdlsjdsajdlsa',
-    category: MockedCategories.Hobby,
-    price: 39,
-    id: 6,
-    imgURL:
-      'https://amsterdamduckstore.com/wp-content/uploads/2016/11/Fitness-Rubber-Duck-front-Amsterdam-Duck-Store-2.jpg',
-  },
-  {
-    title: 'Gamer Girl',
-    information: 'Lorem ipsum jdksjdksajdajkd jdksaljdkasjdklas jdlsjdsajdlsa',
-    category: MockedCategories.Hobby,
-    price: 69,
-    id: 7,
-    imgURL:
-      'https://www.amsterdamduckstore.com/wp-content/uploads/2020/11/gamer-girl-rubber-duck-front-amsterdam-duck-store-.jpg',
-  },
-  {
-    title: 'Gamer Boy',
-    information: 'Lorem ipsum jdksjdksajdajkd jdksaljdkasjdklas jdlsjdsajdlsa',
-    category: MockedCategories.Hobby,
-    price: 69,
-    id: 8,
-    imgURL:
-      'https://www.amsterdamduckstore.com/wp-content/uploads/2020/11/gamer-boy-rubber-duck-front-amsterdam-duck-store-.jpg',
-  },
-  {
-    title: 'Donkey',
-    information: 'Lorem ipsum jdksjdksajdajkd jdksaljdkasjdklas jdlsjdsajdlsa',
-    category: MockedCategories.Animals,
-    price: 59,
-    id: 9,
-    imgURL:
-      'https://www.amsterdamduckstore.com/wp-content/uploads/2022/02/Donkey-rubber-duck-front-Amsterdam-duckstore.jpeg',
-  },
-  {
-    title: 'Liberty',
-    information: 'Lorem ipsum jdksjdksajdajkd jdksaljdkasjdklas jdlsjdsajdlsa',
-    category: MockedCategories.Famous,
-    price: 89,
-    id: 10,
-    imgURL:
-      'https://www.amsterdamduckstore.com/wp-content/uploads/2015/09/liberty-rubber-duck-front-e1569407748113.jpg',
-  },
-  {
-    title: 'BatDuck',
-    information: 'Lorem ipsum jdksjdksajdajkd jdksaljdkasjdklas jdlsjdsajdlsa',
-    category: MockedCategories.Famous,
-    price: 69,
-    id: 11,
-    imgURL:
-      'https://www.amsterdamduckstore.com/wp-content/uploads/2018/01/dark-rubber-duck-front-Amsterdam-Duck-Store.jpg',
-  },
-  {
-    title: 'SpiderDuck',
-    information: 'Lorem ipsum jdksjdksajdajkd jdksaljdkasjdklas jdlsjdsajdlsa',
-    category: MockedCategories.Famous,
-    price: 69,
-    id: 12,
-    imgURL:
-      'https://www.amsterdamduckstore.com/wp-content/uploads/2015/08/spidy-rubber-duck-front-e1569408181344.jpg',
-  },
-  {
-    title: 'SkeleDuck',
-    information: 'Lorem ipsum jdksjdksajdajkd jdksaljdkasjdklas jdlsjdsajdlsa',
-    category: MockedCategories.Famous,
-    price: 69,
-    id: 13,
-    imgURL:
-      'https://www.amsterdamduckstore.com/wp-content/uploads/2015/09/skeleton-rubber-duck-front.jpg',
-  },
-];
-
-// export interface User {
-//   username: string;
-//   password: string;
-//   isAdmin: boolean;
-// }
-
-// export const mockedUsers: User[] = [
-//   {
-//     username: 'Regular-User',
-//     password: 'User',
-//     isAdmin: false,
-//   },
-//   {
-//     username: 'Admin-User',
-//     password: 'Admin',
-//     isAdmin: true,
-//   },
-// ];
-
 export interface Delivery {
   name: string;
   altText: string;
@@ -180,7 +27,7 @@ export interface Delivery {
 export const deliveryOptions: Delivery[] = [
   {
     name: 'Postnord',
-    altText: 'Leverans i brevlådan, 1-3 arbetsdagar',
+    altText: 'Delivery in mailbox, 1-3 workingdays',
     shippingTime: 3,
     price: 19,
     logo: postnord,
@@ -188,7 +35,7 @@ export const deliveryOptions: Delivery[] = [
   },
   {
     name: 'Schenker',
-    altText: 'Spårbar leverans, 1-2 arbetsdagar',
+    altText: 'Trackable delivery, 1-2 workingdays',
     shippingTime: 2,
     price: 29,
     logo: schenker,
@@ -196,7 +43,7 @@ export const deliveryOptions: Delivery[] = [
   },
   {
     name: 'Instabox',
-    altText: 'Leverans till box, 1-2 arbetsdagar',
+    altText: 'Delivery to box, 1-2 workingdays',
     shippingTime: 2,
     price: 29,
     logo: instabox,
@@ -215,19 +62,19 @@ export interface Payment {
 export const paymentOptions: Payment[] = [
   {
     name: 'Klarna',
-    altText: 'Välj att delbetala, betala senare, eller i slutet av månaden',
+    altText: 'Split up your payment, pay later, or in the end of the month',
     logo: klarna,
     id: 'klarna',
   },
   {
     name: 'Swish',
-    altText: 'Betala enkelt med mobilen',
+    altText: 'Pay easy with your phone',
     logo: swish,
     id: 'swish',
   },
   {
-    name: 'Kortbetalning',
-    altText: 'Betala med Visa / Mastercard / Maestro',
+    name: 'Card payment',
+    altText: 'Pay with Visa / Mastercard / Maestro',
     icon: CreditCardIcon,
     id: 'card',
   },

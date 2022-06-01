@@ -1,15 +1,15 @@
-import { Box, Tabs, Tab, Container, Button, Typography } from '@mui/material';
-import { FC, useState } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import React from 'react';
-import { useUser, UserContext } from '../../contexts/UserContext';
-import AdminBar from './AdminBar';
-import CartButton from './CartButton';
+import { Box, Tabs, Tab, Container, Button, Typography } from "@mui/material";
+import { FC, useState } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import React from "react";
+import { useUser, UserContext } from "../../contexts/UserContext";
+import AdminBar from "./AdminBar";
+import CartButton from "./CartButton";
 
 interface HeaderProps {}
 
-const TabValues: string[] = ['/', '/products', '/about'];
+const TabValues: string[] = ["/", "/products", "/about"];
 
 const filteredValue = (value: string) =>
   TabValues.includes(value) ? value : false;
@@ -29,32 +29,32 @@ const Header: FC<HeaderProps> = () => {
   };
 
   const { user, logout } = useUser();
-  
+
   return (
     <>
       {!!user?.isAdmin && <AdminBar />}
 
-      <Container maxWidth="md" sx={{ padding: '0,2rem', mb: 1, mt: 2 }}>
-        <Box sx={{ width: '100%' }}>
+      <Container maxWidth="md" sx={{ padding: "0,2rem", mb: 1, mt: 2 }}>
+        <Box sx={{ width: "100%" }}>
           {!!user && (
-            <Typography sx={{ color: '#c900c1' }}>
-              Du är nu inloggad som: {user?.email}
+            <Typography sx={{ color: "#c900c1" }}>
+              You are logged in as: {user?.email}
             </Typography>
           )}
         </Box>
         <Box
           sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            width: '100%',
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            width: "100%",
           }}
         >
           <Tabs
             sx={{
-              '@media screen and (max-width: 440px)': {
-                padding: '0',
-                marginLeft: '-25px',
+              "@media screen and (max-width: 440px)": {
+                padding: "0",
+                marginLeft: "-25px",
               },
             }}
             value={value}
@@ -63,16 +63,16 @@ const Header: FC<HeaderProps> = () => {
             indicatorColor="primary"
             aria-label="secondary tabs example"
           >
-            <Tab value="/" label="Hem" />
-            <Tab value="/products" label="Produkter" />
+            <Tab value="/" label="Home" />
+            <Tab value="/products" label="Products" />
           </Tabs>
           <Box
             sx={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '1rem',
-              '@media screen and (max-width: 480px)': {
-                marginRight: '-10px',
+              display: "flex",
+              alignItems: "center",
+              gap: "1rem",
+              "@media screen and (max-width: 480px)": {
+                marginRight: "-10px",
               },
             }}
           >
@@ -81,22 +81,22 @@ const Header: FC<HeaderProps> = () => {
                 <Link to="/login">
                   <Button
                     sx={{
-                      bgcolor: 'white',
-                      border: 'none',
-                      color: ' black',
-                      minWidth: '1px',
-                      '&:hover': {
-                        bgcolor: '#dadcd9',
-                        border: 'none',
-                        color: ' black',
+                      bgcolor: "white",
+                      border: "none",
+                      color: " black",
+                      minWidth: "1px",
+                      "&:hover": {
+                        bgcolor: "#dadcd9",
+                        border: "none",
+                        color: " black",
                       },
-                      '@media screen and (max-width: 480px)': {
-                        fontSize: '0',
-                        padding: '0',
-                        bgcolor: 'transparent',
-                        textalign: 'none',
-                        '&:hover': {
-                          bgcolor: 'transparent',
+                      "@media screen and (max-width: 480px)": {
+                        fontSize: "0",
+                        padding: "0",
+                        bgcolor: "transparent",
+                        textalign: "none",
+                        "&:hover": {
+                          bgcolor: "transparent",
                         },
                       },
                     }}
@@ -104,39 +104,39 @@ const Header: FC<HeaderProps> = () => {
                     endIcon={
                       <AccountCircleIcon
                         sx={{
-                          padding: '0',
-                          height: '2.5rem',
-                          width: '2.5rem',
-                          '@media screen and (max-width: 440px)': {
-                            marginRight: '-30px',
+                          padding: "0",
+                          height: "2.5rem",
+                          width: "2.5rem",
+                          "@media screen and (max-width: 440px)": {
+                            marginRight: "-30px",
                           },
                         }}
                         color="warning"
                       />
                     }
                   >
-                    Logga in
+                    Log in
                   </Button>
                 </Link>
                 <Link to="/signup">
                   <Button
                     sx={{
-                      bgcolor: 'white',
-                      border: 'none',
-                      color: ' black',
-                      minWidth: '1px',
-                      '&:hover': {
-                        bgcolor: '#dadcd9',
-                        border: 'none',
-                        color: ' black',
+                      bgcolor: "white",
+                      border: "none",
+                      color: " black",
+                      minWidth: "1px",
+                      "&:hover": {
+                        bgcolor: "#dadcd9",
+                        border: "none",
+                        color: " black",
                       },
-                      '@media screen and (max-width: 480px)': {
-                        fontSize: '0',
-                        padding: '0',
-                        bgcolor: 'transparent',
-                        textalign: 'none',
-                        '&:hover': {
-                          bgcolor: 'transparent',
+                      "@media screen and (max-width: 480px)": {
+                        fontSize: "0",
+                        padding: "0",
+                        bgcolor: "transparent",
+                        textalign: "none",
+                        "&:hover": {
+                          bgcolor: "transparent",
                         },
                       },
                     }}
@@ -144,11 +144,11 @@ const Header: FC<HeaderProps> = () => {
                     endIcon={
                       <AccountCircleIcon
                         sx={{
-                          padding: '0',
-                          height: '2.5rem',
-                          width: '2.5rem',
-                          '@media screen and (max-width: 440px)': {
-                            marginRight: '-30px',
+                          padding: "0",
+                          height: "2.5rem",
+                          width: "2.5rem",
+                          "@media screen and (max-width: 440px)": {
+                            marginRight: "-30px",
                           },
                         }}
                         color="warning"
@@ -162,22 +162,22 @@ const Header: FC<HeaderProps> = () => {
             ) : (
               <Button
                 sx={{
-                  bgcolor: 'white',
-                  border: 'none',
-                  color: ' black',
-                  minWidth: '1px',
-                  '&:hover': {
-                    bgcolor: '#dadcd9',
-                    border: 'none',
-                    color: ' black',
+                  bgcolor: "white",
+                  border: "none",
+                  color: " black",
+                  minWidth: "1px",
+                  "&:hover": {
+                    bgcolor: "#dadcd9",
+                    border: "none",
+                    color: " black",
                   },
-                  '@media screen and (max-width: 480px)': {
-                    fontSize: '0',
-                    padding: '0',
-                    bgcolor: 'transparent',
-                    textalign: 'none',
-                    '&:hover': {
-                      bgcolor: 'transparent',
+                  "@media screen and (max-width: 480px)": {
+                    fontSize: "0",
+                    padding: "0",
+                    bgcolor: "transparent",
+                    textalign: "none",
+                    "&:hover": {
+                      bgcolor: "transparent",
                     },
                   },
                 }}
@@ -185,11 +185,11 @@ const Header: FC<HeaderProps> = () => {
                 endIcon={
                   <AccountCircleIcon
                     sx={{
-                      padding: '0',
-                      height: '2.5rem',
-                      width: '2.5rem',
-                      '@media screen and (max-width: 440px)': {
-                        marginRight: '-30px',
+                      padding: "0",
+                      height: "2.5rem",
+                      width: "2.5rem",
+                      "@media screen and (max-width: 440px)": {
+                        marginRight: "-30px",
                       },
                     }}
                     color="success"
@@ -197,7 +197,7 @@ const Header: FC<HeaderProps> = () => {
                 }
                 onClick={() => logout()}
               >
-                Logga ut
+                Log out
               </Button>
             )}
 

@@ -6,11 +6,11 @@ import {
   ListItem,
   ListItemAvatar,
   ListItemText,
-} from '@mui/material';
-import { Order } from '@shared/types';
-import axios from 'axios';
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+} from "@mui/material";
+import { Order } from "@shared/types";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 function ConfirmedOrderPage() {
   const { id } = useParams();
@@ -29,16 +29,16 @@ function ConfirmedOrderPage() {
 
   return (
     <Container maxWidth="md">
-      <Box sx={{ bgcolor: '#ffffff', padding: 2 }}>
-        <h2>Tack för din beställning!</h2>
+      <Box sx={{ bgcolor: "#ffffff", padding: 2 }}>
+        <h2>Thank you for your order!</h2>
         <p>
-          Din betalning och beställning har genomförts, och snart kommer dina
-          nya ankor till sitt nya hem! <br />
-          Nedan är en sammanfattning på din beställning;
+          Your payment and order has been confirmed, you're new hats are on it's
+          way! <br />
+          Here you can see the summary ;
         </p>
         <Divider />
-        <h3>Ordernummer: {order?.orderId}</h3>
-        <h3>Produkter:</h3>
+        <h3>Order number: {order?.orderId}</h3>
+        <h3>Products:</h3>
         <List dense>
           {order
             ? order.products.map((product) => (
@@ -48,23 +48,23 @@ function ConfirmedOrderPage() {
                       src={product.photoUrl}
                       alt={product.title}
                       style={{
-                        width: '70px',
-                        height: '70px',
-                        borderRadius: '50%',
+                        width: "70px",
+                        height: "70px",
+                        borderRadius: "50%",
                       }}
                     />
                   </ListItemAvatar>
                   <ListItemText
                     primary={product.title}
-                    secondary={`Antal: ${product.qty} Pris: ${product.price} kr/st`}
+                    secondary={`Quantity: ${product.qty} Price: ${product.price} kr/each`}
                   />
                   <ListItemText
                     primary={`${product.qty * product.price} kr`}
-                    sx={{ textAlign: 'right' }}
+                    sx={{ textAlign: "right" }}
                   />
                 </ListItem>
               ))
-            : 'fuc'}
+            : ""}
         </List>
         <Divider />
         {/* get and print total price of products */}
@@ -74,10 +74,10 @@ function ConfirmedOrderPage() {
         </Typography> */}
 
         {/* Get shipping adress from local storage  */}
-        <h3>Leveransadress:</h3>
+        <h3>Delivery address:</h3>
         {/* first and last name */}
         <>
-          {order?.deliveryAddress[0].firstName}{' '}
+          {order?.deliveryAddress[0].firstName}{" "}
           {order?.deliveryAddress[0].lastName}
         </>
         <br />
@@ -90,10 +90,10 @@ function ConfirmedOrderPage() {
         </>
         <br />
         {/* phone number */}
-        <>Telefonnummer: {order?.deliveryAddress[0].phone}</>
+        <>Phone number: {order?.deliveryAddress[0].phone}</>
         <br />
         {/* e-mailadress */}
-        <>e-postadress: {order?.deliveryAddress[0].email}</>
+        <>Email: {order?.deliveryAddress[0].email}</>
         <br />
         <Divider />
         {/* Get shipping method  TODO  */}
@@ -113,8 +113,8 @@ function ConfirmedOrderPage() {
         </> */}
         <Divider />
         <p>
-          Skulle någonting inte stämma, eller om du har övriga frågor är du
-          varmt välkommen att kontakta oss på: support@ducky.se
+          If your order isn't correct you can always contact us at:
+          hatonhats@hatmail.com
         </p>
       </Box>
     </Container>
