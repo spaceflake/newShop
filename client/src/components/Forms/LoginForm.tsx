@@ -92,17 +92,14 @@ function LoginForm(_props: Props) {
           variant="outlined"
           type="submit"
           sx={{
-            margin: '4rem 0rem 0rem',
-            maxWidth: 'max-content',
-            height: '3rem',
-            bgcolor: '#0EDFE6',
-            border: 'none',
-            color: ' black',
-            borderRadius: '0',
-            '&:hover': {
-              bgcolor: '#eaa0ff',
-              border: 'none',
-              color: 'black',
+            marginTop: '1rem',
+            height: "3rem",
+            bgcolor: "#ED6C02",
+            border: "none",
+            color: " white",
+            "&:hover": {
+              bgcolor: '#181818',
+              color: 'white',
             },
             '@media screen and (max-width: 440px)': {
               mt: 2,
@@ -118,16 +115,13 @@ function LoginForm(_props: Props) {
           type="submit"
           sx={{
             marginTop: '1rem',
-            height: '3rem',
-            maxWidth: 'max-content',
-            bgcolor: '#0EDFE6',
-            border: 'none',
-            color: ' black',
-            borderRadius: '0',
-            '&:hover': {
-              bgcolor: '#eaa0ff',
-              border: 'none',
-              color: 'black',
+            height: "3rem",
+            bgcolor: "#ED6C02",
+            border: "none",
+            color: " white",
+            "&:hover": {
+              bgcolor: '#181818',
+              color: 'white',
             },
             '@media screen and (max-width: 440px)': {
               mt: 2,

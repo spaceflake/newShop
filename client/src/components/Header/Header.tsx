@@ -184,9 +184,9 @@ const Header: FC<HeaderProps> = () => {
                       }}
                       onClick={() => {
                         handleCloseUserMenu();
-                        navigate('/settings')
+                        navigate('/userpage')
                       }}>
-                      settings
+                      Your page
                     </Button>
                     <Button
                       sx={{

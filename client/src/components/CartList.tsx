@@ -218,7 +218,7 @@ function CartList({ handleClose }: any) {
             disabled={cart.length > 0 ? false : true}
             onClick={handleClose}
           >
-            To payment
+            {user ? 'To payment' : 'Log in to check out'}
           </Button>
         </Link>
       </Box>
