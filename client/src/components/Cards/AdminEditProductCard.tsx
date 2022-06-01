@@ -252,6 +252,7 @@ function ProductCard({ product }: Props) {
                   <ButtonGroup>
                     {categories.map((categori) => (
                       <Button
+                        key={categori}
                         variant={
                           product.categories.includes(categori)
                             ? 'contained'

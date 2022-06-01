@@ -8,18 +8,18 @@ import {
   ListItemAvatar,
   ListItemText,
   Typography,
-} from '@mui/material';
-import OrderForm from '../components/Forms/OrderForm';
-import useLocalStorage from '../Hooks/useLocalStorage';
-import { CartType } from '../contexts/Reducers';
-import { useState } from 'react';
-import { deliveryOptions } from '../Api/Data';
-import { useNavigate } from 'react-router-dom';
+} from "@mui/material";
+import OrderForm from "../components/Forms/OrderForm";
+import useLocalStorage from "../Hooks/useLocalStorage";
+import { CartType } from "../contexts/Reducers";
+import { useState } from "react";
+import { deliveryOptions } from "../Api/Data";
+import { useNavigate } from "react-router-dom";
 
 function CheckOutPage() {
   // get cart and total price from cart
-  const [cart] = useLocalStorage<CartType[]>('cart', '');
-  const [total] = useLocalStorage<number>('cartSum', 0);
+  const [cart] = useLocalStorage<CartType[]>("cart", "");
+  const [total] = useLocalStorage<number>("cartSum", 0);
   const [shippingMethod, setShippingMethod] = useState<number | undefined>(
     undefined
   );
@@ -29,12 +29,12 @@ function CheckOutPage() {
   return (
     <Container maxWidth="md">
       {/* cart summary, loops throught cart array */}
-      <Box sx={{ bgcolor: '#ffffff', mt: 2 }}>
+      <Box sx={{ bgcolor: "#ffffff", mt: 2 }}>
         <Typography
           variant="h5"
-          sx={{ mt: -2, mb: 2, fontWeight: 'bold', padding: '2rem' }}
+          sx={{ mt: -2, mb: 2, fontWeight: "bold", padding: "2rem" }}
         >
-          Din varukorg
+          Your cart
         </Typography>
         <List dense>
           {cart?.length &&
@@ -45,10 +45,10 @@ function CheckOutPage() {
                     src={c.photoUrl}
                     alt={c.title}
                     style={{
-                      width: '70px',
-                      height: '70px',
-                      borderRadius: '50%',
-                      marginRight: '2vw',
+                      width: "70px",
+                      height: "70px",
+                      borderRadius: "50%",
+                      marginRight: "2vw",
                     }}
                   />
                 </ListItemAvatar>
@@ -57,26 +57,26 @@ function CheckOutPage() {
                   secondary={
                     <>
                       <Typography
-                        sx={{ display: 'block' }}
+                        sx={{ display: "block" }}
                         component="span"
                         variant="body2"
                       >
-                        Antal: {c.qty} st
+                        Quantity: {c.qty} each
                       </Typography>
                       <Typography
-                        sx={{ display: 'block' }}
+                        sx={{ display: "block" }}
                         component="span"
                         variant="body2"
                       >
-                        {' '}
-                        Pris: {c.price} kr/st
+                        {" "}
+                        Price: {c.price} kr/each
                       </Typography>
                     </>
                   }
                 />
                 <ListItemText
                   primary={`${c.qty * c.price} kr`}
-                  sx={{ textAlign: 'right' }}
+                  sx={{ textAlign: "right" }}
                 />
               </ListItem>
             ))}
@@ -84,24 +84,24 @@ function CheckOutPage() {
       </Box>
       <Divider sx={{ mt: 2, mb: 2 }} />
       {/* get and print total price of products */}
-      <Box sx={{ textAlign: 'right' }}>
-        <Typography sx={{ mt: 2, fontWeight: 'bold' }}>
-          Pris för produkter (inkl 25% moms)
+      <Box sx={{ textAlign: "right" }}>
+        <Typography sx={{ mt: 2, fontWeight: "bold" }}>
+          Price for products (including 25% VAT)
         </Typography>
         <Typography variant="body2">{`${total} kr`}</Typography>
       </Box>
 
-      <Box sx={{ textAlign: 'right' }}>
-        <Typography sx={{ mt: 2, fontWeight: 'bold' }}>
-          Totalpris (inkl moms & frakt)
+      <Box sx={{ textAlign: "right" }}>
+        <Typography sx={{ mt: 2, fontWeight: "bold" }}>
+          Total (including VAT & delivery)
         </Typography>
         <Typography variant="body2">
           {`${
             total +
-            (typeof shippingMethod === 'number'
+            (typeof shippingMethod === "number"
               ? deliveryOptions[shippingMethod].price
               : 0)
-          }`}{' '}
+          }`}{" "}
           kr
         </Typography>
         <Button
@@ -109,22 +109,22 @@ function CheckOutPage() {
           onClick={toCart}
           sx={{
             mt: 2,
-            bgcolor: 'white',
-            border: '1',
-            borderColor: 'white',
-            color: ' black',
-            '&:hover': {
-              bgcolor: '#dfdfdf',
-              border: '1',
-              borderColor: '#dfdfdf',
-              color: 'black',
+            bgcolor: "white",
+            border: "1",
+            borderColor: "white",
+            color: " black",
+            "&:hover": {
+              bgcolor: "#dfdfdf",
+              border: "1",
+              borderColor: "#dfdfdf",
+              color: "black",
             },
-            '@media screen and (max-width: 440px)': {
-              display: 'none',
+            "@media screen and (max-width: 440px)": {
+              display: "none",
             },
           }}
         >
-          Tillbaka till kundvagnen
+          Back to cart
         </Button>
       </Box>
 
@@ -135,7 +135,7 @@ function CheckOutPage() {
   );
 
   function toCart() {
-    navigate('/cartPage');
+    navigate("/cartPage");
   }
 }
 

@@ -19,7 +19,7 @@ import hatLogo from '../../assets/hatLogo.png';
 const theme = createTheme({
   palette: {
     secondary: {
-      main: '#1a237e',
+      main: "#1a237e",
     },
   },
   typography: {
@@ -30,10 +30,10 @@ const theme = createTheme({
 const iconSize = createTheme({
   palette: {
     secondary: {
-      main: '#ec407a',
+      main: "#ec407a",
     },
     primary: {
-      main: '#3d5afe',
+      main: "#3d5afe",
     },
   },
   typography: {
@@ -46,7 +46,7 @@ function LinksContainer() {
     <Grid
       container
       spacing={2}
-      sx={{ margin: 'auto', width: '90%', padding: '3rem 0' }}
+      sx={{ margin: "auto", width: "90%", padding: "3rem 0" }}
     >
       <Grid
         item
@@ -54,8 +54,8 @@ function LinksContainer() {
         md={3}
         lg={2}
         sx={{
-          display: 'flex',
-          justifyContent: 'center',
+          display: "flex",
+          justifyContent: "center",
         }}
       >
         <img src={hatLogo} width="200" height="200" alt=""></img>
@@ -65,31 +65,31 @@ function LinksContainer() {
         xs={12}
         md={3}
         lg={2}
-        sx={{ display: 'flex', justifyContent: 'center' }}
+        sx={{ display: "flex", justifyContent: "center" }}
       >
-        <Box sx={{ textAlign: 'center' }}>
+        <Box sx={{ textAlign: "center" }}>
           <Typography gutterBottom variant="h6">
-            Hjälp
+            Help
           </Typography>
           <ThemeProvider theme={theme}>
             <Typography gutterBottom>
               <Link to="faq">
                 <Button color="secondary" variant="text">
-                  Vanliga frågor
+                  FAQ
                 </Button>
               </Link>
             </Typography>
             <Typography gutterBottom>
               <Link to="termsOfUse">
                 <Button color="secondary" variant="text">
-                  Användarvillkor
+                  Terms of use
                 </Button>
               </Link>
             </Typography>
             <Typography>
               <Link to="support">
                 <Button color="secondary" variant="text">
-                  Kundtjänst
+                  Support
                 </Button>
               </Link>
             </Typography>
@@ -102,19 +102,19 @@ function LinksContainer() {
         md={3}
         lg={2}
         sx={{
-          display: 'flex',
-          justifyContent: 'center',
+          display: "flex",
+          justifyContent: "center",
         }}
       >
         <Box
           sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
           }}
         >
           <Typography gutterBottom variant="h6">
-            Följ oss
+            Follow us
           </Typography>
           <ThemeProvider theme={iconSize}>
             <FacebookOutlinedIcon color="primary" fontSize="large" />
@@ -127,7 +127,7 @@ function LinksContainer() {
         xs={12}
         md={3}
         lg={2}
-        sx={{ display: 'flex', justifyContent: 'center' }}
+        sx={{ display: "flex", justifyContent: "center" }}
       >
         <Box>
           <SubscribeForm />
@@ -138,9 +138,9 @@ function LinksContainer() {
         xs={12}
         md={6}
         lg={2}
-        sx={{ display: 'flex', justifyContent: 'center' }}
+        sx={{ display: "flex", justifyContent: "center" }}
       >
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+        <Box sx={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
           <img width="75" src={klarna} alt=""></img>
           <img width="75" src={swish} alt=""></img>
           <img width="75" src={visa} alt=""></img>
@@ -153,9 +153,9 @@ function LinksContainer() {
         xs={12}
         md={6}
         lg={2}
-        sx={{ display: 'flex', justifyContent: 'center' }}
+        sx={{ display: "flex", justifyContent: "center" }}
       >
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
           <img width="100" src={instabox} alt=""></img>
           <img width="100" src={postnord} alt=""></img>
           <img width="90" src={schenker} alt=""></img>

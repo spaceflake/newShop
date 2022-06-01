@@ -8,36 +8,36 @@ function StartPageDesription() {
   return (
     <Box
       sx={{
-        width: '100%',
-        height: 'fitContent',
-        background: '#ffffff',
-        paddingTop: '2rem',
+        width: "100%",
+        height: "fitContent",
+        background: "#ffffff",
+        paddingTop: "2rem",
       }}
     >
 
       <ShowCarousel />
       <Box
         sx={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          '@media screen and (max-width: 480px)': {
-            flexDirection: 'column',
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          "@media screen and (max-width: 480px)": {
+            flexDirection: "column",
           },
         }}
       >
         <img
           style={{
-            width: '10rem',
+            width: "10rem",
           }}
           src={hatLogo}
           alt=""
         ></img>
         <Typography
           sx={{
-            textAlign: 'center',
-            padding: '1rem',
-            fontSize: 'clamp(1.5rem, 2.5vw, 2rem)',
+            textAlign: "center",
+            padding: "1rem",
+            fontSize: "clamp(1.5rem, 2.5vw, 2rem)",
           }}
         >
           Welcome to Hats on Hats, we got the hats you need!
@@ -45,22 +45,19 @@ function StartPageDesription() {
       </Box>
       <Box
         sx={{
-          width: '70%',
-          textAlign: 'center',
-          margin: 'auto',
-          padding: '2rem',
+          width: "70%",
+          textAlign: "center",
+          margin: "auto",
+          padding: "2rem",
         }}
       >
-        <Typography sx={{ fontSize: 'clamp(1rem, 2.5vw, 1.1rem)' }}>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt
-          dolore officia impedit dolorem temporibus ratione beatae hic ad
-          quisquam ut enim, quos at sed aut nesciunt architecto nam nisi
-          accusamus!
+        <Typography sx={{ fontSize: "clamp(1rem, 2.5vw, 1.1rem)" }}>
+          Here on Hats on Hats we got hats for everyone!
         </Typography>
       </Box>
       <Box sx={{ textAlign: 'center' }}>
         <Typography
-          sx={{ marginBottom: '2rem', fontSize: 'clamp(1.5rem, 2.5vw, 2rem)' }}
+          sx={{ marginBottom: "2rem", fontSize: "clamp(1.5rem, 2.5vw, 2rem)" }}
         >
           See our products
         </Typography>
@@ -70,14 +67,14 @@ function StartPageDesription() {
             sx={{
               mt: 2,
               mb: 2,
-              height: '3rem',
-              bgcolor: '#0EDFE6',
-              border: 'none',
-              color: ' black',
-              '&:hover': {
-                bgcolor: '#eaa0ff',
-                border: 'none',
-                color: 'black',
+              height: "3rem",
+              bgcolor: "#0EDFE6",
+              border: "none",
+              color: " black",
+              "&:hover": {
+                bgcolor: "#eaa0ff",
+                border: "none",
+                color: "black",
               },
             }}
             variant="outlined"

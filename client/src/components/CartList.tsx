@@ -19,47 +19,50 @@ import AddIcon from '@mui/icons-material/Add';
 import { Link } from 'react-router-dom';
 import { useCart } from '../contexts/CartContext';
 import { CartType, Types } from '../contexts/Reducers';
+import { useUser } from '../contexts/UserContext';
+
 
 function CartList({ handleClose }: any) {
   const { cart, dispatch, total } = useCart();
+  const { user } = useUser();
 
   return (
     <>
       <List>
         {cart && cart.length > 0 ? (
           cart.map((product: CartType) => (
-            <ListItem key={product.id} sx={{ bgcolor: '#fffff' }}>
+            <ListItem key={product.id} sx={{ bgcolor: "#fffff" }}>
               <ListItemAvatar>
                 <img
                   src={product.photoUrl}
                   alt={product.title}
                   style={{
-                    width: '70px',
-                    height: '70px',
-                    borderRadius: '50%',
+                    width: "70px",
+                    height: "70px",
+                    borderRadius: "50%",
                   }}
                 />
               </ListItemAvatar>
               <ListItemText
                 primary={product.title}
-                secondary={`${product.price} kr/st`}
-                sx={{ marginLeft: '.5rem' }}
+                secondary={`${product.price} kr/each`}
+                sx={{ marginLeft: ".5rem" }}
               />
               <ButtonGroup
                 size="small"
                 sx={{
-                  flexGrow: '1',
-                  justifyContent: 'flex-end',
-                  '@media screen and (max-width: 440px)': {
-                    flexDirection: 'column',
+                  flexGrow: "1",
+                  justifyContent: "flex-end",
+                  "@media screen and (max-width: 440px)": {
+                    flexDirection: "column",
                   },
                 }}
               >
                 <Button
                   sx={{
-                    '@media screen and (max-width: 440px)': {
-                      padding: '0',
-                      border: 'none',
+                    "@media screen and (max-width: 440px)": {
+                      padding: "0",
+                      border: "none",
                     },
                   }}
                   onClick={() => {
@@ -76,9 +79,9 @@ function CartList({ handleClose }: any) {
                 </Button>
                 <Button
                   sx={{
-                    '@media screen and (max-width: 440px)': {
-                      padding: '0',
-                      border: 'none',
+                    "@media screen and (max-width: 440px)": {
+                      padding: "0",
+                      border: "none",
                     },
                   }}
                   disableRipple
@@ -87,9 +90,9 @@ function CartList({ handleClose }: any) {
                 </Button>
                 <Button
                   sx={{
-                    '@media screen and (max-width: 440px)': {
-                      padding: '0',
-                      border: 'none',
+                    "@media screen and (max-width: 440px)": {
+                      padding: "0",
+                      border: "none",
                     },
                   }}
                   onClick={() => {
@@ -108,20 +111,20 @@ function CartList({ handleClose }: any) {
 
               <ListItemText
                 sx={{
-                  textAlign: 'right',
-                  '@media screen and (max-width: 440px)': {
-                    display: 'none',
+                  textAlign: "right",
+                  "@media screen and (max-width: 440px)": {
+                    display: "none",
                   },
                 }}
               >
                 {product.price * product.qty} kr
               </ListItemText>
               <ListItemIcon>
-                <Tooltip title="Ta bort">
+                <Tooltip title="Remove">
                   <IconButton
                     sx={{
-                      '@media screen and (max-width: 440px)': {
-                        marginLeft: '20px',
+                      "@media screen and (max-width: 440px)": {
+                        marginLeft: "20px",
                       },
                     }}
                     aria-label="delete"
@@ -140,23 +143,23 @@ function CartList({ handleClose }: any) {
             </ListItem>
           ))
         ) : (
-          <Typography variant="body1">Här var det tomt!</Typography>
+          <Typography variant="body1">Nothing here!</Typography>
         )}
       </List>
       <Divider
         light
         textAlign="right"
-        sx={{ '@media screen and (max-width: 440px)': {} }}
+        sx={{ "@media screen and (max-width: 440px)": {} }}
       >
-        Summa
+        Total
       </Divider>
       <Box
         maxWidth="md"
         sx={{
-          paddingInline: '1rem',
-          textAlign: 'right',
-          '@media screen and (max-width: 440px)': {
-            padding: '0',
+          paddingInline: "1rem",
+          textAlign: "right",
+          "@media screen and (max-width: 440px)": {
+            padding: "0",
           },
         }}
       >
@@ -168,40 +171,41 @@ function CartList({ handleClose }: any) {
             variant="outlined"
             sx={{
               mr: 2,
-              bgcolor: 'white',
-              border: '1',
-              borderColor: 'white',
-              color: ' black',
-              '&:hover': {
-                bgcolor: '#dfdfdf',
-                border: '1',
-                borderColor: '#dfdfdf',
-                color: 'black',
+              bgcolor: "white",
+              border: "1",
+              borderColor: "white",
+              color: " black",
+              "&:hover": {
+                bgcolor: "#dfdfdf",
+                border: "1",
+                borderColor: "#dfdfdf",
+                color: "black",
               },
-              '@media screen and (max-width: 440px)': {
-                width: '100%',
-                borderRadius: '0',
+              "@media screen and (max-width: 440px)": {
+                width: "100%",
+                borderRadius: "0",
               },
             }}
             onClick={handleClose}
           >
-            Fortsätt handla
+            Continue shopping
           </Button>
         </Link>
-        <Link to={cart.length ? '/checkoutPage' : ''}>
+
+        <Link to={cart.length && user ? '/checkoutPage' : '/login'}>
           <Button
             sx={{
-              bgcolor: '#0EDFE6',
-              border: 'none',
-              color: ' black',
-              '&:hover': {
-                bgcolor: '#eaa0ff',
-                border: 'none',
-                color: 'black',
+              bgcolor: "#0EDFE6",
+              border: "none",
+              color: " black",
+              "&:hover": {
+                bgcolor: "#eaa0ff",
+                border: "none",
+                color: "black",
               },
-              '@media screen and (max-width: 440px)': {
-                width: '100%',
-                borderRadius: '0',
+              "@media screen and (max-width: 440px)": {
+                width: "100%",
+                borderRadius: "0",
               },
             }}
             variant="outlined"
@@ -209,7 +213,7 @@ function CartList({ handleClose }: any) {
             disabled={cart.length > 0 ? false : true}
             onClick={handleClose}
           >
-            Till betalning
+            To payment
           </Button>
         </Link>
       </Box>

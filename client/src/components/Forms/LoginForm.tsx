@@ -6,64 +6,64 @@ import * as Yup from 'yup'
 import { useUser } from '../../contexts/UserContext'
 import InputField from './InputField'
 
-type LoginDetailsSchemaType = Record<keyof LoginDetails, Yup.AnySchema>
+type LoginDetailsSchemaType = Record<keyof LoginDetails, Yup.AnySchema>;
 
 const LoginFormSchema = Yup.object().shape<LoginDetailsSchemaType>({
-  email: Yup.string().required('Vänligen fyll i ditt email.'),
-  password: Yup.string().required('Vänligen fyll i ditt lösenord.'),
-})
+  email: Yup.string().required("Please enter your email."),
+  password: Yup.string().required("Please enter your password."),
+});
 
 export interface LoginDetails {
-  email: string
-  password: string
+  email: string;
+  password: string;
 }
 
 interface Props {
-  defaultLoginDetails?: LoginDetails
+  defaultLoginDetails?: LoginDetails;
 }
 
 const emptyForm: LoginDetails = {
-  email: '',
-  password: '',
-}
+  email: "",
+  password: "",
+};
 
 function LoginForm(_props: Props) {
-  const userContext = useUser()
-  const [submitError, setSubmitError] = useState<string | undefined>(undefined)
-  let nav = useNavigate()
+  const userContext = useUser();
+  const [submitError, setSubmitError] = useState<string | undefined>(undefined);
+  let nav = useNavigate();
 
   const { values, errors, touched, handleChange, handleSubmit, handleBlur } =
     useFormik<LoginDetails>({
       initialValues: emptyForm,
       validationSchema: LoginFormSchema,
       onSubmit: (loginDetails, { resetForm }) => {
-        setSubmitError(undefined)
+        setSubmitError(undefined);
 
         // on submit, set user to logged in if successful, navigate back to home
         userContext
-        .login(loginDetails)
+          .login(loginDetails)
           .then(() => {
-            resetForm()
-            nav('/')
+            resetForm();
+            nav("/");
           })
           .catch((e) => {
-            setSubmitError(e.message)
-          })
-          console.log(loginDetails);
+            setSubmitError(e.message);
+          });
+        console.log(loginDetails);
       },
-    })
+    });
 
   return (
     // Log-in form
     <form onSubmit={handleSubmit}>
       {/* Display error if invalid input */}
       {!!submitError && (
-        <Typography sx={{ color: 'red' }}>{submitError}</Typography>
+        <Typography sx={{ color: "red" }}>{submitError}</Typography>
       )}
 
       {/* user name input */}
       <InputField
-        label="email: "
+        label="Email: "
         id="email"
         name="email"
         type="email"
@@ -76,7 +76,7 @@ function LoginForm(_props: Props) {
 
       {/* Password input */}
       <InputField
-        label="password: "
+        label="Password: "
         id="password"
         name="password"
         type="password"
@@ -110,7 +110,7 @@ function LoginForm(_props: Props) {
             },
           }}
         >
-          Logga in
+          Log in
         </Button>
         <Button
           onClick={() => nav('/signup')}
@@ -139,7 +139,7 @@ function LoginForm(_props: Props) {
         </Button>
       </Box>
     </form>
-  )
+  );
 }
 
-export default LoginForm
+export default LoginForm;

@@ -16,7 +16,7 @@ function CardPaymentForm(props: Props) {
     <>
       {/* Card number input */}
       <InputField
-        label="kortnummer: "
+        label="Cardnumber: "
         id="cardNumber"
         name="cardNumber"
         type="text"
@@ -29,7 +29,7 @@ function CardPaymentForm(props: Props) {
 
       {/* CVC input */}
       <InputField
-        label="cvc: "
+        label="Cvc: "
         id="cvc"
         name="cvc"
         type="cvc"
@@ -46,7 +46,7 @@ function CardPaymentForm(props: Props) {
         <DatePicker
           value={values.expDate}
           onChange={handleChange}
-          label="Utgångsdatum:"
+          label="Expire date:"
           renderInput={(params) => (
             <InputField
               InputLabelProps={{ shrink: true }}
@@ -54,7 +54,7 @@ function CardPaymentForm(props: Props) {
               id="expDate"
               name="expDate"
               type="date"
-              placeholder=""
+              placeholder="YY-MM-DD"
               onBlur={handleBlur}
               error={touched.expDate && !!errors.expDate}
               onChange={handleChange}

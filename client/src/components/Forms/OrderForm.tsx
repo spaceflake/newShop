@@ -12,7 +12,6 @@ import { useFormik } from 'formik';
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
-import { deliveryOptions } from '../../Api/Data';
 import { useCart } from '../../contexts/CartContext';
 import { CartType, Types } from '../../contexts/Reducers';
 import useLocalStorage from '../../Hooks/useLocalStorage';
@@ -23,6 +22,7 @@ import ShippingForm, {
   emptyShippingForm,
 } from './ShippingForm';
 import { useUser } from '../../contexts/UserContext';
+import { useProduct } from '../../contexts/ProductsContext';
 
 export interface OrderData {
   deliveryAddress: Address;
@@ -50,27 +50,27 @@ export type OrderSchemaType = Record<keyof OrderData, Yup.AnySchema>;
 
 const OrderFormSchema = Yup.object().shape<OrderSchemaType>({
   deliveryAddress: AdressFormSchema,
-  paymentMethod: Yup.string().required('Du måste välja ett betalsätt'),
-  shippingMethod: Yup.string().required('Du måste välja ett fraktsätt'),
+  paymentMethod: Yup.string().required('You need to choose a payment option'),
+  shippingMethod: Yup.string().required('You need to choose a delivery option'),
   cardNumber: Yup.string().when('paymentMethod', {
     is: 'card',
-    then: (schema) => schema.required('Vänligen fyll i ditt kortnummer.'),
+    then: (schema) => schema.required('Please enter your cardnumber.'),
   }),
   cvc: Yup.string().when('paymentMethod', {
     is: 'card',
-    then: (schema) => schema.required('Vänligen fyll i din CVC-kod.'),
+    then: (schema) => schema.required('Please enter your CVC-code.'),
   }),
   expDate: Yup.string().when('paymentMethod', {
     is: 'card',
-    then: (schema) => schema.required('Vänligen fyll i utgångsdatum.'),
+    then: (schema) => schema.required('Please enter your expire date.'),
   }),
   personalNumber: Yup.string().when('paymentMethod', {
     is: 'klarna',
-    then: (schema) => schema.required('Vänligen fyll i ditt personnummer.'),
+    then: (schema) => schema.required('Please enter your birthnumber.'),
   }),
   phone: Yup.string().when('paymentMethod', {
     is: 'swish',
-    then: (schema) => schema.required('Vänligen fyll i ditt telefonnummer.'),
+    then: (schema) => schema.required('Please enter your phonenumber.'),
   }),
 });
 
@@ -87,6 +87,7 @@ interface Props {
 
 function OrderForm(props: Props) {
   const { user } = useUser();
+  const { updateProduct } = useProduct();
 
   let navigate = useNavigate();
   const { dispatch } = useCart();
@@ -98,6 +99,21 @@ function OrderForm(props: Props) {
   let [sumDetails] = useLocalStorage<number>('cartSum', '');
   let [productsDetails] = useLocalStorage<CartType[]>('cart', '');
 
+  const updateStock = () => {
+    for (let i = 0; i < productsDetails.length; i++) {
+      const { qty, stock } = productsDetails[i];
+
+      const updatedStock = stock - qty;
+      console.log('updatedStock', updatedStock);
+
+      if (updatedStock < 0) {
+        console.log('not enough in stock');
+        return;
+      }
+      const updatedProduct = { ...productsDetails[i], stock: updatedStock };
+      updateProduct(updatedProduct);
+    }
+  };
   // successful submit
   async function handleSubmit(orderData: OrderData) {
     setLoading(true);
@@ -112,6 +128,7 @@ function OrderForm(props: Props) {
     // fetch api and navigate to confirmed-order page if successful
     // const success = await placeOrderFetch();
     try {
+      updateStock();
       const res = await axios.post('/api/order', order);
 
       const result = await res.data;
@@ -168,7 +185,7 @@ function OrderForm(props: Props) {
             }}
           >
             <Typography variant="h6" sx={{ padding: 2, fontWeight: 'bold' }}>
-              Välj dina betal och leveransmetoder
+              Choose your payment and delivery method
             </Typography>
             {/* RANDOM INFO TEXT, DOESN'T ACTUALLY DO/MEAN ANYTHING */}
 
@@ -176,13 +193,13 @@ function OrderForm(props: Props) {
             <form onSubmit={formikProps.handleSubmit}>
               {/* Shipping adress */}
               <Typography variant="body1" sx={{ mt: 1, fontWeight: 'bold' }}>
-                Leveransadress
+                Shipping address
               </Typography>
               <ShippingForm formikProps={formikProps} />
 
               {/* Shipping methods */}
               <Typography variant="body1" sx={{ mt: 1, fontWeight: 'bold' }}>
-                Leveransmetod
+                Delivery method
               </Typography>
 
               {/* Show error if no shipping method is selected */}
@@ -196,7 +213,7 @@ function OrderForm(props: Props) {
 
               {/* Payment methods (and payment details) */}
               <Typography variant="body1" sx={{ mt: 1, fontWeight: 'bold' }}>
-                Betalningsmetod{' '}
+                Payment method{' '}
               </Typography>
 
               {/* Show error if no payment method is selected */}
@@ -207,11 +224,8 @@ function OrderForm(props: Props) {
 
               {/* conditions checkbox, does nothing for now */}
               <div>
-                <FormControlLabel
-                  control={<Checkbox />}
-                  label="Jag godkänner"
-                />
-                <Link to="/termsOfUse">Köpvillkoren.</Link>
+                <FormControlLabel control={<Checkbox />} label="I approve" />
+                <Link to="/termsOfUse">Terms of use.</Link>
               </div>
 
               {/* Post form */}
@@ -239,7 +253,7 @@ function OrderForm(props: Props) {
                 variant="outlined"
                 type="submit"
               >
-                Slutför beställning
+                Submit order
               </Button>
             </form>
           </Box>
@@ -248,7 +262,7 @@ function OrderForm(props: Props) {
         <>
           {' '}
           <LinearProgress /> <br />
-          Kontrollerar beställning...
+          Checking order...
         </>
       )}
     </>

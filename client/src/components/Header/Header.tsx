@@ -1,6 +1,6 @@
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { AppBar, Box, Button, Container, createTheme, IconButton, Menu, MenuItem, Toolbar, Tooltip, Typography } from '@mui/material';
-import React, { FC, useState } from 'react';
+import { AppBar, Box, Button, Container, createTheme, IconButton, Menu, Toolbar, Tooltip, Typography } from '@mui/material';
+import { default as React, FC, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import hatLogo from '../../assets/hatLogo.png';
 import { useUser } from '../../contexts/UserContext';
@@ -10,7 +10,7 @@ import CartButton from './CartButton';
 
 interface HeaderProps { }
 
-const TabValues: string[] = ['/', '/products', '/about'];
+const TabValues: string[] = ["/", "/products", "/about"];
 
 const filteredValue = (value: string) =>
   TabValues.includes(value) ? value : false;

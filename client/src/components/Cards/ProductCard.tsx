@@ -1,20 +1,18 @@
 import {
+  Box,
+  Button,
   Card,
+  CardActionArea,
+  CardActions,
   CardContent,
   CardMedia,
-  Box,
   Typography,
-  Rating,
-  CardActions,
-  Button,
-  CardActionArea,
 } from '@mui/material';
-import { Link } from 'react-router-dom';
-import { useState } from 'react';
-import { useCart } from '../../contexts/CartContext';
-import BuyButton from '../BuyButton';
-import { CartType } from '../../contexts/Reducers';
 import type { Product } from '@shared/types';
+import { Link } from 'react-router-dom';
+import { useCart } from '../../contexts/CartContext';
+import { CartType } from '../../contexts/Reducers';
+import BuyButton from '../BuyButton';
 
 interface Props {
   product: Product;
@@ -22,7 +20,6 @@ interface Props {
 
 function ProductCard({ product }: Props) {
   const { cart, dispatch } = useCart();
-  const [ratingValue] = useState(5);
 
   return (
     <Card key={product.id} sx={{ borderRadius: '1rem', padding: '1rem' }}>
@@ -55,8 +52,17 @@ function ProductCard({ product }: Props) {
               >
                 {product.title}
               </Typography>
+
               <Box component="span">
-                <Rating name="read-only" value={ratingValue} readOnly />
+                <Typography
+                  variant="h5"
+                  component="span"
+                  color="primary"
+                  fontWeight="700"
+                  sx={{ marginRight: '.4rem' }}
+                >
+                  {product.stock === 0 ? 'Out of stock' : `${product.stock}`}
+                </Typography>
               </Box>
             </Box>
           </CardContent>
@@ -85,11 +91,13 @@ function ProductCard({ product }: Props) {
             }}
             variant="outlined"
           >
-            Visa
+            Show
           </Button>
         </Link>
         {cart && cart.some((p: CartType) => p.id === product.id) ? (
-          <Button>I kundkorgen</Button>
+          <Button>In cart</Button>
+        ) : product.stock === 0 ? (
+          'not in stock'
         ) : (
           <BuyButton dispatch={dispatch} product={product} />
         )}
