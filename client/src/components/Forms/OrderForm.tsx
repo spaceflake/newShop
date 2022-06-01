@@ -232,17 +232,16 @@ function OrderForm(props: Props) {
 
               <Button
                 sx={{
-                  mt: 2,
-                  mb: 2,
-                  height: '3rem',
-                  width: '100%',
-                  bgcolor: '#0EDFE6',
-                  border: 'none',
-                  color: ' black',
-                  '&:hover': {
-                    bgcolor: '#eaa0ff',
-                    border: 'none',
-                    color: 'black',
+                  height: "3rem",
+                  marginTop: '2rem',
+                  bgcolor: "#ED6C02",
+                  border: "none",
+                  color: " white",
+                  fontSize: '1.5rem',
+                  "&:hover": {
+                    border: "none",
+                    bgcolor: '#181818',
+                    color: 'white',
                   },
                   '@media screen and (max-width: 440px)': {
                     borderRadius: '0',
