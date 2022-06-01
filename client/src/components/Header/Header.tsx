@@ -115,8 +115,17 @@ const Header: FC<HeaderProps> = () => {
             )}
             <CartButton />
             <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="Open menu">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+              <Tooltip title={user ? 'Open menu' : 'Log in'}>
+                <IconButton
+                  sx={{ p: 0 }}
+                  onClick={(e) => {
+                    if (user) {
+                      handleOpenUserMenu(e);
+                    } else {
+                      navigate('/login');
+                    }
+                  }}
+                >
                   <AccountCircleIcon
                     sx={{
                       padding: '0',
@@ -130,35 +139,32 @@ const Header: FC<HeaderProps> = () => {
                   />
                 </IconButton>
               </Tooltip>
-              <Menu
-                sx={{ mt: '45px' }}
-                id="menu-appbar"
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
-              >
-                {
-                  user ?
-                    <Box sx={{display: 'flex', flexDirection: 'column'}}>
-                        <Button sx={{ color: 'black', textAlign: "center", padding: '1rem 2rem' }} onClick={() => {handleCloseUserMenu(); navigate('/settings')}}>settings</Button>
-                        <Button sx={{ color: 'black', textAlign: "center", padding: '1rem 2rem' }} onClick={() => {handleCloseUserMenu(); logout(); navigate('/')}}>Log out</Button>
+              {
+                user ?
+                  <Menu
+                    sx={{ mt: '45px' }}
+                    id="menu-appbar"
+                    anchorEl={anchorElUser}
+                    anchorOrigin={{
+                      vertical: 'top',
+                      horizontal: 'right',
+                    }}
+                    keepMounted
+                    transformOrigin={{
+                      vertical: 'top',
+                      horizontal: 'right',
+                    }}
+                    open={Boolean(anchorElUser)}
+                    onClose={handleCloseUserMenu}
+                  >
+                    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                      <Button sx={{ color: 'black', textAlign: "center", padding: '1rem 2rem' }} onClick={() => { handleCloseUserMenu(); navigate('/settings') }}>settings</Button>
+                      <Button sx={{ color: 'black', textAlign: "center", padding: '1rem 2rem' }} onClick={() => { handleCloseUserMenu(); logout(); navigate('/') }}>Log out</Button>
                     </Box>
-                    :
-                    <Box sx={{display: 'flex', flexDirection: 'column'}}>
-                        <Button sx={{ color: 'black', textAlign: "center", padding: '1rem 2rem' }} onClick={() => {handleCloseUserMenu(); navigate('/login')}}>Log in</Button>
-                        <Button sx={{ color: 'black', textAlign: "center", padding: '1rem 2rem' }} onClick={() => {handleCloseUserMenu(); navigate('/signup')}}>Sign up</Button>
-                    </Box>
-                }
-              </Menu>
+                  </Menu>
+                  :
+                  null
+              }
             </Box>
           </Toolbar>
         </Container>
