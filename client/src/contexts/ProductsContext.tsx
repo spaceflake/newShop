@@ -23,9 +23,7 @@ type PContext = {
 export const ProductContext = createContext<PContext>({} as PContext);
 
 export const ProductsProvider: React.FC = ({ children }) => {
-  // const lsProducts = localStorage.getItem('products');
   let initialStateProducts: Product[] = [];
-  // lsProducts !== null ? JSON.parse(lsProducts) : mockedProducts;
   const [prods, setProds] = useState<Product[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
 
@@ -51,8 +49,6 @@ export const ProductsProvider: React.FC = ({ children }) => {
       setProds(res);
     }
   };
-
-  console.log(prods);
 
   const createProduct = async (product: ProductCreate) => {
     // TODO: add product to database

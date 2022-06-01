@@ -19,9 +19,11 @@ import AddIcon from '@mui/icons-material/Add';
 import { Link } from 'react-router-dom';
 import { useCart } from '../contexts/CartContext';
 import { CartType, Types } from '../contexts/Reducers';
+import { useUser } from '../contexts/UserContext';
 
 function CartList({ handleClose }: any) {
   const { cart, dispatch, total } = useCart();
+  const { user } = useUser();
 
   return (
     <>
@@ -188,7 +190,7 @@ function CartList({ handleClose }: any) {
             Fortsätt handla
           </Button>
         </Link>
-        <Link to={cart.length ? '/checkoutPage' : ''}>
+        <Link to={cart.length && user ? '/checkoutPage' : '/login'}>
           <Button
             sx={{
               bgcolor: '#0EDFE6',
