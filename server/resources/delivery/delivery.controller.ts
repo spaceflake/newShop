@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { DeliveryModel } from './delivery.model';
+import { Delivery, DeliveryModel } from './delivery.model';
 
 export const getAllDeliverys = async (req: Request, res: Response) => {
   const deliveries = await DeliveryModel.find({});
@@ -22,7 +22,7 @@ export const getDelivery = async (req: Request, res: Response) => {
 };
 //Does this need to be async?
 export const addDelivery = async (
-  req: Request,
+  req: Request<{}, {}, Delivery>,
   res: Response,
   next: NextFunction
 ) => {

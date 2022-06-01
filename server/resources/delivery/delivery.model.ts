@@ -5,8 +5,8 @@ export interface Delivery {
   altText: string;
   shippingTime: number;
   price: number;
-  // logoId: Types.ObjectId;
-  logoUrl: string;
+  logoId: Types.ObjectId;
+  /** Virtual */ logoUrl: string;
   id: string;
 }
 
@@ -16,7 +16,7 @@ const deliverySchema = new mongoose.Schema<Delivery>(
     altText: { type: String, minlength: 2, required: true },
     shippingTime: { type: Number, minlength: 1, required: true },
     price: { type: Number, minlength: 1, required: true },
-    // logoId: { type: Schema.Types.ObjectId, required: true },
+    logoId: { type: Schema.Types.ObjectId, required: true },
     id: { type: String, required: true },
   },
   {
@@ -25,8 +25,8 @@ const deliverySchema = new mongoose.Schema<Delivery>(
   }
 );
 
-// deliverySchema.virtual('logoUrl').get(function () {
-//   return '/api/media/' + this.logoUrl;
-// });
+deliverySchema.virtual('logoUrl').get(function () {
+  return '/api/media/' + this.logoId;
+});
 
 export const DeliveryModel = mongoose.model('delivery', deliverySchema);

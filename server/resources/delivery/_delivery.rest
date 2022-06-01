@@ -1,7 +1,7 @@
 GET http://localhost:4000/api/delivery
 
 ###
-GET http://localhost:4000/api/delivery/628f3cd691ffef25d261f3a3
+GET http://localhost:4000/api/delivery/62970625f173d24e3b59ca1f
 
 ###
 
@@ -9,27 +9,22 @@ POST http://localhost:4000/api/delivery
 Content-Type: application/json
 
 {
-  "name": "test",
-  "altText": "Leverans till box, 1-2 arbetsdagar",
-  "shippingTime": 2,
+  "name": "Postnord",
+  "altText": "Home delivery, 1-2 working days",
+  "shippingTime": 3,
   "price": 29,
-  "logo": "deliveryLogo",
-  "id": "instabox"
+  "logoId": "6297010dd716830e2c4c52e1",
+  "id": "postnord"
 }
 
 
 ###
 
-PUT http://localhost:4000/api/delivery/628f40d8e63229379b584aac
+PUT http://localhost:4000/api/delivery/628ded3e2304eb3857ad27a0
 Content-Type: application/json
 
 {
-  "name": "testar",
-  "altText": "Leverans till box, 1-2 arbetsdagar",
-  "shippingTime": 2,
-  "price": 29,
-  "logo": "deliveryLogo",
-  "id": "instabox"
+  "logoId": "62970153d716830e2c4c52e4",
 }
 
 ###
