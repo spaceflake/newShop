@@ -180,7 +180,7 @@ export interface Delivery {
 export const deliveryOptions: Delivery[] = [
   {
     name: 'Postnord',
-    altText: 'Leverans i brevlådan, 1-3 arbetsdagar',
+    altText: 'Delivery in mailbox, 1-3 workingdays',
     shippingTime: 3,
     price: 19,
     logo: postnord,
@@ -188,7 +188,7 @@ export const deliveryOptions: Delivery[] = [
   },
   {
     name: 'Schenker',
-    altText: 'Spårbar leverans, 1-2 arbetsdagar',
+    altText: 'Trackable delivery, 1-2 workingdays',
     shippingTime: 2,
     price: 29,
     logo: schenker,
@@ -196,7 +196,7 @@ export const deliveryOptions: Delivery[] = [
   },
   {
     name: 'Instabox',
-    altText: 'Leverans till box, 1-2 arbetsdagar',
+    altText: 'Delivery to box, 1-2 workingdays',
     shippingTime: 2,
     price: 29,
     logo: instabox,
@@ -215,19 +215,19 @@ export interface Payment {
 export const paymentOptions: Payment[] = [
   {
     name: 'Klarna',
-    altText: 'Välj att delbetala, betala senare, eller i slutet av månaden',
+    altText: 'Split up your payment, pay later, or in the end of the month',
     logo: klarna,
     id: 'klarna',
   },
   {
     name: 'Swish',
-    altText: 'Betala enkelt med mobilen',
+    altText: 'Pay easy with your phone',
     logo: swish,
     id: 'swish',
   },
   {
     name: 'Kortbetalning',
-    altText: 'Betala med Visa / Mastercard / Maestro',
+    altText: 'Pay with Visa / Mastercard / Maestro',
     icon: CreditCardIcon,
     id: 'card',
   },

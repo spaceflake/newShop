@@ -1,22 +1,19 @@
-import { FormikProps } from 'formik';
-import * as Yup from 'yup';
-import InputField from './InputField';
-import { OrderData } from './OrderForm';
-import type { Address } from '@shared/types';
+import { FormikProps } from "formik";
+import * as Yup from "yup";
+import InputField from "./InputField";
+import { OrderData } from "./OrderForm";
+import type { Address } from "@shared/types";
 
 type ShippingAdressSchemaType = Record<keyof Address, Yup.AnySchema>;
 
 export const AdressFormSchema = Yup.object().shape<ShippingAdressSchemaType>({
-  firstName: Yup.string().required('Vänligen fyll i ditt förnamn.'),
-  lastName: Yup.string().required('Vänligen fyll i ditt efternamn.'),
-  street: Yup.string().required('Vänligen fyll i din postadress.'),
-  zipcode: Yup.string()
-    .min(5)
-    .max(5)
-    .required('Vänligen fyll i ditt postnummer.'),
-  city: Yup.string().required('Vänligen fyll i din stad.'),
-  phone: Yup.string().required('Vänligen fyll i ditt telefonnummer.'),
-  email: Yup.string().required('Vänligen fyll i din e-postadress.'),
+  firstName: Yup.string().required("Please enter your firstname."),
+  lastName: Yup.string().required("Please enter your lastname."),
+  street: Yup.string().required("Please enter your delivery address."),
+  zipcode: Yup.string().min(5).max(5).required("Please enter your zipcode."),
+  city: Yup.string().required("Please enter your city."),
+  phone: Yup.string().required("Please enter your phone number."),
+  email: Yup.string().required("Please enter your email."),
 });
 
 interface Props {
@@ -24,13 +21,13 @@ interface Props {
 }
 
 export const emptyShippingForm: Address = {
-  firstName: '',
-  lastName: '',
-  phone: '',
-  street: '',
-  city: '',
-  zipcode: '',
-  email: '',
+  firstName: "",
+  lastName: "",
+  phone: "",
+  street: "",
+  city: "",
+  zipcode: "",
+  email: "",
 };
 
 function ShippingForm(props: Props) {
@@ -41,7 +38,7 @@ function ShippingForm(props: Props) {
     <>
       {/* First name input */}
       <InputField
-        label="Förnamn"
+        label="Firstname"
         id="deliveryAddress.firstName"
         name="deliveryAddress.firstName"
         type="text"
@@ -60,7 +57,7 @@ function ShippingForm(props: Props) {
 
       {/* Last name input */}
       <InputField
-        label="Efternamn"
+        label="Lastname"
         id="deliveryAddress.lastName"
         name="deliveryAddress.lastName"
         type="text"
@@ -78,7 +75,7 @@ function ShippingForm(props: Props) {
 
       {/* Street adress input */}
       <InputField
-        label="Postadress"
+        label="Delivery address"
         id="deliveryAddress.street"
         name="deliveryAddress.street"
         type="text"
@@ -95,7 +92,7 @@ function ShippingForm(props: Props) {
 
       {/* Post code input */}
       <InputField
-        label="Postnummer"
+        label="Zipcode"
         id="deliveryAddress.zipcode"
         name="deliveryAddress.zipcode"
         type="text"
@@ -112,7 +109,7 @@ function ShippingForm(props: Props) {
 
       {/* city input */}
       <InputField
-        label="Stad"
+        label="City"
         id="deliveryAddress.city"
         name="deliveryAddress.city"
         type="text"
@@ -127,7 +124,7 @@ function ShippingForm(props: Props) {
 
       {/* phone number input */}
       <InputField
-        label="Telefonnummer"
+        label="Phone number"
         id="deliveryAddress.phone"
         name="deliveryAddress.phone"
         type="text"
@@ -137,7 +134,7 @@ function ShippingForm(props: Props) {
           // checks if other number is filled in under swish, won't overwrite.
           if (!props.formikProps.values.phone) {
             // adds phonenumber to swish if swishnumber is empty
-            props.formikProps.setFieldValue('phone', e.target.value);
+            props.formikProps.setFieldValue("phone", e.target.value);
           }
         }}
         onBlur={handleBlur}
@@ -151,7 +148,7 @@ function ShippingForm(props: Props) {
 
       {/* email adress input */}
       <InputField
-        label="E-postadress"
+        label="Email"
         id="deliveryAddress.email"
         name="deliveryAddress.email"
         type="text"
