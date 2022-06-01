@@ -28,7 +28,7 @@ const AdminOrderControl = () => {
       })
       .then(
         (res: AxiosResponse) => {
-          console.log(res);
+          console.log(res.data.msg);
           setIsLoading(!isLoading);
         },
         () => {

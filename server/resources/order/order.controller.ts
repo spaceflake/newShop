@@ -43,14 +43,14 @@ export const updateOrder = async (
 ) => {
   const { id } = req.params;
   try {
-    const orderOption = await OrderModel.findById(id);
+    const order = await OrderModel.findById(id);
 
-    if (!orderOption) {
+    if (!order) {
       // res.status(400).json('Order option not found');
       throw new Error('Order option not found');
     }
 
-    const updatedOrderOption = await OrderModel.findByIdAndUpdate(
+    const updatedOrderStatus = await OrderModel.findByIdAndUpdate(
       id,
       req.body,
       { new: true }
@@ -58,8 +58,8 @@ export const updateOrder = async (
 
     res.status(200).json({
       success: true,
-      msg: 'Order option updated',
-      data: updatedOrderOption,
+      msg: 'Order updated as sent',
+      data: updatedOrderStatus,
     });
   } catch (error) {
     next(error);
