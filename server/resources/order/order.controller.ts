@@ -29,7 +29,6 @@ export const addOrder = async (
       ...req.body,
       user: req.user,
     });
-    console.log(order);
 
     await order.save();
     res.status(200).json({ success: true, order });

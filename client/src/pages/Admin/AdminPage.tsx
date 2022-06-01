@@ -5,6 +5,7 @@ import Container from '@mui/material/Container/Container';
 import AdminUserControl from './AdminUserControl';
 import { Link } from 'react-router-dom';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import AdminOrderControl from './AdminOrderControl';
 
 function AdminPage() {
   const [activePage, setActivePage] = useState('products');
@@ -39,6 +40,7 @@ function AdminPage() {
       </Container>
       {activePage === 'users' && <AdminUserControl />}
       {activePage === 'products' && <AdminProductControl />}
+      {activePage === 'orders' && <AdminOrderControl />}
     </>
   );
 }
