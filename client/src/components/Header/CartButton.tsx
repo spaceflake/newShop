@@ -55,10 +55,10 @@ function CartButton() {
         onClick={handleClick}
         disabled={active}
       >
-        <Badge badgeContent={cart?.length} color="info" showZero>
+        <Badge badgeContent={cart?.length} color='warning' showZero>
           <ShoppingCartIcon
             sx={{
-              color: "#0EDFE6",
+              color: "white",
               height: "2.5rem",
               width: "2.5rem",
               border: "none",

@@ -7,7 +7,7 @@ function Layout() {
   return (
     <Container maxWidth={false} disableGutters={true} sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
       <Header />
-      <Container component="main" disableGutters={true} sx={{ flexGrow: "1" }}>
+      <Container component="main" disableGutters={true} sx={{ flexGrow: "1", paddingTop: {xs: '5rem', md: '7rem'} }}>
         <Outlet />
       </Container>
       <Footer />

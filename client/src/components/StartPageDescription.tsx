@@ -14,7 +14,6 @@ function StartPageDesription() {
         paddingTop: "2rem",
       }}
     >
-
       <ShowCarousel />
       <Box
         sx={{
@@ -31,7 +30,7 @@ function StartPageDesription() {
             width: "10rem",
           }}
           src={hatLogo}
-          alt=""
+          alt="logo"
         ></img>
         <Typography
           sx={{
@@ -52,7 +51,7 @@ function StartPageDesription() {
         }}
       >
         <Typography sx={{ fontSize: "clamp(1rem, 2.5vw, 1.1rem)" }}>
-          Here on Hats on Hats we got hats for everyone!
+          Here at Hats on Hats we got hats for everyone!
         </Typography>
       </Box>
       <Box sx={{ textAlign: 'center' }}>

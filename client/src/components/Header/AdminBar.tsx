@@ -5,9 +5,11 @@ function AdminBar() {
   return (
     <Container
       sx={{
+        position: 'fixed',
+        zIndex: 3,
         minWidth: "100%",
         margin: 0,
-        marginBottom: "0",
+        marginBottom: "1rem",
         bgcolor: "#00ffe5",
       }}
     >
