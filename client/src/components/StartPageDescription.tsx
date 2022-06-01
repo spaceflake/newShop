@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Box, Button, Typography } from '@mui/material';
-import ducky from '../assets/ducky2.png';
+import hatLogo from '../assets/hatLogo.png';
 import PopularDucks from './Cards/PopularDucks';
 import ShowCarousel from './Carousel';
 
@@ -28,7 +28,7 @@ function StartPageDesription() {
           style={{
             width: '10rem',
           }}
-          src={ducky}
+          src={hatLogo}
           alt=""
         ></img>
         <Typography

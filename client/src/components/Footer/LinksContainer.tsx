@@ -14,7 +14,7 @@ import instabox from '../../assets/ShippingLogos/instabox-full.jpg';
 import postnord from '../../assets/ShippingLogos/postnord-full.png';
 import schenker from '../../assets/ShippingLogos/schenker-full.png';
 import SubscribeForm from '../Forms/SubscribeForm';
-import duckLogo from '../../assets/ducky2.png';
+import hatLogo from '../../assets/hatLogo.png';
 
 const theme = createTheme({
   palette: {
@@ -58,7 +58,7 @@ function LinksContainer() {
           justifyContent: 'center',
         }}
       >
-        <img src={duckLogo} width="200" height="200" alt=""></img>
+        <img src={hatLogo} width="200" height="200" alt=""></img>
       </Grid>
       <Grid
         item
