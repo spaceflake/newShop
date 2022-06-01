@@ -1,20 +1,18 @@
 import {
+  Box,
+  Button,
   Card,
+  CardActionArea,
+  CardActions,
   CardContent,
   CardMedia,
-  Box,
   Typography,
-  Rating,
-  CardActions,
-  Button,
-  CardActionArea,
-} from "@mui/material";
-import { Link } from "react-router-dom";
-import { useState } from "react";
-import { useCart } from "../../contexts/CartContext";
-import BuyButton from "../BuyButton";
-import { CartType } from "../../contexts/Reducers";
-import type { Product } from "@shared/types";
+} from '@mui/material';
+import type { Product } from '@shared/types';
+import { Link } from 'react-router-dom';
+import { useCart } from '../../contexts/CartContext';
+import { CartType } from '../../contexts/Reducers';
+import BuyButton from '../BuyButton';
 
 interface Props {
   product: Product;
@@ -22,28 +20,27 @@ interface Props {
 
 function ProductCard({ product }: Props) {
   const { cart, dispatch } = useCart();
-  const [ratingValue] = useState(5);
 
   return (
-    <Card key={product.id} sx={{ borderRadius: "1rem", padding: "1rem" }}>
+    <Card key={product.id} sx={{ borderRadius: '1rem', padding: '1rem' }}>
       <CardActionArea>
         <Link to={`/products/${product.id}`}>
-          <CardContent sx={{ padding: "0" }}>
+          <CardContent sx={{ padding: '0' }}>
             <CardMedia
               component="img"
               height="240"
               src={product.photoUrl}
-              sx={{ objectFit: "contain", objectPosition: "center top" }}
+              sx={{ objectFit: 'contain', objectPosition: 'center top' }}
             />
             <Box
               component="div"
               sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                flexWrap: "wrap-reverse",
-                alignItems: "center",
-                marginBlock: "1rem",
-                flexDirection: "column",
+                display: 'flex',
+                justifyContent: 'space-between',
+                flexWrap: 'wrap-reverse',
+                alignItems: 'center',
+                marginBlock: '1rem',
+                flexDirection: 'column',
               }}
             >
               <Typography
@@ -51,12 +48,21 @@ function ProductCard({ product }: Props) {
                 component="span"
                 color="primary"
                 fontWeight="700"
-                sx={{ marginRight: ".4rem" }}
+                sx={{ marginRight: '.4rem' }}
               >
                 {product.title}
               </Typography>
+
               <Box component="span">
-                <Rating name="read-only" value={ratingValue} readOnly />
+                <Typography
+                  variant="h5"
+                  component="span"
+                  color="primary"
+                  fontWeight="700"
+                  sx={{ marginRight: '.4rem' }}
+                >
+                  {product.stock === 0 ? 'Out of stock' : `${product.stock}`}
+                </Typography>
               </Box>
             </Box>
           </CardContent>
@@ -64,8 +70,8 @@ function ProductCard({ product }: Props) {
       </CardActionArea>
       <CardActions
         sx={{
-          justifyContent: "space-between",
-          padding: "0",
+          justifyContent: 'space-between',
+          padding: '0',
         }}
       >
         <Link to={`/products/${product.id}`}>
@@ -73,14 +79,14 @@ function ProductCard({ product }: Props) {
             sx={{
               mt: 2,
               mb: 2,
-              height: "3rem",
-              bgcolor: "#ffffff",
-              border: "1",
-              borderColor: "#c6c6c6",
-              color: " black",
-              "&:hover": {
-                bgcolor: "#c6c6c6",
-                borderColor: "#c6c6c6",
+              height: '3rem',
+              bgcolor: '#ffffff',
+              border: '1',
+              borderColor: '#c6c6c6',
+              color: ' black',
+              '&:hover': {
+                bgcolor: '#c6c6c6',
+                borderColor: '#c6c6c6',
               },
             }}
             variant="outlined"
@@ -90,6 +96,8 @@ function ProductCard({ product }: Props) {
         </Link>
         {cart && cart.some((p: CartType) => p.id === product.id) ? (
           <Button>In cart</Button>
+        ) : product.stock === 0 ? (
+          'not in stock'
         ) : (
           <BuyButton dispatch={dispatch} product={product} />
         )}
