@@ -23,7 +23,18 @@ function ProductPage() {
   return (
     <Container maxWidth="md">
       <Link to="/products">
-        <Button startIcon={<ArrowBackIcon />}>Back to products</Button>
+        <Button sx={{
+          mt: 2,
+          mb: '1rem',
+          height: "3rem",
+          bgcolor: "#ED6C02",
+          border: "none",
+          color: " white",
+          "&:hover": {
+            bgcolor: '#181818',
+            color: 'white',
+          },
+        }} startIcon={<ArrowBackIcon />}>Back to products</Button>
       </Link>
       {product && (
         <Card sx={{ height: "100%" }}>

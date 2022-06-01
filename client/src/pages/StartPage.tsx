@@ -7,7 +7,7 @@ function StartPage() {
   return (
     <Box>
       <StartPageDesription />
-      <CategoriesCard />
+      {/* <CategoriesCard /> */}
     </Box>
   );
 }

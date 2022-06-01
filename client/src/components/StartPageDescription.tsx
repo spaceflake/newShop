@@ -33,7 +33,7 @@ function StartPageDesription() {
         <Typography
           sx={{
             textAlign: "center",
-            padding: "1rem",
+            paddingTop: "1rem",
             fontSize: "clamp(1.5rem, 2.5vw, 2rem)",
           }}
         >
@@ -45,7 +45,8 @@ function StartPageDesription() {
           width: "70%",
           textAlign: "center",
           margin: "auto",
-          padding: "2rem",
+          paddingTop: "1rem",
+          paddingBottom: "2rem",
         }}
       >
         <Typography sx={{ fontSize: "clamp(1rem, 2.5vw, 1.1rem)" }}>

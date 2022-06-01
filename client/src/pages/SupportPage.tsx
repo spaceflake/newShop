@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Box, Container, Typography } from "@mui/material";
-import duckyComputer from "../assets/duckyComputer.webp";
+import hatLogo from "../assets/hatLogo.png";
 
 function SupportPage() {
   return (
@@ -34,10 +34,8 @@ function SupportPage() {
           Mailsupport hatsonhats@hatmail.com
         </Typography>
         <img
-          style={{ borderRadius: "20rem", marginTop: "5rem" }}
-          width="250"
-          height="250"
-          src={duckyComputer}
+          style={{height: '20rem'}}
+          src={hatLogo}
           alt=""
         ></img>
       </Box>

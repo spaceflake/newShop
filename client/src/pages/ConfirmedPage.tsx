@@ -32,7 +32,7 @@ function ConfirmedOrderPage() {
       <Box sx={{ bgcolor: "#ffffff", padding: 2 }}>
         <h2>Thank you for your order!</h2>
         <p>
-          Your payment and order has been confirmed, you're new hats are on it's
+          Your payment and order has been confirmed, your new hats are on it's
           way! <br />
           Here you can see the summary ;
         </p>
