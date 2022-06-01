@@ -19,7 +19,6 @@ function ProductListPage() {
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [searchParams, setSearchParams] = useSearchParams();
   const selectedCategory = searchParams.get('category');
-  console.log(selectedCategory);
 
   const matches = useMediaQuery('(max-width: 440px)');
 
@@ -37,7 +36,6 @@ function ProductListPage() {
 
       setSearchParams({ category });
       setFilteredProducts(prodFilter);
-      console.log(category);
     },
     [prods, selectedCategory, setSearchParams]
   );
@@ -65,7 +63,7 @@ function ProductListPage() {
           {categories.map((category, index) => (
             <Button
               key={index}
-              variant="contained"
+              variant={selectedCategory === category ? 'contained' : 'outlined'}
               onClick={() => filterCategories(category)}
             >
               {category}
