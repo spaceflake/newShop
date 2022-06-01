@@ -14,6 +14,8 @@ function StartPageDesription() {
         paddingTop: '2rem',
       }}
     >
+
+      <ShowCarousel />
       <Box
         sx={{
           display: 'flex',
@@ -56,7 +58,6 @@ function StartPageDesription() {
           accusamus!
         </Typography>
       </Box>
-      <ShowCarousel />
       <Box sx={{ textAlign: 'center' }}>
         <Typography
           sx={{ marginBottom: '2rem', fontSize: 'clamp(1.5rem, 2.5vw, 2rem)' }}
