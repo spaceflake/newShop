@@ -1,7 +1,7 @@
 import { Grid } from '@mui/material';
 import { useEffect, useState } from 'react';
 import type { Product } from '@shared/types';
-import { useProduct, ProductType } from '../../contexts/ProductsContext';
+import { useProduct } from '../../contexts/ProductsContext';
 import ProductCard from './ProductCard';
 
 function PopularDucks() {
@@ -18,9 +18,7 @@ function PopularDucks() {
         products.length
       );
       let productsCopy = [...products];
-      let randomProducts: ProductType[] = new Array<ProductType>(
-        numberOfIndicies
-      );
+      let randomProducts: Product[] = new Array<Product>(numberOfIndicies);
 
       for (let i = 0; i < numberOfIndicies; i++) {
         let index = Math.floor(Math.random() * productsCopy.length);

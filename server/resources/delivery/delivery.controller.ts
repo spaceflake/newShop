@@ -1,11 +1,11 @@
 import { NextFunction, Request, Response } from 'express';
-import { DeliveryModel } from './delivery.model';
+import { Delivery, DeliveryModel } from './delivery.model';
 
 export const getAllDeliverys = async (req: Request, res: Response) => {
   const deliveries = await DeliveryModel.find({});
 
   if (!deliveries) {
-    throw new Error('Could not retrieve delivery methods')
+    throw new Error('Could not retrieve delivery methods');
   }
 
   res.status(200).json(deliveries);
@@ -15,20 +15,20 @@ export const getDelivery = async (req: Request, res: Response) => {
   const delivery = await DeliveryModel.findById(id);
 
   if (!delivery) {
-    throw new Error('Could not retrieve delivery method')
+    throw new Error('Could not retrieve delivery method');
   }
 
   res.status(200).json(delivery);
 };
 //Does this need to be async?
 export const addDelivery = async (
-  req: Request,
+  req: Request<{}, {}, Delivery>,
   res: Response,
   next: NextFunction
 ) => {
   const delivery = new DeliveryModel(req.body);
 
-  if (!delivery) throw new Error('Could not add product')
+  if (!delivery) throw new Error('Could not add product');
 
   await delivery.save();
   res.status(200).json(delivery);
@@ -68,7 +68,7 @@ export const deleteDelivery = async (req: Request, res: Response) => {
     const deliveryMethod = await DeliveryModel.findByIdAndDelete(id);
 
     if (!deliveryMethod) {
-      throw new Error('Delivery method not found')
+      throw new Error('Delivery method not found');
     }
     return res.status(200).json('DELETED DELIVERY OPTION');
   } else {

@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { Document } from 'mongoose';
 
 export interface User {
   id: string;
@@ -11,6 +11,9 @@ export interface User {
   createdAt: Date;
   updateAt: Date;
 }
+
+export type UserDocument = User & Document;
+
 const userSchema = new mongoose.Schema<User>(
   {
     firstName: { type: String, minLength: 2, maxLength: 26, required: true },

@@ -1,0 +1,51 @@
+GET http://localhost:4000/api/order
+
+###
+
+GET http://localhost:4000/api/order/62961ae916403b58a5cbae4e
+
+###
+
+POST http://localhost:4000/api/order
+Content-Type: application/json
+
+{
+  "products": [{
+    "_id": "6287834d1a573fec1e165629",
+    "title": "winter",
+    "description": "bla",
+    "price": 499,
+    "photo": "bowlerHat.jpeg",
+    "categories": [
+      "Old school",
+      "Fancy"
+    ],
+    "stock": 0,
+    "__v": 0,
+    "id": "6287834d1a573fec1e165629"
+  }],
+  "deliveryAddress": [{
+    "firstName": "tomas",
+    "lastName": "fridekrans",
+    "phone": "0770304003",
+    "street": "gatan 1",
+    "city": "staden",
+    "zipcode": "12345"
+    }]
+}
+
+
+###
+
+PUT http://localhost:4000/api/order/628f40d8e63229379b584aac
+Content-Type: application/json
+
+{
+  "name": "testar",
+  "altText": "Leverans till box, 1-2 arbetsdagar",
+  "shippingTime": 2,
+  "price": 29,
+  "logo": "orderLogo",
+  "id": "instabox"
+}
+

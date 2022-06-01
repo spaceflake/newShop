@@ -9,9 +9,11 @@ import passportLocal from 'passport-local';
 import connectDB from './config/db';
 import errorHandler from './middleware/errorMiddleware';
 import { deliveryRouter } from './resources/delivery';
+import { orderRouter } from './resources/order/order.router';
 import { productRouter } from './resources/product/product.router';
-import { User, UserModel } from './resources/user/user.model';
+import { User, UserDocument, UserModel } from './resources/user/user.model';
 import { userRouter } from './resources/user/user.router';
+import { mediaRouter } from './resources/media';
 
 const app = express();
 const port = 4000;
@@ -34,7 +36,16 @@ app.use(passport.session());
 
 app.use('/api', userRouter);
 app.use('/api', productRouter);
+app.use('/api', mediaRouter);
 app.use('/api', deliveryRouter);
+app.use('/api', orderRouter);
+
+// TODO: 404 handler
+
+// global error handler
+app.use(errorHandler);
+
+// TODO: We need to get this passport below out of here.
 
 // TODO: We need to get this passport below out of here.
 
@@ -61,26 +72,13 @@ passport.use(
   })
 );
 
-passport.serializeUser((user: any, cb: any) => {
+passport.serializeUser<UserDocument>((user: any, cb) => {
   cb(null, user._id);
   console.log(user);
 });
 passport.deserializeUser((id: string, cb) => {
   UserModel.findOne({ _id: id }, (err: any, user: User) => {
-    const userInformation: User = {
-      firstName: user?.firstName,
-      lastName: user?.lastName,
-      password: user?.password,
-      phone: user.phone,
-      email: user?.email,
-      isAdmin: user?.isAdmin,
-      id: user?.id,
-      createdAt: user.createdAt,
-      updateAt: user.updateAt,
-    };
-    cb(err, userInformation);
-
-    console.log(userInformation);
+    cb(err, user);
   });
 });
 

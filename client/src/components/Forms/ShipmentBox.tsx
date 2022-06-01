@@ -13,7 +13,7 @@ import format from 'date-fns/format';
 import sv from 'date-fns/locale/sv';
 import { FormikProps } from 'formik';
 import React, { useEffect, useState } from 'react';
-import { Delivery } from '../../Api/Data';
+import { Delivery } from '@shared/types';
 import { OrderData } from './OrderForm';
 
 interface Props {
@@ -30,7 +30,7 @@ function ShipmentBox(props: Props) {
 
   useEffect(() => {
     const getDeliveryOptions = async () => {
-      const res = await axios.get('http://localhost:4000/api/delivery');
+      const res = await axios.get('/api/delivery');
       const data = await res.data;
       setDeliveryoptions(data);
     };
@@ -66,7 +66,10 @@ function ShipmentBox(props: Props) {
               >
                 {/* logo for delivery-option */}
                 <ListItemAvatar>
-                  <Avatar src={delivery.logo} alt={`${delivery.name} logo`} />
+                  <Avatar
+                    src={delivery.logoUrl}
+                    alt={`${delivery.name} logo`}
+                  />
                 </ListItemAvatar>
 
                 {/* name of delivery-option */}
