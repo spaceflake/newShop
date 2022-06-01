@@ -39,7 +39,7 @@ function ProductPage() {
             <CardMedia
               component="img"
               height="480"
-              image={product.photo}
+              image={product.photoUrl}
               sx={{ objectFit: 'contain', maxWidth: '20rem' }}
             />
             <Box
