@@ -46,22 +46,18 @@ function ProductCard({ product }: Props) {
               <Typography
                 variant="h5"
                 component="span"
-                color="primary"
                 fontWeight="700"
-                sx={{ marginRight: '.4rem' }}
+                sx={{ marginRight: '.4rem', color: '#181818' }}
               >
                 {product.title}
               </Typography>
 
               <Box component="span">
                 <Typography
-                  variant="h5"
                   component="span"
-                  color="primary"
-                  fontWeight="700"
-                  sx={{ marginRight: '.4rem' }}
+                  sx={{ marginRight: '.4rem', color: '#181818' }}
                 >
-                  {product.stock === 0 ? 'Out of stock' : `${product.stock}`}
+                  {product.stock === 0 ? 'Out of stock' : `${product.stock} left in stock`}
                 </Typography>
               </Box>
             </Box>
@@ -77,16 +73,17 @@ function ProductCard({ product }: Props) {
         <Link to={`/products/${product.id}`}>
           <Button
             sx={{
-              mt: 2,
-              mb: 2,
-              height: '3rem',
-              bgcolor: '#ffffff',
-              border: '1',
-              borderColor: '#c6c6c6',
-              color: ' black',
+              margin: '1rem 0.5rem',
+              padding: '0.5rem 1rem',
+              color: 'black',
+              border: 'solid',
+              borderColor: 'black',
+              bgcolor: 'white',
               '&:hover': {
-                bgcolor: '#c6c6c6',
-                borderColor: '#c6c6c6',
+                border: 'solid',
+                borderColor: 'black',
+                bgcolor: '#181818',
+                color: 'white',
               },
             }}
             variant="outlined"

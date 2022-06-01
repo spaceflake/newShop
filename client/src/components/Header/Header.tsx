@@ -47,7 +47,7 @@ const Header: FC<HeaderProps> = () => {
 
   return (
     <>
-      <AppBar sx={{ backgroundColor: '#1A9335', position: 'fixed', zIndex: 3, }} position="static">
+      <AppBar sx={{ backgroundColor: 'white', zIndex: 3, }} position="fixed">
         <Toolbar disableGutters>
 
           <Link
@@ -55,7 +55,7 @@ const Header: FC<HeaderProps> = () => {
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
-              color: 'white',
+              color: '#181818',
               margin: '0 1rem'
             }}
             to={"/"}>
@@ -65,7 +65,6 @@ const Header: FC<HeaderProps> = () => {
               src={hatLogo}
               sx={{
                 mr: 2,
-                filter: "invert(100%)",
                 width: '4.5rem',
                 display: { xs: 'none', md: 'flex' },
               }}
@@ -83,7 +82,7 @@ const Header: FC<HeaderProps> = () => {
             <Button
               onClick={() => navigate('/products')}
               sx={{
-                color: 'white',
+                color: '#181818',
                 my: 2,
                 display: 'block',
                 fontSize: { md: '1rem', lg: '1.3rem' },
@@ -94,7 +93,7 @@ const Header: FC<HeaderProps> = () => {
             <Button
               onClick={() => navigate('/faq')}
               sx={{
-                color: 'white',
+                color: '#181818',
                 my: 2,
                 display: 'block',
                 fontSize: { md: '1rem', lg: '1.3rem' },
@@ -106,7 +105,7 @@ const Header: FC<HeaderProps> = () => {
             <Button
               onClick={() => navigate('/support')}
               sx={{
-                color: 'white',
+                color: '#181818',
                 my: 2,
                 display: 'block',
                 fontSize: { md: '1rem', lg: '1.3rem' },
@@ -116,7 +115,7 @@ const Header: FC<HeaderProps> = () => {
             </Button>
           </Box>
           {!!user && (
-            <Typography sx={{ color: 'white', mr: '9rem', display: { xs: 'none', lg: 'flex' } }}>
+            <Typography sx={{ color: '#181818', mr: '9rem', display: { xs: 'none', lg: 'flex' } }}>
               You are signed in as{!!user?.isAdmin && ' an admin'}: {user?.email}
             </Typography>
           )}
@@ -137,7 +136,7 @@ const Header: FC<HeaderProps> = () => {
                     padding: '0',
                     height: '2.5rem',
                     width: '2.5rem',
-                    color: "white",
+                    color: "#181818",
                     '@media screen and (max-width: 440px)': {
                       marginRight: '-30px',
                     },
@@ -198,7 +197,7 @@ const Header: FC<HeaderProps> = () => {
                       onClick={() => {
                         handleCloseUserMenu();
                         logout();
-                        navigate('/')
+                        navigate('/');
                       }}>
                       Log out
                     </Button>

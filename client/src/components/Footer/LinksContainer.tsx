@@ -58,7 +58,7 @@ function LinksContainer() {
           justifyContent: "center",
         }}
       >
-        <img src={hatLogo} width="200" height="200" alt=""></img>
+        <img src={hatLogo} style={{height: '11rem'}} alt=""></img>
       </Grid>
       <Grid
         item
