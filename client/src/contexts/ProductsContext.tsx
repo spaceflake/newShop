@@ -68,15 +68,9 @@ export const ProductsProvider: React.FC = ({ children }) => {
 
   const updateProduct = async (product: Product) => {
     await axios
-      .put(
-        '/api/product/' + product.id,
-        {
-          ...product,
-        },
-        {
-          withCredentials: true,
-        }
-      )
+      .put('/api/product/' + product.id, {
+        ...product,
+      })
       .then(
         (res: AxiosResponse) => {
           console.log('suc');

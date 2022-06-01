@@ -30,6 +30,8 @@ export const addOrder = async (
       user: req.user,
     });
 
+    // update stock on products
+
     await order.save();
     res.status(200).json({ success: true, order });
   } catch (err) {
