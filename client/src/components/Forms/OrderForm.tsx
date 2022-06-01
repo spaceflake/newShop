@@ -12,7 +12,6 @@ import { useFormik } from "formik";
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
-import { deliveryOptions } from "../../Api/Data";
 import { useCart } from "../../contexts/CartContext";
 import { CartType, Types } from "../../contexts/Reducers";
 import useLocalStorage from "../../Hooks/useLocalStorage";

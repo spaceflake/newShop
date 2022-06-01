@@ -56,7 +56,7 @@ function ConfirmedOrderPage() {
                   </ListItemAvatar>
                   <ListItemText
                     primary={product.title}
-                    secondary={`Antal: ${product.qty} Pris: ${product.price} kr/st`}
+                    secondary={`Quantity: ${product.qty} Price: ${product.price} kr/each`}
                   />
                   <ListItemText
                     primary={`${product.qty * product.price} kr`}
@@ -64,7 +64,7 @@ function ConfirmedOrderPage() {
                   />
                 </ListItem>
               ))
-            : "fuc"}
+            : ""}
         </List>
         <Divider />
         {/* get and print total price of products */}
