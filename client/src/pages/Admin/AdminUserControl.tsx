@@ -11,11 +11,12 @@ import {
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useUser } from '../../contexts/UserContext';
+import type { User } from '@shared/types';
 
 import axios, { AxiosResponse } from 'axios';
 
 const AdminUserControl = () => {
-  const [selectedUser, setSelectedUser] = useState();
+  const [selectedUser, setSelectedUser] = useState<string>();
   const [openDelete, setOpenDelete] = React.useState(false);
   const [openEdit, setOpenEdit] = React.useState(false);
 
@@ -72,17 +73,19 @@ const AdminUserControl = () => {
   return (
     <Container maxWidth="xl" sx={{ height: '100%' }}>
       <List>
-        {allUsers.map((user: any) => (
-          <Box key={user._id}>
+        {allUsers.map((user: User) => (
+          <Box key={user.id}>
             <Paper elevation={3}>
               <Box>
                 <Typography variant="h5">
                   {user.firstName + ' ' + user.lastName}
                 </Typography>
-                <Typography></Typography>
+                <Typography variant="body1">
+                  {user.isAdmin ? 'Admin' : 'Customer'}
+                </Typography>
                 <button
                   onClick={() => {
-                    setSelectedUser(user._id);
+                    setSelectedUser(user.id);
                     handleDeleteDrawerOpen();
                   }}
                 >
@@ -91,7 +94,7 @@ const AdminUserControl = () => {
 
                 <button
                   onClick={() => {
-                    setSelectedUser(user._id);
+                    setSelectedUser(user.id);
                     handleEditDrawerOpen();
                   }}
                 >
