@@ -5,10 +5,10 @@ import Header from './Header/Header'
 
 function Layout() {
   return (
-    <Container maxWidth={false} disableGutters={true} sx={{ display:"flex", flexDirection:"column", height:"100%"}}>
+    <Container maxWidth={false} disableGutters={true} sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
       <Header />
-      <Container component="main" disableGutters={true} sx={{flexGrow:"1"}}>
-      <Outlet />
+      <Container component="main" disableGutters={true} sx={{ flexGrow: "1", paddingTop: {xs: '5rem', md: '7rem'} }}>
+        <Outlet />
       </Container>
       <Footer />
     </Container>

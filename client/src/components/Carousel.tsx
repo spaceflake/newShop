@@ -1,8 +1,8 @@
 import { Container } from '@mui/material';
 import Carousel from 'react-material-ui-carousel';
-import firstDuck from '../assets/CarouselPictures/firstDuck.jpg';
-import secondDuck from '../assets/CarouselPictures/secondDuck.jpg';
-import thirdDuck from '../assets/CarouselPictures/thirdDuck.jpg';
+import commercial1 from '../assets/CarouselPictures/commercial1.jpeg';
+import commercial2 from '../assets/CarouselPictures/commercial2.jpg';
+import commercial3 from '../assets/CarouselPictures/commercial3.jpg';
 import '../App.css';
 
 interface Item {
@@ -16,22 +16,22 @@ interface Props {
 function ShowCarousel() {
   let images = [
     {
-      image: firstDuck,
+      image: commercial1,
     },
     {
-      image: secondDuck,
+      image: commercial2,
     },
     {
-      image: thirdDuck,
+      image: commercial3,
     },
   ];
 
   return (
-    <Container maxWidth="xl" sx={{ padding: '4rem 0' }}>
+    <Container >
       <Carousel
-        interval={2000}
+        interval={3000}
         indicators={false}
-        sx={{ height: '30vw', width: '90%', margin: 'auto' }}
+        sx={{ height: {xs: '10rem', sm: '20rem', md: '40rem'}, width: '100%', margin: 'auto' }}
       >
         {images.map((item, i) => (
           <ShowImages key={i} item={item} />

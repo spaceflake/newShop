@@ -16,6 +16,7 @@ import StartPage from '../pages/StartPage';
 import SupportPage from '../pages/SupportPage';
 import TermsOfUsePage from '../pages/TermsOfUsePage';
 import Layout from './Layout';
+import UserPage from './UserPage';
 
 function App() {
   const { user } = useUser();
@@ -28,6 +29,7 @@ function App() {
           <Route index element={<ProductListPage />} />
           <Route path=":id" element={<ProductPage />} />
         </Route>
+        <Route path="userpage" element={<UserPage />} />
         <Route path="cartPage" element={<CartPage />} />
         <Route path="checkoutPage" element={<CheckOutPage />} />
         <Route path="confirmed-order/:id" element={<ConfirmedOrderPage />} />

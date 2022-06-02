@@ -1,12 +1,14 @@
 //import CategoriesCard from '../components/Cards/CategoriesCard';
+import { Box } from '@mui/material';
+import CategoriesCard from '../components/Cards/CategoriesCard';
 import StartPageDesription from '../components/StartPageDescription';
 
 function StartPage() {
   return (
-    <div>
+    <Box>
       <StartPageDesription />
       {/* <CategoriesCard /> */}
-    </div>
+    </Box>
   );
 }
 

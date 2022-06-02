@@ -8,6 +8,7 @@ import {
   Drawer,
   IconButton,
   styled,
+  Chip,
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useUser } from '../../contexts/UserContext';
@@ -100,6 +101,9 @@ const AdminUserControl = () => {
                 >
                   Make Admin
                 </button>
+                {user.adminRequested && !user.isAdmin && (
+                  <Chip label="Admin requested" />
+                )}
               </Box>
             </Paper>
             <Drawer variant="persistent" anchor="right" open={openDelete}>

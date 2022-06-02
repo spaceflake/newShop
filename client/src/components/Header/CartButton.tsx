@@ -55,16 +55,13 @@ function CartButton() {
         onClick={handleClick}
         disabled={active}
       >
-        <Badge badgeContent={cart?.length} color="info" showZero>
+        <Badge badgeContent={cart?.length} color='warning' showZero>
           <ShoppingCartIcon
             sx={{
-              color: "#0EDFE6",
+              color: "#181818",
               height: "2.5rem",
               width: "2.5rem",
               border: "none",
-              "&:hover": {
-                color: "#eaa0ff",
-              },
             }}
           />
         </Badge>
@@ -93,15 +90,14 @@ function CartButton() {
           <Link to="cartPage" onClick={handleClose}>
             <Button
               sx={{
-                bgcolor: "#0EDFE6",
+                marginTop: '1rem',
+                height: "3rem",
+                bgcolor: "#ED6C02",
                 border: "none",
-                color: " black",
-                marginTop: "1rem",
-                borderRadius: "0",
+                color: " white",
                 "&:hover": {
-                  bgcolor: "#eaa0ff",
-                  border: "none",
-                  color: "black",
+                  bgcolor: '#181818',
+                  color: 'white',
                 },
                 "@media screen and (max-width: 440px)": {
                   display: "none",

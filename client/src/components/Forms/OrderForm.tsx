@@ -99,21 +99,6 @@ function OrderForm(props: Props) {
   let [sumDetails] = useLocalStorage<number>('cartSum', '');
   let [productsDetails] = useLocalStorage<CartType[]>('cart', '');
 
-  const updateStock = () => {
-    for (let i = 0; i < productsDetails.length; i++) {
-      const { qty, stock } = productsDetails[i];
-
-      const updatedStock = stock - qty;
-      console.log('updatedStock', updatedStock);
-
-      if (updatedStock < 0) {
-        console.log('not enough in stock');
-        return;
-      }
-      const updatedProduct = { ...productsDetails[i], stock: updatedStock };
-      updateProduct(updatedProduct);
-    }
-  };
   // successful submit
   async function handleSubmit(orderData: OrderData) {
     setLoading(true);
@@ -128,7 +113,7 @@ function OrderForm(props: Props) {
     // fetch api and navigate to confirmed-order page if successful
     // const success = await placeOrderFetch();
     try {
-      updateStock();
+      // updateStock();
       const res = await axios.post('/api/order', order);
 
       const result = await res.data;
@@ -232,17 +217,16 @@ function OrderForm(props: Props) {
 
               <Button
                 sx={{
-                  mt: 2,
-                  mb: 2,
                   height: '3rem',
-                  width: '100%',
-                  bgcolor: '#0EDFE6',
+                  marginTop: '2rem',
+                  bgcolor: '#ED6C02',
                   border: 'none',
-                  color: ' black',
+                  color: ' white',
+                  fontSize: '1.5rem',
                   '&:hover': {
-                    bgcolor: '#eaa0ff',
                     border: 'none',
-                    color: 'black',
+                    bgcolor: '#181818',
+                    color: 'white',
                   },
                   '@media screen and (max-width: 440px)': {
                     borderRadius: '0',
