@@ -5,11 +5,13 @@ import {
   Button,
   Container,
   Drawer,
+  FormLabel,
   IconButton,
   styled,
   TextField,
   Typography,
 } from '@mui/material';
+import { display, padding } from '@mui/system';
 import { FormikErrors, useFormik } from 'formik';
 import { useState } from 'react';
 import { useProduct, ProductCreate } from '../../contexts/ProductsContext';
@@ -129,13 +131,14 @@ const AdminProductControl = () => {
               </IconButton>
               <Typography>Add Product</Typography>
             </DrawerHeader>
-
+              <AddForm>
             <form onSubmit={formik.handleSubmit}>
               <div>
                 <div>
                   <div>
-                    <label htmlFor="name">Title</label>
+                    <label htmlFor="name">Title</label>  
                     <TextField
+                     sx={{display: 'flex', justifyContent: 'center', padding: '1rem'}}
                       id="title"
                       name="title"
                       type="title"
@@ -151,6 +154,7 @@ const AdminProductControl = () => {
                   <div>
                     <label htmlFor="price">Price</label>
                     <TextField
+                    sx={{display: 'flex', justifyContent: 'center', padding: '1rem'}}
                       id="price"
                       name="price"
                       type="price"
@@ -166,6 +170,7 @@ const AdminProductControl = () => {
                   <div>
                     <label htmlFor="photo">Add Image</label>
                     <TextField
+                     sx={{display: 'flex', justifyContent: 'center', padding: '1rem'}}
                       id="photo"
                       name="photo"
                       type="text"
@@ -179,6 +184,7 @@ const AdminProductControl = () => {
                   <div>
                     <label htmlFor="description">Description</label>
                     <TextField
+                  sx={{display: 'flex', justifyContent: 'center', padding: '1rem'}}
                       id="description"
                       name="description"
                       onChange={formik.handleChange}
@@ -192,6 +198,7 @@ const AdminProductControl = () => {
                   <div>
                     <label htmlFor="description">Stock</label>
                     <TextField
+                  sx={{display: 'flex', justifyContent: 'center', padding: '1rem'}}
                       id="Stock"
                       name="Stock"
                       onChange={formik.handleChange}
@@ -210,6 +217,7 @@ const AdminProductControl = () => {
                 </div>
               </div>
             </form>
+            </AddForm>
           </Drawer>
         </Box>
         <AdminEditProduct />
@@ -223,6 +231,19 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   alignItems: 'center',
   padding: theme.spacing(0, 1),
   justifyContent: 'flex-start',
+  
 }));
+
+const AddForm = styled('div')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  padding: '1rem',
+  justifyContent: 'flex-start',
+  
+  
+}));
+
+
+
 
 export default AdminProductControl;
