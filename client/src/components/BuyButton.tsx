@@ -12,8 +12,9 @@ function BuyButton({ dispatch, product }: any) {
           padding: '0.5rem 1rem',
           color: 'black',
           border: 'solid',
-          borderColor: 'black',
+          borderColor: 'white',
           bgcolor: 'white',
+          minWidth: 'max-content',
           '&:hover': {
             border: 'solid',
             borderColor: 'black',
@@ -30,7 +31,7 @@ function BuyButton({ dispatch, product }: any) {
         variant="outlined"
         endIcon={<AddShoppingCartIcon />}
       >
-        Buy now {product.price}kr
+        Add to cart
       </Button>
     </>
   );
