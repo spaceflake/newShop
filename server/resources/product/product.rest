@@ -9,12 +9,13 @@ POST http://localhost:4000/api/product
 Content-Type: application/json
 
 {
-  "title": ,
-  "description": "One of those days",
-  "price": 2,
-  "photo": "tophat.jpg",
-  "categories": ["Other"],
-  "stock": 1
+  "title": "test hat",
+  "description": "loremdeoloaron onfseoe knfsoen",
+  "price": 295,
+  "photoId": "62987188e7b4e60b692e0db9",
+  "categories": ["other, test"],
+  "stock": 12,
+  "qty": 0
 }
 
 

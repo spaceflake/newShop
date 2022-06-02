@@ -4,7 +4,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import { UserFetch } from '../Api/Api';
 import { LoginDetails } from '../components/Forms/LoginForm';
 
-
 interface UserContextValue {
   isLoading: boolean;
   user?: User;
@@ -15,7 +14,18 @@ interface UserContextValue {
 }
 export const UserContext = React.createContext<UserContextValue>({
   isLoading: false,
-  user: { id: '', firstName: '', lastName: '', email: '', isAdmin: false, phone: '', password: '', createdAt: new Date(), updateAt:  new Date()},
+  user: {
+    id: '',
+    firstName: '',
+    lastName: '',
+    email: '',
+    isAdmin: false,
+    adminRequested: false,
+    phone: '',
+    password: '',
+    createdAt: new Date(),
+    updateAt: new Date(),
+  },
   allUsers: [],
   login: (_loginDetails: LoginDetails): Promise<boolean> => {
     return new Promise(() => {});
