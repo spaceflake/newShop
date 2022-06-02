@@ -1,6 +1,7 @@
 import { Types } from 'mongoose';
 import { NextFunction, Request, Response } from 'express';
 import { OrderModel } from './order.model';
+import { UserModel } from '../user/user.model';
 
 declare global {
   namespace Express {
@@ -21,13 +22,16 @@ export const getOrder = async (req: Request, res: Response) => {
 };
 
 export const getSpecUserOrders = async (req: Request, res: Response) => {
-  const user = req.params
-  const userOrders = await OrderModel.find(user);
-  console.log(userOrders)
-  if (!userOrders) {
-    throw new Error('Can not find user')
+  try {
+    const user = await req.params;
+    const userOrders = await OrderModel.find({user: user?.id});
+    console.log(user);
+    
+    res.status(200).json(userOrders);
+  } catch (err) {
+    res.status(500).json(err);
   }
-  return res.status(200).json(userOrders);
+
 };
 
 export const addOrder = async (
