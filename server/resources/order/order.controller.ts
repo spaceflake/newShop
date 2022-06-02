@@ -19,6 +19,17 @@ export const getOrder = async (req: Request, res: Response) => {
   const order = await OrderModel.findById(id);
   res.status(200).json(order);
 };
+
+export const getSpecUserOrders = async (req: Request, res: Response) => {
+  const user = req.params
+  const userOrders = await OrderModel.find(user);
+  console.log(userOrders)
+  if (!userOrders) {
+    throw new Error('Can not find user')
+  }
+  return res.status(200).json(userOrders);
+};
+
 export const addOrder = async (
   req: Request,
   res: Response,
