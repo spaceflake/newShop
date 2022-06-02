@@ -14,7 +14,7 @@ import { useProduct } from '../contexts/ProductsContext';
 import type { Product } from '@shared/types';
 
 function ProductListPage() {
-  const { prods, categories } = useProduct();
+  const { prods, categories, getAllProducts } = useProduct();
   // const [categories, setCategories] = useState<string[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -44,6 +44,10 @@ function ProductListPage() {
     filterCategories();
   }, [prods, filterCategories]);
 
+  useEffect(() => {
+    getAllProducts();
+  }, [getAllProducts, prods]);
+
   return (
     <>
       <Container>
@@ -65,17 +69,19 @@ function ProductListPage() {
               <Button
                 sx={{
                   margin: '1rem 0.3rem',
-                  height: "3rem",
-                  bgcolor: "#ED6C02",
-                  border: "none",
-                  color: " white",
-                  "&:hover": {
+                  height: '3rem',
+                  bgcolor: '#ED6C02',
+                  border: 'none',
+                  color: ' white',
+                  '&:hover': {
                     bgcolor: '#181818',
                     color: 'white',
                   },
                 }}
                 key={index}
-                variant={selectedCategory === category ? 'contained' : 'outlined'}
+                variant={
+                  selectedCategory === category ? 'contained' : 'outlined'
+                }
                 onClick={() => filterCategories(category)}
               >
                 {category}
@@ -90,7 +96,7 @@ function ProductListPage() {
             </Grid>
           ))}
         </Grid>
-      </Container >
+      </Container>
     </>
   );
 }

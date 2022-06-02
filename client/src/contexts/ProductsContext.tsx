@@ -15,6 +15,7 @@ type PContext = {
   prods: Product[];
   categories: string[];
   dispatch: React.Dispatch<ProductActions>;
+  getAllProducts: () => void;
   createProduct: (product: ProductCreate) => void;
   updateProduct: (product: Product) => void;
   deleteProduct: (productId: string) => void;
@@ -108,6 +109,7 @@ export const ProductsProvider: React.FC = ({ children }) => {
         prods,
         categories,
         dispatch,
+        getAllProducts,
         createProduct,
         updateProduct,
         deleteProduct,
