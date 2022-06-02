@@ -2,6 +2,7 @@ import { Types } from 'mongoose';
 import { NextFunction, Request, Response } from 'express';
 import { OrderModel } from './order.model';
 import { UserModel } from '../user/user.model';
+import { updateStock } from '../product';
 
 declare global {
   namespace Express {
@@ -24,14 +25,13 @@ export const getOrder = async (req: Request, res: Response) => {
 export const getSpecUserOrders = async (req: Request, res: Response) => {
   try {
     const user = await req.params;
-    const userOrders = await OrderModel.find({user: user?.id});
+    const userOrders = await OrderModel.find({ user: user?.id });
     console.log(user);
-    
+
     res.status(200).json(userOrders);
   } catch (err) {
     res.status(500).json(err);
   }
-
 };
 
 export const addOrder = async (
@@ -45,9 +45,11 @@ export const addOrder = async (
       user: req.user,
     });
 
-    // update stock on products
-
     await order.save();
+
+    // update stock on products
+    await updateStock(order);
+
     res.status(200).json({ success: true, order });
   } catch (err) {
     next(err);
