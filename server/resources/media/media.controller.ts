@@ -44,48 +44,27 @@ export const addMedia = async (
   }
 
   const { originalname, mimetype, buffer } = req.file;
-  const thumbname = 'thumb ' + originalname;
 
   const readableStream = Readable.from(buffer);
   const writableStream = bucket.openUploadStream(originalname, {
     contentType: mimetype,
-    metadata: { thumbnail: false },
-  });
-  bucket.openUploadStream(thumbname, {
-    contentType: mimetype,
-    metadata: { thumbnail: true },
   });
 
-  const onFinishUpload = (file: GridFSFile) => {
-    images.push(file);
-    if (images.length === 2) {
-      res.status(201).json(images);
-    }
-  };
-
-  const transformer = sharp();
-
-  const images: GridFSFile[] = [];
-
-  transformer
-    .resize({
+  const transformer = sharp().resize({
       width: 500,
-      height: 500,
-      fit: 'cover',
+      height: 850,
+      fit: 'fill',
       position: sharp.strategy.entropy,
     })
-    .pipe(writableStream)
-    .on('finish', onFinishUpload);
 
   readableStream
+    .pipe(transformer)
     .pipe(writableStream)
     .on('finish', (file: GridFSFile) => {
       console.log('done', file);
       res.status(201).json(file);
     })
     .on('error', next);
-
-  readableStream.pipe(transformer).on('error', next);
 };
 
 export const deleteMedia = (req: Request, res: Response) => {
