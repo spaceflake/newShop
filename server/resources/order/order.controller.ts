@@ -1,6 +1,8 @@
 import { Types } from 'mongoose';
 import { NextFunction, Request, Response } from 'express';
 import { OrderModel } from './order.model';
+import { UserModel } from '../user/user.model';
+import { updateStock } from '../product';
 
 declare global {
   namespace Express {
@@ -19,6 +21,19 @@ export const getOrder = async (req: Request, res: Response) => {
   const order = await OrderModel.findById(id);
   res.status(200).json(order);
 };
+
+export const getSpecUserOrders = async (req: Request, res: Response) => {
+  try {
+    const user = await req.params;
+    const userOrders = await OrderModel.find({ user: user?.id });
+    console.log(user);
+
+    res.status(200).json(userOrders);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
 export const addOrder = async (
   req: Request,
   res: Response,
@@ -29,9 +44,12 @@ export const addOrder = async (
       ...req.body,
       user: req.user,
     });
-    console.log(order);
 
     await order.save();
+
+    // update stock on products
+    await updateStock(order);
+
     res.status(200).json({ success: true, order });
   } catch (err) {
     next(err);
@@ -44,14 +62,14 @@ export const updateOrder = async (
 ) => {
   const { id } = req.params;
   try {
-    const orderOption = await OrderModel.findById(id);
+    const order = await OrderModel.findById(id);
 
-    if (!orderOption) {
+    if (!order) {
       // res.status(400).json('Order option not found');
       throw new Error('Order option not found');
     }
 
-    const updatedOrderOption = await OrderModel.findByIdAndUpdate(
+    const updatedOrderStatus = await OrderModel.findByIdAndUpdate(
       id,
       req.body,
       { new: true }
@@ -59,8 +77,8 @@ export const updateOrder = async (
 
     res.status(200).json({
       success: true,
-      msg: 'Order option updated',
-      data: updatedOrderOption,
+      msg: 'Order updated as sent',
+      data: updatedOrderStatus,
     });
   } catch (error) {
     next(error);

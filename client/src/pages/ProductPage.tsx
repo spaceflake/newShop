@@ -23,10 +23,21 @@ function ProductPage() {
   return (
     <Container maxWidth="md">
       <Link to="/products">
-        <Button startIcon={<ArrowBackIcon />}>Back to products</Button>
+        <Button sx={{
+          mt: 2,
+          mb: '1rem',
+          height: "3rem",
+          bgcolor: "#ED6C02",
+          border: "none",
+          color: " white",
+          "&:hover": {
+            bgcolor: '#181818',
+            color: 'white',
+          },
+        }} startIcon={<ArrowBackIcon />}>Back to products</Button>
       </Link>
       {product && (
-        <Card sx={{ height: "100%" }}>
+        <Card elevation={10} sx={{ height: "100%" }}>
           <Box
             sx={{
               display: "flex",
@@ -37,8 +48,8 @@ function ProductPage() {
             <CardMedia
               component="img"
               height="480"
-              image={product.photo}
-              sx={{ objectFit: "contain", maxWidth: "20rem" }}
+              image={product.photoUrl}
+              sx={{ objectFit: 'contain', maxWidth: '20rem' }}
             />
             <Box
               sx={{
@@ -49,17 +60,17 @@ function ProductPage() {
               }}
             >
               <CardContent sx={{ flexGrow: "1" }}>
-                <Typography variant="h5" component="div" gutterBottom>
+                <Typography variant="h3" component="div" gutterBottom>
                   {product.title}
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
+                <Typography sx={{fontSize: '1,5rem'}}>
                   {product.description}
                 </Typography>
                 {/* <Rating name="read-only" value={ratingValue} readOnly /> */}
               </CardContent>
               <CardActions>
                 {cart.some((p: any) => p.id === product.id) ? (
-                  <Button>In cart</Button>
+                  <Button sx={{color: 'black'}}>In cart</Button>
                 ) : (
                   <BuyButton dispatch={dispatch} product={product} />
                 )}

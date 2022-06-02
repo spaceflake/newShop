@@ -15,6 +15,7 @@ type PContext = {
   prods: Product[];
   categories: string[];
   dispatch: React.Dispatch<ProductActions>;
+  getAllProducts: () => void;
   createProduct: (product: ProductCreate) => void;
   updateProduct: (product: Product) => void;
   deleteProduct: (productId: string) => void;
@@ -23,9 +24,7 @@ type PContext = {
 export const ProductContext = createContext<PContext>({} as PContext);
 
 export const ProductsProvider: React.FC = ({ children }) => {
-  // const lsProducts = localStorage.getItem('products');
   let initialStateProducts: Product[] = [];
-  // lsProducts !== null ? JSON.parse(lsProducts) : mockedProducts;
   const [prods, setProds] = useState<Product[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
 
@@ -52,8 +51,6 @@ export const ProductsProvider: React.FC = ({ children }) => {
     }
   };
 
-  console.log(prods);
-
   const createProduct = async (product: ProductCreate) => {
     // TODO: add product to database
     await axios
@@ -72,15 +69,9 @@ export const ProductsProvider: React.FC = ({ children }) => {
 
   const updateProduct = async (product: Product) => {
     await axios
-      .put(
-        '/api/product/' + product.id,
-        {
-          ...product,
-        },
-        {
-          withCredentials: true,
-        }
-      )
+      .put('/api/product/' + product.id, {
+        ...product,
+      })
       .then(
         (res: AxiosResponse) => {
           console.log('suc');
@@ -118,6 +109,7 @@ export const ProductsProvider: React.FC = ({ children }) => {
         prods,
         categories,
         dispatch,
+        getAllProducts,
         createProduct,
         updateProduct,
         deleteProduct,

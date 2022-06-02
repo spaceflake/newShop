@@ -14,12 +14,11 @@ import { useProduct } from '../contexts/ProductsContext';
 import type { Product } from '@shared/types';
 
 function ProductListPage() {
-  const { prods, categories } = useProduct();
+  const { prods, categories, getAllProducts } = useProduct();
   // const [categories, setCategories] = useState<string[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [searchParams, setSearchParams] = useSearchParams();
   const selectedCategory = searchParams.get('category');
-  console.log(selectedCategory);
 
   const matches = useMediaQuery('(max-width: 440px)');
 
@@ -37,7 +36,6 @@ function ProductListPage() {
 
       setSearchParams({ category });
       setFilteredProducts(prodFilter);
-      console.log(category);
     },
     [prods, selectedCategory, setSearchParams]
   );
@@ -46,41 +44,60 @@ function ProductListPage() {
     filterCategories();
   }, [prods, filterCategories]);
 
+  useEffect(() => {
+    getAllProducts();
+  }, [getAllProducts, prods]);
+
   return (
-    <Container maxWidth="lg">
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          marginBottom: '1rem',
-        }}
-      >
-        <Typography gutterBottom variant="h6">
-          Kategorier
-        </Typography>
-        <ButtonGroup
-          orientation={matches ? 'vertical' : 'horizontal'}
-          aria-label="button group"
+    <>
+      <Container>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            marginBottom: '1rem',
+          }}
         >
-          {categories.map((category, index) => (
-            <Button
-              key={index}
-              variant="contained"
-              onClick={() => filterCategories(category)}
-            >
-              {category}
-            </Button>
-          ))}
-        </ButtonGroup>
-      </Box>
-      <Grid container spacing={2}>
-        {filteredProducts.map((product) => (
-          <Grid key={product.id} item xs={12} sm={6} md={4} lg={3}>
+          <Typography gutterBottom variant="h6">
+            Categories
+          </Typography>
+          <ButtonGroup
+            orientation={matches ? 'vertical' : 'horizontal'}
+            aria-label="button group"
+          >
+            {categories.map((category, index) => (
+              <Button
+                sx={{
+                  margin: '1rem 0.3rem',
+                  height: '3rem',
+                  bgcolor: '#ED6C02',
+                  border: 'none',
+                  color: ' white',
+                  '&:hover': {
+                    bgcolor: '#181818',
+                    color: 'white',
+                  },
+                }}
+                key={index}
+                variant={
+                  selectedCategory === category ? 'contained' : 'outlined'
+                }
+                onClick={() => filterCategories(category)}
+              >
+                {category}
+              </Button>
+            ))}
+          </ButtonGroup>
+        </Box>
+        <Grid
+          container
+          sx={{ gap: '1rem', alignItems: 'center', justifyContent: 'center' }}>
+          {filteredProducts.map((product) => (
             <ProductCard key={product.id} product={product} />
-          </Grid>
-        ))}
-      </Grid>
-    </Container>
+          ))}
+        </Grid>
+      </Container>
+    </>
   );
 }
 

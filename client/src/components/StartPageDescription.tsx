@@ -1,8 +1,8 @@
-import { Link } from "react-router-dom";
-import { Box, Button, Typography } from "@mui/material";
-import ducky from "../assets/ducky2.png";
-import PopularDucks from "./Cards/PopularDucks";
-import ShowCarousel from "./Carousel";
+import { Link } from 'react-router-dom';
+import { Box, Button, Typography } from '@mui/material';
+import hatLogo from '../assets/hatLogo.png';
+import PopularDucks from './Cards/PopularDucks';
+import ShowCarousel from './Carousel';
 
 function StartPageDesription() {
   return (
@@ -14,27 +14,26 @@ function StartPageDesription() {
         paddingTop: "2rem",
       }}
     >
+      <ShowCarousel />
       <Box
         sx={{
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          "@media screen and (max-width: 480px)": {
-            flexDirection: "column",
-          },
+          flexDirection: "column",
         }}
       >
         <img
           style={{
             width: "10rem",
           }}
-          src={ducky}
-          alt=""
+          src={hatLogo}
+          alt="logo"
         ></img>
         <Typography
           sx={{
             textAlign: "center",
-            padding: "1rem",
+            paddingTop: "1rem",
             fontSize: "clamp(1.5rem, 2.5vw, 2rem)",
           }}
         >
@@ -46,19 +45,21 @@ function StartPageDesription() {
           width: "70%",
           textAlign: "center",
           margin: "auto",
-          padding: "2rem",
+          paddingTop: "1rem",
+          paddingBottom: "2rem",
         }}
       >
         <Typography sx={{ fontSize: "clamp(1rem, 2.5vw, 1.1rem)" }}>
-          Here on Hats on Hats we got hats for everyone!
+          Here at Hats on Hats we got hats for everyone!
+          {<br />}
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nesciunt accusamus quod neque. Fugit qui, maiores nostrum ratione ipsam quidem obcaecati culpa itaque iusto, ut numquam incidunt, ex aperiam. Beatae, ullam.
         </Typography>
       </Box>
-      <ShowCarousel />
-      <Box sx={{ textAlign: "center" }}>
+      <Box sx={{ textAlign: 'center' }}>
         <Typography
           sx={{ marginBottom: "2rem", fontSize: "clamp(1.5rem, 2.5vw, 2rem)" }}
         >
-          See our products
+          Our popular products
         </Typography>
         <PopularDucks />
         <Link to="products">
@@ -67,13 +68,12 @@ function StartPageDesription() {
               mt: 2,
               mb: 2,
               height: "3rem",
-              bgcolor: "#0EDFE6",
+              bgcolor: "#ED6C02",
               border: "none",
-              color: " black",
+              color: " white",
               "&:hover": {
-                bgcolor: "#eaa0ff",
-                border: "none",
-                color: "black",
+                bgcolor: '#181818',
+                color: 'white',
               },
             }}
             variant="outlined"

@@ -15,8 +15,6 @@ Content-Type: application/json
   "photo": "newsboycap.jpg",
   "categories": ["Oldschool", "Fancy"],
   "stock": 9
-  
-
 }
 
 

@@ -11,17 +11,20 @@ import {
   Typography,
   Divider,
   Box,
-} from "@mui/material";
-import PaymentIcon from "@mui/icons-material/Payment";
-import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
-import RemoveIcon from "@mui/icons-material/Remove";
-import AddIcon from "@mui/icons-material/Add";
-import { Link } from "react-router-dom";
-import { useCart } from "../contexts/CartContext";
-import { CartType, Types } from "../contexts/Reducers";
+} from '@mui/material';
+import PaymentIcon from '@mui/icons-material/Payment';
+import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+import RemoveIcon from '@mui/icons-material/Remove';
+import AddIcon from '@mui/icons-material/Add';
+import { Link } from 'react-router-dom';
+import { useCart } from '../contexts/CartContext';
+import { CartType, Types } from '../contexts/Reducers';
+import { useUser } from '../contexts/UserContext';
+
 
 function CartList({ handleClose }: any) {
   const { cart, dispatch, total } = useCart();
+  const { user } = useUser();
 
   return (
     <>
@@ -47,6 +50,7 @@ function CartList({ handleClose }: any) {
               />
               <ButtonGroup
                 size="small"
+                color="warning"
                 sx={{
                   flexGrow: "1",
                   justifyContent: "flex-end",
@@ -57,6 +61,7 @@ function CartList({ handleClose }: any) {
               >
                 <Button
                   sx={{
+                    color: 'black',
                     "@media screen and (max-width: 440px)": {
                       padding: "0",
                       border: "none",
@@ -76,6 +81,7 @@ function CartList({ handleClose }: any) {
                 </Button>
                 <Button
                   sx={{
+                    color: 'black',
                     "@media screen and (max-width: 440px)": {
                       padding: "0",
                       border: "none",
@@ -87,6 +93,7 @@ function CartList({ handleClose }: any) {
                 </Button>
                 <Button
                   sx={{
+                    color: 'black',
                     "@media screen and (max-width: 440px)": {
                       padding: "0",
                       border: "none",
@@ -188,28 +195,30 @@ function CartList({ handleClose }: any) {
             Continue shopping
           </Button>
         </Link>
-        <Link to={cart.length ? "/checkoutPage" : ""}>
+
+        <Link to={cart.length && user ? '/checkoutPage' : '/login'}>
           <Button
             sx={{
-              bgcolor: "#0EDFE6",
+              height: "3rem",
+              bgcolor: "#ED6C02",
               border: "none",
-              color: " black",
+              color: " white",
               "&:hover": {
-                bgcolor: "#eaa0ff",
                 border: "none",
-                color: "black",
-              },
-              "@media screen and (max-width: 440px)": {
-                width: "100%",
-                borderRadius: "0",
-              },
+                bgcolor: '#181818',
+                color: 'white',
+                "@media screen and (max-width: 440px)": {
+                  width: "100%",
+                  borderRadius: "0",
+                },
+              }
             }}
             variant="outlined"
             endIcon={<PaymentIcon />}
             disabled={cart.length > 0 ? false : true}
             onClick={handleClose}
           >
-            To payment
+            {user ? 'To payment' : 'Log in to check out'}
           </Button>
         </Link>
       </Box>

@@ -8,6 +8,7 @@ export interface User {
   email: string;
   phone: string;
   isAdmin: boolean;
+  adminRequested: boolean;
   createdAt: Date;
   updateAt: Date;
 }
@@ -21,6 +22,7 @@ const userSchema = new mongoose.Schema<User>(
     password: { type: String, required: true },
     email: { type: String, minLength: 3, maxlength: 320, required: true },
     isAdmin: { type: Boolean, required: true, default: false },
+    adminRequested: { type: Boolean, required: true, default: false },
   },
   {
     toJSON: { virtuals: true },

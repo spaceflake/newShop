@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { Box } from "@mui/system";
 
 const SubscribeSchema = Yup.object().shape({
-  email: Yup.string().email("Ogiltig email adress").required("Obligatorisk"),
+  email: Yup.string().email("Ogiltig email adress").required("Obligatory"),
 });
 
 function SubscribeForm() {
@@ -22,7 +22,7 @@ function SubscribeForm() {
 
   return (
     <div>
-      <Typography variant="h6">Subscribe for our newsletters</Typography>
+      <Typography variant="h6">Subscribe to our newsletters</Typography>
       <Formik
         initialValues={{
           email: "",

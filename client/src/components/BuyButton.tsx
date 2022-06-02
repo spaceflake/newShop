@@ -9,14 +9,17 @@ function BuyButton({ dispatch, product }: any) {
         sx={{
           mt: 2,
           mb: 2,
-          height: "3rem",
-          bgcolor: "#0EDFE6",
-          border: "none",
-          color: " black",
-          "&:hover": {
-            bgcolor: "#eaa0ff",
-            border: "none",
-            color: "black",
+          padding: '0.5rem 1rem',
+          color: 'black',
+          border: 'solid',
+          borderColor: 'white',
+          bgcolor: 'white',
+          minWidth: 'max-content',
+          '&:hover': {
+            border: 'solid',
+            borderColor: 'black',
+            bgcolor: '#181818',
+            color: 'white',
           },
         }}
         onClick={() => {
@@ -28,7 +31,7 @@ function BuyButton({ dispatch, product }: any) {
         variant="outlined"
         endIcon={<AddShoppingCartIcon />}
       >
-        Buy now {product.price}kr
+        Add to cart
       </Button>
     </>
   );

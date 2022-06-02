@@ -1,20 +1,20 @@
-import { Link } from "react-router-dom";
-import { Box, Button, Typography } from "@mui/material";
-import Grid from "@mui/material/Grid";
-import { createTheme } from "@mui/material/styles";
-import { ThemeProvider } from "@emotion/react";
-import FacebookOutlinedIcon from "@mui/icons-material/FacebookOutlined";
-import InstagramIcon from "@mui/icons-material/Instagram";
-import klarna from "../../assets/PaymentLogos/klarna.png";
-import swish from "../../assets/PaymentLogos/swish.svg";
-import visa from "../../assets/PaymentLogos/visa.png";
-import mastercard from "../../assets/PaymentLogos/mastercard.png";
-import maestro from "../../assets/PaymentLogos/maestro.png";
-import instabox from "../../assets/ShippingLogos/instabox-full.jpg";
-import postnord from "../../assets/ShippingLogos/postnord-full.png";
-import schenker from "../../assets/ShippingLogos/schenker-full.png";
-import SubscribeForm from "../Forms/SubscribeForm";
-import duckLogo from "../../assets/ducky2.png";
+import { Link } from 'react-router-dom';
+import { Box, Button, Typography } from '@mui/material';
+import Grid from '@mui/material/Grid';
+import { createTheme } from '@mui/material/styles';
+import { ThemeProvider } from '@emotion/react';
+import FacebookOutlinedIcon from '@mui/icons-material/FacebookOutlined';
+import InstagramIcon from '@mui/icons-material/Instagram';
+import klarna from '../../assets/PaymentLogos/klarna.png';
+import swish from '../../assets/PaymentLogos/swish.svg';
+import visa from '../../assets/PaymentLogos/visa.png';
+import mastercard from '../../assets/PaymentLogos/mastercard.png';
+import maestro from '../../assets/PaymentLogos/maestro.png';
+import instabox from '../../assets/ShippingLogos/instabox-full.jpg';
+import postnord from '../../assets/ShippingLogos/postnord-full.png';
+import schenker from '../../assets/ShippingLogos/schenker-full.png';
+import SubscribeForm from '../Forms/SubscribeForm';
+import hatLogo from '../../assets/hatLogo.png';
 
 const theme = createTheme({
   palette: {
@@ -58,7 +58,7 @@ function LinksContainer() {
           justifyContent: "center",
         }}
       >
-        <img src={duckLogo} width="200" height="200" alt=""></img>
+        <img src={hatLogo} style={{height: '11rem'}} alt=""></img>
       </Grid>
       <Grid
         item

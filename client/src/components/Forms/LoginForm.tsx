@@ -1,10 +1,10 @@
-import { Button, Typography } from "@mui/material";
-import { useFormik } from "formik";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import * as Yup from "yup";
-import { useUser } from "../../contexts/UserContext";
-import InputField from "./InputField";
+import { Box, Button, Typography } from '@mui/material'
+import { useFormik } from 'formik'
+import { useState } from 'react'
+import { Navigate, useNavigate } from 'react-router-dom'
+import * as Yup from 'yup'
+import { useUser } from '../../contexts/UserContext'
+import InputField from './InputField'
 
 type LoginDetailsSchemaType = Record<keyof LoginDetails, Yup.AnySchema>;
 
@@ -87,30 +87,51 @@ function LoginForm(_props: Props) {
         helperText={touched.password && errors.password}
       />
 
-      <Button
-        variant="outlined"
-        type="submit"
-        sx={{
-          mt: 2,
-          mb: 2,
-          height: "3rem",
-          bgcolor: "#0EDFE6",
-          border: "none",
-          color: " black",
-          "&:hover": {
-            bgcolor: "#eaa0ff",
+      <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+        <Button
+          variant="outlined"
+          type="submit"
+          sx={{
+            marginTop: '1rem',
+            height: "3rem",
+            bgcolor: "#ED6C02",
             border: "none",
-            color: "black",
-          },
-          "@media screen and (max-width: 440px)": {
-            borderRadius: "0",
-            mt: 2,
-            mb: 0,
-          },
-        }}
-      >
-        Log in
-      </Button>
+            color: " white",
+            "&:hover": {
+              bgcolor: '#181818',
+              color: 'white',
+            },
+            '@media screen and (max-width: 440px)': {
+              mt: 2,
+              mb: 0,
+            },
+          }}
+        >
+          Log in
+        </Button>
+        <Button
+          onClick={() => nav('/signup')}
+          variant="outlined"
+          type="submit"
+          sx={{
+            marginTop: '1rem',
+            height: "3rem",
+            bgcolor: "#ED6C02",
+            border: "none",
+            color: " white",
+            "&:hover": {
+              bgcolor: '#181818',
+              color: 'white',
+            },
+            '@media screen and (max-width: 440px)': {
+              mt: 2,
+              mb: 0,
+            },
+          }}
+        >
+          Create account
+        </Button>
+      </Box>
     </form>
   );
 }
