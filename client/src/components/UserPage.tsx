@@ -9,10 +9,10 @@ export default function UserPage() {
     }
 
     return (
-        <Box sx={{display: 'flex', justifyContent:'center', alignItems: 'center', flexDirection: 'column'}}>
+        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
             <Typography variant="h6">Your previous orders:</Typography>
 
-            <form onSubmit={(e) => handleSubmit(e)}>
+            <form style={{ marginTop: '2rem', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }} onSubmit={(e) => handleSubmit(e)}>
                 <FormControlLabel control={<Checkbox required />} label="I wish to become an admin" />
                 <Button
                     sx={{
