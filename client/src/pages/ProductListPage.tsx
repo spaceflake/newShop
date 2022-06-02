@@ -89,11 +89,11 @@ function ProductListPage() {
             ))}
           </ButtonGroup>
         </Box>
-        <Grid container spacing={2}>
+        <Grid
+          container
+          sx={{ gap: '1rem', alignItems: 'center', justifyContent: 'center' }}>
           {filteredProducts.map((product) => (
-            <Grid key={product.id} item xs={12} sm={6} md={4} lg={3}>
-              <ProductCard key={product.id} product={product} />
-            </Grid>
+            <ProductCard key={product.id} product={product} />
           ))}
         </Grid>
       </Container>

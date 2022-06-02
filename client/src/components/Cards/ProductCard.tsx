@@ -22,7 +22,7 @@ function ProductCard({ product }: Props) {
   const { cart, dispatch } = useCart();
 
   return (
-    <Card elevation={10} key={product.id} sx={{ borderRadius: '1rem', padding: '1rem' }}>
+    <Card elevation={10} key={product.id} sx={{ maxHeight: '450px', width: '300px', borderRadius: '1rem', padding: '1rem' }}>
       <CardActionArea>
         <Link to={`/products/${product.id}`}>
           <CardContent sx={{ padding: '0' }}>
@@ -73,11 +73,10 @@ function ProductCard({ product }: Props) {
         <Link to={`/products/${product.id}`}>
           <Button
             sx={{
-              margin: '1rem 0.5rem',
               padding: '0.5rem 1rem',
               color: 'black',
               border: 'solid',
-              borderColor: 'black',
+              borderColor: 'white',
               bgcolor: 'white',
               '&:hover': {
                 border: 'solid',
@@ -92,7 +91,7 @@ function ProductCard({ product }: Props) {
           </Button>
         </Link>
         {cart && cart.some((p: CartType) => p.id === product.id) ? (
-          <Button sx={{color: 'black'}}>In cart</Button>
+          <Button sx={{color: '#ED6C02'}}>In cart</Button>
         ) : product.stock === 0 ? (
           'not in stock'
         ) : (
