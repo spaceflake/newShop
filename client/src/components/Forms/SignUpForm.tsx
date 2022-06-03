@@ -140,19 +140,16 @@ function SignUpForm(_props: Props) {
         variant="outlined"
         type="submit"
         sx={{
-          mt: 2,
-          mb: 2,
+          marginTop: '1rem',
           height: "3rem",
-          bgcolor: "#0EDFE6",
+          bgcolor: "#ED6C02",
           border: "none",
-          color: " black",
+          color: " white",
           "&:hover": {
-            bgcolor: "#eaa0ff",
-            border: "none",
-            color: "black",
+            bgcolor: '#181818',
+            color: 'white',
           },
-          "@media screen and (max-width: 440px)": {
-            borderRadius: "0",
+          '@media screen and (max-width: 440px)': {
             mt: 2,
             mb: 0,
           },
