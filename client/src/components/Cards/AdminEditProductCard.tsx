@@ -71,7 +71,6 @@ function ProductCard({ product }: Props) {
     setOpenDelete(false);
   };
 
-  //    const id = Math.max(...products.map((p) => p.id)) + 1;
   let drawerWidth;
   if (!openEditProduct) {
     drawerWidth = '0%';

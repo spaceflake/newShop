@@ -1,19 +1,18 @@
-import { Button, Typography } from "@mui/material";
-import { useFormik } from "formik";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import * as Yup from "yup";
-import { useUser } from "../../contexts/UserContext";
-import InputField from "./InputField";
-import axios, { AxiosResponse } from "axios";
+import { Button, Typography } from '@mui/material';
+import axios, { AxiosResponse } from 'axios';
+import { useFormik } from 'formik';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import * as Yup from 'yup';
+import InputField from './InputField';
 
 type SignUpDetailsSchemaType = Record<keyof SignUpDetails, Yup.AnySchema>;
 
 const SignUpFormSchema = Yup.object().shape<SignUpDetailsSchemaType>({
-  firstName: Yup.string().required("Please enter your firstname."),
-  lastName: Yup.string().required("Please enter your lastname."),
-  email: Yup.string().required("Please enter your email."),
-  password: Yup.string().required("Please enter your password."),
+  firstName: Yup.string().required('Please enter your firstname.'),
+  lastName: Yup.string().required('Please enter your lastname.'),
+  email: Yup.string().required('Please enter your email.'),
+  password: Yup.string().required('Please enter your password.'),
 });
 
 export interface SignUpDetails {
@@ -28,14 +27,13 @@ interface Props {
 }
 
 const emptyForm: SignUpDetails = {
-  firstName: "",
-  lastName: "",
-  email: "",
-  password: "",
+  firstName: '',
+  lastName: '',
+  email: '',
+  password: '',
 };
 
 function SignUpForm(_props: Props) {
-  // const userContext = useUser()
   const [submitError, setSubmitError] = useState<string | undefined>(undefined);
   let nav = useNavigate();
 
@@ -48,7 +46,7 @@ function SignUpForm(_props: Props) {
         const userRegister = async () => {
           await axios
             .post(
-              "http://localhost:4000/api/user/register",
+              'http://localhost:4000/api/user/register',
               {
                 ...SignUpDetails,
               },
@@ -58,15 +56,15 @@ function SignUpForm(_props: Props) {
             )
             .then(
               (res: AxiosResponse) => {
-                console.log("user has been registerd ");
+                console.log('user has been registerd ');
                 console.log(res);
                 console.log(SignUpDetails);
 
-                nav("/");
+                nav('/');
                 resetForm();
               },
               () => {
-                console.log("failed to register");
+                console.log('failed to register');
               }
             );
         };
@@ -79,7 +77,7 @@ function SignUpForm(_props: Props) {
     <form onSubmit={handleSubmit}>
       {/* Display error if invalid input */}
       {!!submitError && (
-        <Typography sx={{ color: "red" }}>{submitError}</Typography>
+        <Typography sx={{ color: 'red' }}>{submitError}</Typography>
       )}
 
       {/* firstName name input */}
@@ -141,11 +139,11 @@ function SignUpForm(_props: Props) {
         type="submit"
         sx={{
           marginTop: '1rem',
-          height: "3rem",
-          bgcolor: "#ED6C02",
-          border: "none",
-          color: " white",
-          "&:hover": {
+          height: '3rem',
+          bgcolor: '#ED6C02',
+          border: 'none',
+          color: ' white',
+          '&:hover': {
             bgcolor: '#181818',
             color: 'white',
           },

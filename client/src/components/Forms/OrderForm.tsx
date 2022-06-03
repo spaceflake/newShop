@@ -86,7 +86,6 @@ interface Props {
 }
 
 function OrderForm(props: Props) {
-  const { user } = useUser();
   const { updateProduct } = useProduct();
 
   let navigate = useNavigate();
@@ -232,14 +231,14 @@ function OrderForm(props: Props) {
 
               <Button
                 sx={{
-                  height: "3rem",
+                  height: '3rem',
                   marginTop: '2rem',
-                  bgcolor: "#ED6C02",
-                  border: "none",
-                  color: " white",
+                  bgcolor: '#ED6C02',
+                  border: 'none',
+                  color: ' white',
                   fontSize: '1.5rem',
-                  "&:hover": {
-                    border: "none",
+                  '&:hover': {
+                    border: 'none',
                     bgcolor: '#181818',
                     color: 'white',
                   },

@@ -5,16 +5,14 @@ import {
   Button,
   Container,
   Drawer,
-  FormLabel,
   IconButton,
   styled,
   TextField,
   Typography,
 } from '@mui/material';
-import { display, padding } from '@mui/system';
 import { FormikErrors, useFormik } from 'formik';
 import { useState } from 'react';
-import { useProduct, ProductCreate } from '../../contexts/ProductsContext';
+import { ProductCreate, useProduct } from '../../contexts/ProductsContext';
 import AdminEditProduct from './AdminEditProduct';
 
 const validate = (values: ProductCreate) => {
@@ -131,92 +129,113 @@ const AdminProductControl = () => {
               </IconButton>
               <Typography>Add Product</Typography>
             </DrawerHeader>
-              <AddForm>
-            <form onSubmit={formik.handleSubmit}>
-              <div>
+            <AddForm>
+              <form onSubmit={formik.handleSubmit}>
                 <div>
                   <div>
-                    <label htmlFor="name">Title</label>  
-                    <TextField
-                     sx={{display: 'flex', justifyContent: 'center', padding: '1rem'}}
-                      id="title"
-                      name="title"
-                      type="title"
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      value={formik.values.title}
-                    />
-                    {formik.touched.title && formik.errors.title ? (
-                      <div>{formik.errors.title}</div>
-                    ) : null}
-                  </div>
+                    <div>
+                      <label htmlFor="name">Title</label>
+                      <TextField
+                        sx={{
+                          display: 'flex',
+                          justifyContent: 'center',
+                          padding: '1rem',
+                        }}
+                        id="title"
+                        name="title"
+                        type="title"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.title}
+                      />
+                      {formik.touched.title && formik.errors.title ? (
+                        <div>{formik.errors.title}</div>
+                      ) : null}
+                    </div>
 
-                  <div>
-                    <label htmlFor="price">Price</label>
-                    <TextField
-                    sx={{display: 'flex', justifyContent: 'center', padding: '1rem'}}
-                      id="price"
-                      name="price"
-                      type="price"
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      value={formik.values.price}
-                    />
-                    {formik.touched.price && formik.errors.price ? (
-                      <div>{formik.errors.price}</div>
-                    ) : null}
-                  </div>
+                    <div>
+                      <label htmlFor="price">Price</label>
+                      <TextField
+                        sx={{
+                          display: 'flex',
+                          justifyContent: 'center',
+                          padding: '1rem',
+                        }}
+                        id="price"
+                        name="price"
+                        type="price"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.price}
+                      />
+                      {formik.touched.price && formik.errors.price ? (
+                        <div>{formik.errors.price}</div>
+                      ) : null}
+                    </div>
 
-                  <div>
-                    <label htmlFor="photo">Add Image</label>
-                    <TextField
-                     sx={{display: 'flex', justifyContent: 'center', padding: '1rem'}}
-                      id="photo"
-                      name="photo"
-                      type="text"
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      value={formik.values.photo}
-                    />
-                    {/* {formik.touched.photo && formik.errors.photo ? <div >{formik.errors.photo}</div> : null} */}
-                  </div>
+                    <div>
+                      <label htmlFor="photo">Add Image</label>
+                      <TextField
+                        sx={{
+                          display: 'flex',
+                          justifyContent: 'center',
+                          padding: '1rem',
+                        }}
+                        id="photo"
+                        name="photo"
+                        type="text"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.photo}
+                      />
+                      {/* {formik.touched.photo && formik.errors.photo ? <div >{formik.errors.photo}</div> : null} */}
+                    </div>
 
-                  <div>
-                    <label htmlFor="description">Description</label>
-                    <TextField
-                  sx={{display: 'flex', justifyContent: 'center', padding: '1rem'}}
-                      id="description"
-                      name="description"
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      value={formik.values.description}
-                    />
-                    {formik.touched.description && formik.errors.description ? (
-                      <div>{formik.errors.description}</div>
-                    ) : null}
-                  </div>
-                  <div>
-                    <label htmlFor="description">Stock</label>
-                    <TextField
-                  sx={{display: 'flex', justifyContent: 'center', padding: '1rem'}}
-                      id="Stock"
-                      name="Stock"
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      value={formik.values.stock}
-                    />
-                    {/* {product.stock <= 2 ? <p>This prosduct almost finished</p> : null} */}
-                    {formik.touched.stock && formik.errors.stock ? (
-                      <div>{formik.errors.stock}</div>
-                    ) : null}
-                  </div>
+                    <div>
+                      <label htmlFor="description">Description</label>
+                      <TextField
+                        sx={{
+                          display: 'flex',
+                          justifyContent: 'center',
+                          padding: '1rem',
+                        }}
+                        id="description"
+                        name="description"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.description}
+                      />
+                      {formik.touched.description &&
+                      formik.errors.description ? (
+                        <div>{formik.errors.description}</div>
+                      ) : null}
+                    </div>
+                    <div>
+                      <label htmlFor="description">Stock</label>
+                      <TextField
+                        sx={{
+                          display: 'flex',
+                          justifyContent: 'center',
+                          padding: '1rem',
+                        }}
+                        id="Stock"
+                        name="Stock"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.stock}
+                      />
+                      {/* {product.stock <= 2 ? <p>This prosduct almost finished</p> : null} */}
+                      {formik.touched.stock && formik.errors.stock ? (
+                        <div>{formik.errors.stock}</div>
+                      ) : null}
+                    </div>
 
-                  <div>
-                    <button type="submit">SAVE</button>
+                    <div>
+                      <button type="submit">SAVE</button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </form>
+              </form>
             </AddForm>
           </Drawer>
         </Box>
@@ -231,7 +250,6 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   alignItems: 'center',
   padding: theme.spacing(0, 1),
   justifyContent: 'flex-start',
-  
 }));
 
 const AddForm = styled('div')(({ theme }) => ({
@@ -239,11 +257,6 @@ const AddForm = styled('div')(({ theme }) => ({
   alignItems: 'center',
   padding: '1rem',
   justifyContent: 'flex-start',
-  
-  
 }));
-
-
-
 
 export default AdminProductControl;

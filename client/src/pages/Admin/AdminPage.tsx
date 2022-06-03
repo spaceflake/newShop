@@ -10,8 +10,6 @@ import AdminOrderControl from './AdminOrderControl';
 function AdminPage() {
   const [activePage, setActivePage] = useState('products');
 
-  // add order resource
-
   return (
     <>
       <Container maxWidth="lg">
