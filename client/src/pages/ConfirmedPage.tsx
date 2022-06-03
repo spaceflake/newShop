@@ -11,10 +11,21 @@ import { Order } from "@shared/types";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { Delivery } from '@shared/types'
 
 function ConfirmedOrderPage() {
   const { id } = useParams();
   const [order, setOrder] = useState<Order>();
+  const [deliveryOptions, setDeliveryoptions] = useState<Delivery[]>([]);
+
+  useEffect(() => {
+    const getDeliveryOptions = async () => {
+      const res = await axios.get("/api/delivery");
+      const data = await res.data;
+      setDeliveryoptions(data);
+    };
+    getDeliveryOptions();
+  }, []);
 
   useEffect(() => {
     const getOrder = async () => {
@@ -97,12 +108,12 @@ function ConfirmedOrderPage() {
         <br />
         <Divider />
         {/* Get shipping method  TODO  */}
-        {/* <h3>Leveransmetod:</h3>
+        <h3>Deliver by:</h3>
         <>
-          {typeof order.order.shippingMethod === 'number'
-            ? deliveryOptions[order.order.shippingMethod].name
+          {typeof order?.shippingMethod === 'number'
+            ? deliveryOptions[order.shippingMethod].name
             : ''}
-        </> */}
+        </> 
         <Divider />
         {/* Get payment method  Todo  */}
         {/* <h3>Betalningsmetod:</h3>

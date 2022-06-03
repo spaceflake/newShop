@@ -48,7 +48,7 @@ export const updateProduct = async (
 ) => {
   const product = await ProductModel.findById(req.params.id);
   await product?.updateOne({
-    $set: { ...req.body, photoId: '6298712ce7b4e60b692e0db2' },
+    $set: req.body,
   });
   res.status(200).json('UPDATED PRODUCT WITH ID: ' + req.params.id);
 };

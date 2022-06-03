@@ -72,6 +72,7 @@ export const UserProvider: React.FC<React.ReactNode> = ({ children }) => {
     setAllUsers(res);
     console.log(res);
   };
+  
   useEffect(() => {
     getAllUsers();
   }, []);
