@@ -5,6 +5,7 @@ export interface Product {
   title: string;
   description: string;
   price: number;
+  photo?: string;
   photoId: Types.ObjectId;
   categories: string[];
   stock: number;

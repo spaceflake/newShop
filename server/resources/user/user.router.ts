@@ -1,4 +1,5 @@
 import express from 'express';
+import { auth, admin } from '../../middleware/Auth';
 import {
   getAllUsers,
   addUser,
@@ -9,8 +10,8 @@ import {
 
 export const userRouter = express
   .Router()
-  .get('/user', /* adminSecure,*/ getAllUsers)
+  .get('/user', auth, admin, getAllUsers)
   .post('/user/register', addUser)
-  .put('/user/:id', updateUser)
-  .delete('/user/:id', deleteUser)
+  .put('/user/:id', auth, admin, updateUser)
+  .delete('/user/:id', auth, admin, deleteUser)
   .get('/logged', loggedUser);

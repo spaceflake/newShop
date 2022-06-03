@@ -46,22 +46,16 @@ export const updateProduct = async (
   req: Request<{ id: string }>,
   res: Response
 ) => {
-  try {
-    const product = await ProductModel.findById(req.params.id);
-    await product?.updateOne({ $set: req.body });
-    res.status(200).json('UPDATED PRODUCT WITH ID: ' + req.params.id);
-  } catch (err) {
-    res.status(500).json(err);
-  }
+  const product = await ProductModel.findById(req.params.id);
+  await product?.updateOne({
+    $set: { ...req.body, photoId: '6298712ce7b4e60b692e0db2' },
+  });
+  res.status(200).json('UPDATED PRODUCT WITH ID: ' + req.params.id);
 };
 export const deleteProduct = async (req: Request, res: Response) => {
-  try {
-    const product = await ProductModel.findById(req.params.id);
-    await product?.deleteOne({ $set: req.body });
-    res.status(200).json('DELETED PRODUCT with ID: ' + req.params.id);
-  } catch (err: any) {
-    res.status(500).json('error: ' + err.message);
-  }
+  const product = await ProductModel.findById(req.params.id);
+  await product?.deleteOne({ $set: req.body });
+  res.status(200).json('DELETED PRODUCT with ID: ' + req.params.id);
 };
 
 export const updateStock = async (order: Order) => {
