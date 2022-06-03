@@ -81,8 +81,6 @@ function ProductCard({ product }: Props) {
     formik.setFieldValue('categories',  [...categorySelect])
   };
 
-  const filteredCategories = categories.splice(0, 0,)
-  console.log(filteredCategories);
   
   
   const handleEditDrawerOpen = () => {
