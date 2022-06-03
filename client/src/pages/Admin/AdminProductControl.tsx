@@ -19,6 +19,7 @@ import axios from 'axios';
 import { FormikErrors, useFormik } from 'formik';
 import { ChangeEvent, useState } from 'react';
 import { useProduct, ProductCreate } from '../../contexts/ProductsContext';
+
 import AdminEditProduct from './AdminEditProduct';
 
 const Input = styled('input')({
@@ -166,7 +167,6 @@ const AdminProductControl = () => {
               </IconButton>
               <Typography>Add Product</Typography>
             </DrawerHeader>
-
             <form onSubmit={formik.handleSubmit}>
             <Box>
               <Box>
@@ -294,6 +294,13 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   padding: theme.spacing(0, 1),
+  justifyContent: 'flex-start',
+}));
+
+const AddForm = styled('div')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  padding: '1rem',
   justifyContent: 'flex-start',
 }));
 

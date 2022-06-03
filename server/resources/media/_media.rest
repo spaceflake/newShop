@@ -1,4 +1,5 @@
-GET http://localhost:4000/api/media/6292302aaf99ce6febb77670
+GET http://localhost:4000/api/media/62987216e7b4e60b692e0dc3
+
 
 ###
 
@@ -10,10 +11,10 @@ POST http://localhost:4000/api/media
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
-Content-Disposition: form-data; name="media"; filename="schenker-full.png"
+Content-Disposition: form-data; name="media"; filename="bowlerHat.jpg"
 Content-Type: image/jpeg
 
-< ./client/src/assets/ShippingLogos/schenker-full.png
+< ./client\src\assets\CategoriesPictures\bowlerHat.jpg
 
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--
 ###
@@ -28,3 +29,5 @@ Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0g
 ###
 
 DELETE http://localhost:4000/api/media/628dfaa3cd220a4afdab7904
+
+

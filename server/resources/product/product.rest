@@ -9,13 +9,12 @@ POST http://localhost:4000/api/product
 Content-Type: application/json
 
 {
-  "title": "test hat",
-  "description": "loremdeoloaron onfseoe knfsoen",
-  "price": 295,
-  "photoId": "62987188e7b4e60b692e0db9",
-  "categories": ["other, test"],
-  "stock": 12,
-  "qty": 0
+  "title": "Newsboy Cap" ,
+  "description": "Extra extra! this hat is on fire",
+  "price": 199,
+  "photo": "newsboycap.jpg",
+  "categories": ["Oldschool", "Fancy"],
+  "stock": 9
 }
 
 
