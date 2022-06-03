@@ -1,5 +1,7 @@
 import bcrypt from 'bcrypt';
 import { NextFunction, Request, Response } from 'express';
+import { userInfo } from 'os';
+import { HttpError } from '../../middleware/errorMiddleware';
 import { User, UserModel } from './user.model';
 
 export const getAllUsers = async (req: Request, res: Response) => {
@@ -92,4 +94,21 @@ export const deleteUser = async (req: Request, res: Response) => {
 
 export const loggedUser = async (req: Request, res: Response) => {
   res.send(req.user);
+};
+
+export const adminRequest = async (req: Request, res: Response) => {
+  const user = await UserModel.findById(req.params.id);
+  await user?.updateOne({
+    $set: { adminRequested: true },
+  });
+
+  if (!user) {
+    throw new HttpError(404, 'Not logged in');
+  }
+  // user.adminRequested = true;
+  res.status(200).json({
+    success: true,
+    msg: 'Your request for becoming an admin has been sent.',
+    user,
+  });
 };
