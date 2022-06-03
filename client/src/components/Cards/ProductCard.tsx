@@ -43,27 +43,31 @@ function ProductCard({ product }: Props) {
                 flexDirection: 'column',
               }}
             >
-              <Typography
-                variant="h5"
-                component="span"
-                fontWeight="700"
-                sx={{ marginRight: '.4rem', color: '#181818' }}
-              >
-                {product.title}
-              </Typography>
 
               <Box component="span">
-                <Typography
-                  component="span"
-                  sx={{ marginRight: '.4rem', color: '#181818' }}
-                >
-                  {product.stock === 0 ? 'Out of stock' : `${product.stock} left in stock`}
-                </Typography>
               </Box>
             </Box>
           </CardContent>
         </Link>
       </CardActionArea>
+      <Box sx={{textAlign: 'center'}}>
+        <Typography
+          variant="h5"
+          component="span"
+          fontWeight="700"
+          sx={{ marginRight: '.4rem', color: '#181818' }}
+        >
+          {product.title}
+        </Typography>
+        <br/>
+        <Typography>{product.price} kr</Typography>
+        <Typography
+          component="span"
+          sx={{ marginRight: '.4rem', color: '#181818' }}
+        >
+          {product.stock === 0 ? 'Out of stock' : `${product.stock} left in stock`}
+        </Typography>
+      </Box>
       <CardActions
         sx={{
           justifyContent: 'space-between',
@@ -91,7 +95,7 @@ function ProductCard({ product }: Props) {
           </Button>
         </Link>
         {cart && cart.some((p: CartType) => p.id === product.id) ? (
-          <Button sx={{color: '#ED6C02'}}>In cart</Button>
+          <Button sx={{ color: '#ED6C02' }}>In cart</Button>
         ) : product.stock === 0 ? (
           'not in stock'
         ) : (

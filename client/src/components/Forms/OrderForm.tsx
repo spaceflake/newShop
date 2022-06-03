@@ -86,7 +86,6 @@ interface Props {
 }
 
 function OrderForm(props: Props) {
-  const { user } = useUser();
   const { updateProduct } = useProduct();
 
   let navigate = useNavigate();

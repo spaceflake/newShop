@@ -1,16 +1,16 @@
-import { Box, Button, Typography } from '@mui/material'
-import { useFormik } from 'formik'
-import { useState } from 'react'
-import { Navigate, useNavigate } from 'react-router-dom'
-import * as Yup from 'yup'
-import { useUser } from '../../contexts/UserContext'
-import InputField from './InputField'
+import { Box, Button, Typography } from '@mui/material';
+import { useFormik } from 'formik';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import * as Yup from 'yup';
+import { useUser } from '../../contexts/UserContext';
+import InputField from './InputField';
 
 type LoginDetailsSchemaType = Record<keyof LoginDetails, Yup.AnySchema>;
 
 const LoginFormSchema = Yup.object().shape<LoginDetailsSchemaType>({
-  email: Yup.string().required("Please enter your email."),
-  password: Yup.string().required("Please enter your password."),
+  email: Yup.string().required('Please enter your email.'),
+  password: Yup.string().required('Please enter your password.'),
 });
 
 export interface LoginDetails {
@@ -23,8 +23,8 @@ interface Props {
 }
 
 const emptyForm: LoginDetails = {
-  email: "",
-  password: "",
+  email: '',
+  password: '',
 };
 
 function LoginForm(_props: Props) {
@@ -44,7 +44,7 @@ function LoginForm(_props: Props) {
           .login(loginDetails)
           .then(() => {
             resetForm();
-            nav("/");
+            nav('/');
           })
           .catch((e) => {
             setSubmitError(e.message);
@@ -58,7 +58,7 @@ function LoginForm(_props: Props) {
     <form onSubmit={handleSubmit}>
       {/* Display error if invalid input */}
       {!!submitError && (
-        <Typography sx={{ color: "red" }}>{submitError}</Typography>
+        <Typography sx={{ color: 'red' }}>{submitError}</Typography>
       )}
 
       {/* user name input */}
@@ -87,17 +87,24 @@ function LoginForm(_props: Props) {
         helperText={touched.password && errors.password}
       />
 
-      <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
         <Button
           variant="outlined"
           type="submit"
           sx={{
             marginTop: '1rem',
-            height: "3rem",
-            bgcolor: "#ED6C02",
-            border: "none",
-            color: " white",
-            "&:hover": {
+            height: '3rem',
+            bgcolor: '#ED6C02',
+            border: 'none',
+            color: ' white',
+            '&:hover': {
               bgcolor: '#181818',
               color: 'white',
             },
@@ -115,11 +122,11 @@ function LoginForm(_props: Props) {
           type="submit"
           sx={{
             marginTop: '1rem',
-            height: "3rem",
-            bgcolor: "#ED6C02",
-            border: "none",
-            color: " white",
-            "&:hover": {
+            height: '3rem',
+            bgcolor: '#ED6C02',
+            border: 'none',
+            color: ' white',
+            '&:hover': {
               bgcolor: '#181818',
               color: 'white',
             },

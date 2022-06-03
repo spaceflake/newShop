@@ -63,14 +63,16 @@ function ProductPage() {
                 <Typography variant="h3" component="div" gutterBottom>
                   {product.title}
                 </Typography>
-                <Typography sx={{fontSize: '1,5rem'}}>
+                <Typography sx={{ fontSize: '1,5rem' }}>
+                  {product.price} kr
+                </Typography>
+                <Typography sx={{ fontSize: '1,5rem' }}>
                   {product.description}
                 </Typography>
-                {/* <Rating name="read-only" value={ratingValue} readOnly /> */}
               </CardContent>
               <CardActions>
                 {cart.some((p: any) => p.id === product.id) ? (
-                  <Button sx={{color: 'black'}}>In cart</Button>
+                  <Button sx={{ color: 'black' }}>In cart</Button>
                 ) : (
                   <BuyButton dispatch={dispatch} product={product} />
                 )}
