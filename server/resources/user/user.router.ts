@@ -1,5 +1,5 @@
 import express from 'express';
-import { auth, admin } from '../../middleware/Auth';
+import { auth, admin } from '../../middleware/auth';
 import {
   getAllUsers,
   addUser,

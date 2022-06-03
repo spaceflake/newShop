@@ -28,10 +28,10 @@ export const UserContext = React.createContext<UserContextValue>({
   },
   allUsers: [],
   login: (_loginDetails: LoginDetails): Promise<boolean> => {
-    return new Promise(() => {});
+    return new Promise(() => { });
   },
-  logout: () => {},
-  getAllUsers: () => {},
+  logout: () => { },
+  getAllUsers: () => { },
 });
 
 export const UserProvider: React.FC<React.ReactNode> = ({ children }) => {
@@ -46,6 +46,9 @@ export const UserProvider: React.FC<React.ReactNode> = ({ children }) => {
       .then((user) => {
         setUser(user);
         setIsLoading(false);
+        if (user.isAdmin) {
+          getAllUsers();
+        }
         return true;
       })
       .catch((e) => {
@@ -72,9 +75,6 @@ export const UserProvider: React.FC<React.ReactNode> = ({ children }) => {
     setAllUsers(res);
     console.log(res);
   };
-  useEffect(() => {
-    getAllUsers();
-  }, []);
   return (
     <UserContext.Provider
       value={{ getAllUsers, allUsers, user, isLoading, login, logout }}

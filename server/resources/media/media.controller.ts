@@ -4,15 +4,13 @@ import mongoose, { Types } from 'mongoose';
 import { Readable } from 'stream';
 import { bucket } from './media.model';
 import sharp from 'sharp';
+import { HttpError } from '../../middleware/errorMiddleware';
 // import { rmSync, write } from 'fs';
 
 export const getAll = async (req: Request, res: Response) => {
   const files = await bucket.find().toArray();
   if (!files || files.length === 0) {
-    return res.status(200).json({
-      success: false,
-      message: 'No files available',
-    });
+    throw new HttpError(404, 'Files not found');
   }
 
   res.status(200).json({
@@ -25,7 +23,7 @@ export const getMedia = async (req: Request, res: Response) => {
   const _id = new mongoose.Types.ObjectId(req.params.id);
   const file = await bucket.find({ _id }).next();
   if (!file || !file.contentType) {
-    return res.status(404).json('media file with this id does not exist');
+    throw new HttpError(404, 'File with this id could not be found');
   }
 
   res.setHeader('Content-Type', file.contentType);
@@ -40,7 +38,7 @@ export const addMedia = async (
   next: NextFunction
 ) => {
   if (!req.file) {
-    return;
+      throw new HttpError(404, 'File not found');
   }
 
   const { originalname, mimetype, buffer } = req.file;
@@ -89,9 +87,9 @@ export const addMedia = async (
 };
 
 export const deleteMedia = (req: Request, res: Response) => {
-  bucket.delete(new mongoose.Types.ObjectId(req.params.id), (err, data) => {
+  bucket.delete(new mongoose.Types.ObjectId(req.params.id), (err) => {
     if (err) {
-      return res.status(404).json({ err: err });
+      return res.status(404).json({ err });
     }
 
     res.status(200).json({

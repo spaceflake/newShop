@@ -1,4 +1,5 @@
 import express from 'express';
+import { admin, auth } from '../../middleware/auth';
 import {
   getAllOrders,
   getOrder,
@@ -9,8 +10,8 @@ import {
 
 export const orderRouter = express
   .Router()
-  .get('/order', /* adminSecure,*/ getAllOrders)
-  .get('/order/:id', /* adminSecure,*/ getOrder)
+  .get('/order', auth, admin, getAllOrders)
+  .get('/order/:id', auth, admin, getOrder)
   .get('/users-orders/:id', getSpecUserOrders)
-  .post('/order', addOrder)
-  .put('/order/:id', /* adminSecure,*/ updateOrder);
+  .post('/order', auth, addOrder)
+  .put('/order/:id', auth, admin, updateOrder);
