@@ -141,14 +141,13 @@ const AdminProductControl = () => {
             Add a new product
           </Button>
           <Drawer
-            sx={{
-              position: 'absolute',
+             sx={{
+              // position: 'absolute',
               flexShrink: 0,
               '& .MuiDrawer-paper': {
                 marginTop: '3rem',
-                marginRight: { sm: '8rem', lg: '20rem' },
-                width: { xs: '100%', sm: '50%', md: '80%', lg: '80%' },
-                height: { xs: '60%', sm: '50%', md: '90%', lg: '90%' },
+                width: "min(100% - 1rem, 30rem)",
+                marginInline: "auto",
                 backgroundColor: '#ECECEC',
                 borderRadius: '20px',
               },

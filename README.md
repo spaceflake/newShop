@@ -38,6 +38,7 @@ I denna uppgift skall vi bygga en webbshops-applikation inkluderande en klient o
 
 ## Krav
 
+### GODKÄNT
 - [x] Alla sidor skall vara responsiva. (G)
       (Genom att använda `CSS`)
 
@@ -63,13 +64,13 @@ I denna uppgift skall vi bygga en webbshops-applikation inkluderande en klient o
       (Detta gör vi med endpoints. Besökaren skickar samlingen av kompletta produkter, sin adress till servern som sedan slår ihop dem till en order som skickas tillbaks till client)
 
 - [x] Administratörer ska kunna uppdatera antalet produkter i lager från admin delen av sidan (G)
-      (kommentar)
+      (Genom ett `edit-forumlär`)
 
 - [x] Administratörer ska kunna se en lista på alla gjorda beställningar (G)
       (Genom ett `fetch-anrop` till klientsidan från databasen)
 
 - [x] Sidans produkter ska delas upp i kategorier, en produkt ska tillhöra minst en kategori, men kan tillhöra flera (G)
-      (När man skapar en produkt krävs att man sät)
+      (När man skapar en produkt krävs att man sätter en `string[]`och den `string[]`används för att dela upp katergorierna)
 
 - [x] Från hemsidan ska man kunna se en lista över alla produkter, och man ska kunna lista bara dom produkter som tillhör en kategori (G)
       (Produkterna skickas från server till client och mappas ut, på produkt datan finns en string array som innehåller kategorierna. String arrayen extraheras från produkterna och mappas ut som knappar. Trycker man på en knapp används dess string som search param och utifrån den parametern filtreras produkterna. )
@@ -78,7 +79,7 @@ I denna uppgift skall vi bygga en webbshops-applikation inkluderande en klient o
       (Med hjälp av `localstorage`)
 
 - [x] En besökare som gör en beställning ska få möjligheten att registrera sig samt logga in och måste vara inloggad som kund innan beställningen skapas (G)
-      (Med hjälp av )
+      (Med hjälp av en `currentUser` som kollar om någon användare är inloggad )
 
 - [x] Besökare ska kunna välja ett av flera fraktalternativ (G)
       (Med hjälp av ett `formik-formulär`)
@@ -91,22 +92,23 @@ I denna uppgift skall vi bygga en webbshops-applikation inkluderande en klient o
 
 <br>
 
+### VÄL GODKÄNT
 - [x] Man ska kunna registrera sig som administratör på sidan, nya användare ska sparas i databasen (VG)
-      (kommentar)
+      (Endpoints finns för att registrera en önskan om att bli admin, existerande admins måste sen godkänna.)
 
-- [x] En administratör behöver godkännas av en tidigare administratör innan man kan logga in fösta gången (VG)
-      (kommentar)
+- [x] En administratör behöver godkännas av en tidigare administratör innan man kan logga in första gången (VG)
+      (-||-)
 
 - [x] Administratörer ska kunna markera beställningar som skickade (VG)
       (kommentar)
 
 - [x] När man är inloggad som kund ska man kunna se sina gjorda beställning och om det är skickade eller inte (VG)
-      (kommentar)
+      (Användare har en egen sida. Orders med status hämtas från endpoint)
 
-- [x] Administratörer ska kunna redigera vilka kategorier en produkt tillhör(VG)
-      (kommentar)
-- [x] Administratörer ska kunna lägga till och ta bort produkter(VG)
-      (kommentar)
+- [ ] Administratörer ska kunna redigera vilka kategorier en produkt tillhör(VG)
+      (ej klart)
+- [ ] Administratörer ska kunna lägga till och ta bort produkter(VG)
+      (ej klart)
 
 - [x] Backendapplikationen måste ha en fungerande global felhantering (VG)
       (Genom att skapa en `felhanterare`)
@@ -129,5 +131,10 @@ När modulerna är nedladdade skriv `npm start` för att köra projektet i brows
 
 ### Inloggningsuppgifter för Admin
 
-`Username:` (fille.risberg@live.se)
-`Password:` (password)
+`Username:`fille.risberg@live.se
+`Password:`password
+
+ <br>
+
+ ## Links 
+ [REPO](https://github.com/spaceflake/newShop)

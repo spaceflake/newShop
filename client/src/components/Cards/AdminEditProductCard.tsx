@@ -207,13 +207,12 @@ function ProductCard({ product }: Props) {
         </Button>
         <Drawer
           sx={{
-            position: 'absolute',
+            // position: 'absolute',
             flexShrink: 0,
             '& .MuiDrawer-paper': {
               marginTop: '3rem',
-              marginRight: { sm: '8rem', lg: '20rem' },
-              width: { xs: '100%', sm: '50%', md: '80%', lg: '80%' },
-              height: { xs: '60%', sm: '50%', md: '90%', lg: '90%' },
+              width: "min(100% - 1rem, 30rem)",
+              marginInline: "auto",
               backgroundColor: '#ECECEC',
               borderRadius: '20px',
             },
@@ -237,11 +236,12 @@ function ProductCard({ product }: Props) {
             <Box>
               <Box>
                 <Box>
-                  <label htmlFor="name">Title</label>
                   <TextField
                     id="title"
                     name="title"
                     type="title"
+                    label="Title"
+
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.title}
@@ -252,11 +252,11 @@ function ProductCard({ product }: Props) {
                 </Box>
 
                 <Box>
-                  <label htmlFor="price">Price</label>
                   <TextField
                     id="price"
                     name="price"
                     type="price"
+                    label="Price"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.price}
@@ -373,7 +373,6 @@ function ProductCard({ product }: Props) {
         </Button>
         <Drawer
           sx={{
-            position: 'absolute',
             flexShrink: 0,
             '& .MuiDrawer-paper': {
               marginTop: '10rem',
