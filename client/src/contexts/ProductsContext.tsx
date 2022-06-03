@@ -52,7 +52,6 @@ export const ProductsProvider: React.FC = ({ children }) => {
   };
 
   const createProduct = async (product: ProductCreate) => {
-    // TODO: add product to database
     await axios
       .post('/api/product/', {
         ...product,

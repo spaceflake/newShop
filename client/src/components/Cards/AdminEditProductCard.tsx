@@ -10,14 +10,21 @@ import {
   CardMedia,
   Drawer,
   IconButton,
+  InputLabel,
+  MenuItem,
+  OutlinedInput,
+  Select,
   styled,
   TextField,
   Typography,
 } from '@mui/material';
+import { SelectChangeEvent } from '@mui/material/Select';
 import { FormikErrors, useFormik } from 'formik';
 import React, { ChangeEvent, useState } from 'react';
 import { Product } from '@shared/types';
 import { useProduct } from '../../contexts/ProductsContext';
+import { PhotoCamera } from '@mui/icons-material';
+import axios, { AxiosResponse } from 'axios';
 
 const validate = (values: Product) => {
   const errors: FormikErrors<Product> = {};
@@ -51,13 +58,31 @@ const validate = (values: Product) => {
 interface Props {
   product: Product;
 }
+const Input = styled('input')({
+  display: 'none',
+});
+
 
 function ProductCard({ product }: Props) {
   const [openEditProduct, setOpenEditProduct] = useState(false);
   const [openDelete, setOpenDelete] = React.useState(false);
-
   const { updateProduct, deleteProduct, categories } = useProduct();
+  const [imgSrc, setImgSrc] = useState<any>();
+  // const [newCategories, setNewCategories] = useState<string[]>([]);
+  const [categorySelect, setCategorySelect] = React.useState<string[]>([]);
 
+  const handleChange = (event: SelectChangeEvent) => {
+    const {
+      target: { value },
+    } = event;
+    setCategorySelect(
+      typeof value === 'string' ? value.split(',') : value,
+    );
+    formik.setFieldValue('categories',  [...categorySelect])
+  };
+
+  
+  
   const handleEditDrawerOpen = () => {
     setOpenEditProduct(true);
   };
@@ -92,19 +117,32 @@ function ProductCard({ product }: Props) {
       };
       updateProduct({
         ...updatedProduct,
-        photoId: '',
       });
     },
   });
 
-  const uploadImage = (e: ChangeEvent<HTMLInputElement>) => {
+  const uploadImage =  (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
     const file = e.target.files[0];
     const formData = new FormData();
     formData.set('media', file);
+    console.log(file);
+   
+    
+    axios.post('/api/media/', formData)
+      .then(
+        res => {
+          formik.setFieldValue('photoId',  res.data._id)  
+        })
 
-    const res = { _id: 'asjdjasdhgasd' };
-    formik.setFieldValue('photoId', res._id);
+        let reader = new FileReader();
+    
+    
+        reader.onloadend = () => {
+          setImgSrc(reader.result)
+        }
+        
+    
   };
 
   return (
@@ -196,9 +234,9 @@ function ProductCard({ product }: Props) {
           </DrawerHeader>
 
           <form onSubmit={formik.handleSubmit}>
-            <div>
-              <div>
-                <div>
+            <Box>
+              <Box>
+                <Box>
                   <label htmlFor="name">Title</label>
                   <TextField
                     id="title"
@@ -209,11 +247,11 @@ function ProductCard({ product }: Props) {
                     value={formik.values.title}
                   />
                   {formik.touched.title && formik.errors.title ? (
-                    <div>{formik.errors.title}</div>
+                    <Box>{formik.errors.title}</Box>
                   ) : null}
-                </div>
+                </Box>
 
-                <div>
+                <Box>
                   <label htmlFor="price">Price</label>
                   <TextField
                     id="price"
@@ -224,27 +262,28 @@ function ProductCard({ product }: Props) {
                     value={formik.values.price}
                   />
                   {formik.touched.price && formik.errors.price ? (
-                    <div>{formik.errors.price}</div>
+                    <Box>{formik.errors.price}</Box>
                   ) : null}
-                </div>
+                </Box>
 
-                <div>
-                  <label htmlFor="image">Add Image</label>
-                  <TextField
-                    id="image"
-                    name="image"
-                    type="text"
-                    onChange={uploadImage}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.photo}
-                  />
-                  {formik.touched.photo && formik.errors.photo ? (
-                    <div>{formik.errors.photo}</div>
-                  ) : null}
-                </div>
+                <Box>
+        
+                {/* <input type="file" onChange={uploadImage}/> */}
+                    <img src={product.photoUrl} alt="" />
+                <Box>
+                </Box>
+                <label htmlFor="contained-button-file">
+                <Input id="contained-button-file"  type="file" onChange={uploadImage} />
+                <Button variant="contained" component="span">
+                  Upload
+                </Button>
+                  </label>
+                </Box>
 
-                <div>
-                  <label htmlFor="description">Description</label>
+                <Box>
+                  <label htmlFor="description">Description
+               
+                  </label>
                   <TextField
                     id="description"
                     name="description"
@@ -253,36 +292,10 @@ function ProductCard({ product }: Props) {
                     value={formik.values.description}
                   />
                   {formik.touched.description && formik.errors.description ? (
-                    <div>{formik.errors.description}</div>
+                    <Box>{formik.errors.description}</Box>
                   ) : null}
-                </div>
-                <div>
-                  <ButtonGroup>
-                    {categories.map((categori) => (
-                      <Button
-                        key={categori}
-                        variant={
-                          product.categories.includes(categori)
-                            ? 'contained'
-                            : 'outlined'
-                        }
-                      >
-                        {categori}
-                      </Button>
-                    ))}
-                  </ButtonGroup>
-                  {/* <label htmlFor="categories">Categories</label>
-              <TextField
-                
-                id="categories"
-                name="categories"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.categories}
-              />
-              {formik.touched.description && formik.errors.description ? <div >{formik.errors.description}</div> : null} */}
-                </div>
-                <div>
+                </Box>                
+                <Box>
                   <label htmlFor="description">Stock</label>
                   <TextField
                     id="stock"
@@ -297,13 +310,46 @@ function ProductCard({ product }: Props) {
                   {formik.touched.stock && formik.errors.stock ? (
                     <div>{formik.errors.stock}</div>
                   ) : null}
-                </div>
-
-                <div>
-                  <button type="submit">SAVE</button>
-                </div>
-              </div>
-            </div>
+                </Box>
+                <label htmlFor="categories">Add new category</label>
+                  <TextField
+                    id="category"
+                    name="category"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    // value={formik.values.category}
+                  />
+                {/* <ButtonGroup>
+                    {categories.map((categori) => (
+                      <Button
+                        key={categori}
+                        onClick={() => {
+                          setNewCategories([categori])
+                          formik.setFieldValue('categories',  newCategories)
+                          console.log(categori);
+                          
+                        }}
+                        variant={
+                          product.categories.includes(categori)
+                            ? 'contained'
+                            : 'outlined'
+                        }
+                      >
+                        {categori}
+                      </Button>
+                    ))}
+                  </ButtonGroup> */}
+                  <InputLabel id='categories-select-label'>Choose categories</InputLabel>
+                  <Select labelId="categories-select-label" id="categories-select" multiple value={categorySelect as any} onChange={handleChange} input={<OutlinedInput label="Categories"/>}>
+                    {categories.map(category => (
+                      <MenuItem key={category} value={category}>{category}</MenuItem>
+                    ))}
+                  </Select>
+                <Box>
+                  <Button type="submit">SAVE</Button>
+                </Box>
+              </Box>
+            </Box>
           </form>
         </Drawer>
         <Button

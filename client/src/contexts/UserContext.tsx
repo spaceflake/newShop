@@ -75,6 +75,7 @@ export const UserProvider: React.FC<React.ReactNode> = ({ children }) => {
     setAllUsers(res);
     console.log(res);
   };
+
   return (
     <UserContext.Provider
       value={{ getAllUsers, allUsers, user, isLoading, login, logout }}

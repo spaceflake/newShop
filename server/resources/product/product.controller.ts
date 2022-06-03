@@ -52,7 +52,7 @@ export const updateProduct = async (
     throw new HttpError(404, 'Product not found');
   }
   await product?.updateOne({
-    $set: { ...req.body, photoId: '6298712ce7b4e60b692e0db2' },
+    $set: req.body,
   });
   res.status(200).json('Updated product with id: ' + req.params.id);
 };

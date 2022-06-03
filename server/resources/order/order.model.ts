@@ -10,6 +10,7 @@ export interface Order {
   isSent: boolean;
   products: Product[];
   deliveryAddress: Address[];
+  shippingMethod: number;
   orderSum: number;
   createdAt: Date;
 }
@@ -25,6 +26,7 @@ const OrderSchema = new mongoose.Schema<Order>(
     isSent: { type: Boolean, required: true, default: false },
     products: { type: [ProductSchema], required: true },
     deliveryAddress: { type: [AddressSchema], required: true },
+    shippingMethod: { type: Number, required: true}
   },
   {
     timestamps: true,

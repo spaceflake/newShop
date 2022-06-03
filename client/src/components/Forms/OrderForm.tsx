@@ -101,12 +101,12 @@ function OrderForm(props: Props) {
   // successful submit
   async function handleSubmit(orderData: OrderData) {
     setLoading(true);
-    const { deliveryAddress /* shippingMethod */ } = orderData;
+    const { deliveryAddress, shippingMethod } = orderData;
 
     const order = {
       deliveryAddress,
       products: productsDetails,
-      // shippingMethod,
+      shippingMethod,
     };
 
     // fetch api and navigate to confirmed-order page if successful

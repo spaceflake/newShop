@@ -6,14 +6,26 @@ import {
   Container,
   Drawer,
   IconButton,
+  InputLabel,
+  MenuItem,
+  OutlinedInput,
+  Select,
+  SelectChangeEvent,
   styled,
   TextField,
   Typography,
 } from '@mui/material';
+import axios from 'axios';
 import { FormikErrors, useFormik } from 'formik';
-import { useState } from 'react';
-import { ProductCreate, useProduct } from '../../contexts/ProductsContext';
+import { ChangeEvent, useState } from 'react';
+import { useProduct, ProductCreate } from '../../contexts/ProductsContext';
+
 import AdminEditProduct from './AdminEditProduct';
+
+const Input = styled('input')({
+  display: 'none',
+});
+
 
 const validate = (values: ProductCreate) => {
   const errors: FormikErrors<ProductCreate> = {};
@@ -22,12 +34,6 @@ const validate = (values: ProductCreate) => {
   } else if (values.title.length > 15 || values.title.length < 2) {
     errors.title = 'Must be between 2 and 15 characters';
   }
-
-  // if (!values.categories) {
-  //   errors.categories = 'Required';
-  // } else if (values.brand.length > 15 || values.brand.length < 2) {
-  //   errors.brand = 'Must be between 2 and 15 characters';
-  // }
 
   if (!values.price) {
     errors.price = 'Required';
@@ -47,8 +53,10 @@ const validate = (values: ProductCreate) => {
   return errors;
 };
 const AdminProductControl = () => {
-  const { createProduct } = useProduct();
+  const { createProduct, categories } = useProduct();
   const [openAddProduct, setOpenAddProduct] = useState(false);
+  const [imgSrc, setImgSrc] = useState<any>();
+  const [categorySelect, setCategorySelect] = useState<string[]>([]);
 
   const handleAddDrawerOpen = () => {
     setOpenAddProduct(true);
@@ -82,12 +90,42 @@ const AdminProductControl = () => {
     },
     validate,
     onSubmit: (values) => {
+      const newProduct = { ...values}
       console.log(values);
-      createProduct(values);
+      createProduct({...newProduct});
       window.location.reload();
     },
   });
-
+  const handleChange = (event: SelectChangeEvent) => {
+    const {
+      target: { value },
+    } = event;
+    setCategorySelect(
+      typeof value === 'string' ? value.split(',') : value,
+    );
+    formik.setFieldValue('categories',  [...categorySelect])
+  };
+  const uploadImage =  (e: ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files) return;
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.set('media', file);
+    console.log(file);
+   
+    
+    axios.post('/api/media/', formData)
+      .then(
+        res => {
+          formik.setFieldValue('photoId',  res.data._id)  
+        })
+  
+        let reader = new FileReader();
+        reader.onloadend = () => {
+          setImgSrc(reader.result)
+        }
+        
+    
+  };
   return (
     <Container maxWidth="xl" sx={{ height: '100%' }}>
       <Box
@@ -129,114 +167,121 @@ const AdminProductControl = () => {
               </IconButton>
               <Typography>Add Product</Typography>
             </DrawerHeader>
-            <AddForm>
-              <form onSubmit={formik.handleSubmit}>
-                <div>
-                  <div>
-                    <div>
-                      <label htmlFor="name">Title</label>
-                      <TextField
-                        sx={{
-                          display: 'flex',
-                          justifyContent: 'center',
-                          padding: '1rem',
-                        }}
-                        id="title"
-                        name="title"
-                        type="title"
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.title}
-                      />
-                      {formik.touched.title && formik.errors.title ? (
-                        <div>{formik.errors.title}</div>
-                      ) : null}
-                    </div>
+            <form onSubmit={formik.handleSubmit}>
+            <Box>
+              <Box>
+                <Box>
+                  <label htmlFor="name">Title</label>
+                  <TextField
+                    id="title"
+                    name="title"
+                    type="title"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.title}
+                  />
+                  {formik.touched.title && formik.errors.title ? (
+                    <Box>{formik.errors.title}</Box>
+                  ) : null}
+                </Box>
 
-                    <div>
-                      <label htmlFor="price">Price</label>
-                      <TextField
-                        sx={{
-                          display: 'flex',
-                          justifyContent: 'center',
-                          padding: '1rem',
-                        }}
-                        id="price"
-                        name="price"
-                        type="price"
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.price}
-                      />
-                      {formik.touched.price && formik.errors.price ? (
-                        <div>{formik.errors.price}</div>
-                      ) : null}
-                    </div>
+                <Box>
+                  <label htmlFor="price">Price</label>
+                  <TextField
+                    id="price"
+                    name="price"
+                    type="price"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.price}
+                  />
+                  {formik.touched.price && formik.errors.price ? (
+                    <Box>{formik.errors.price}</Box>
+                  ) : null}
+                </Box>
 
-                    <div>
-                      <label htmlFor="photo">Add Image</label>
-                      <TextField
-                        sx={{
-                          display: 'flex',
-                          justifyContent: 'center',
-                          padding: '1rem',
-                        }}
-                        id="photo"
-                        name="photo"
-                        type="text"
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.photo}
-                      />
-                      {/* {formik.touched.photo && formik.errors.photo ? <div >{formik.errors.photo}</div> : null} */}
-                    </div>
+                <Box>
+        
+                {/* <input type="file" onChange={uploadImage}/> */}
+                    <img src={imgSrc} alt="" />
+                <Box>
+                </Box>
+                <label htmlFor="contained-button-file">
+                <Input id="contained-button-file"  type="file" onChange={uploadImage} />
+                <Button variant="contained" component="span">
+                  Upload
+                </Button>
+                  </label>
+                </Box>
 
-                    <div>
-                      <label htmlFor="description">Description</label>
-                      <TextField
-                        sx={{
-                          display: 'flex',
-                          justifyContent: 'center',
-                          padding: '1rem',
+                <Box>
+                  <label htmlFor="description">Description
+               
+                  </label>
+                  <TextField
+                    id="description"
+                    name="description"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.description}
+                  />
+                  {formik.touched.description && formik.errors.description ? (
+                    <Box>{formik.errors.description}</Box>
+                  ) : null}
+                </Box>                
+                <Box>
+                  <label htmlFor="description">Stock</label>
+                  <TextField
+                    id="stock"
+                    name="stock"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.stock}
+                  />
+                  {formik.touched.stock && formik.errors.stock ? (
+                    <div>{formik.errors.stock}</div>
+                  ) : null}
+                </Box>
+                {/* <label htmlFor="categories">Add new category</label>
+                  <TextField
+                    id="category"
+                    name="category"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    // value={formik.values.category}
+                  /> */}
+                {/* <ButtonGroup>
+                    {categories.map((categori) => (
+                      <Button
+                        key={categori}
+                        onClick={() => {
+                          setNewCategories([categori])
+                          formik.setFieldValue('categories',  newCategories)
+                          console.log(categori);
+                          
                         }}
-                        id="description"
-                        name="description"
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.description}
-                      />
-                      {formik.touched.description &&
-                      formik.errors.description ? (
-                        <div>{formik.errors.description}</div>
-                      ) : null}
-                    </div>
-                    <div>
-                      <label htmlFor="description">Stock</label>
-                      <TextField
-                        sx={{
-                          display: 'flex',
-                          justifyContent: 'center',
-                          padding: '1rem',
-                        }}
-                        id="Stock"
-                        name="Stock"
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.stock}
-                      />
-                      {/* {product.stock <= 2 ? <p>This prosduct almost finished</p> : null} */}
-                      {formik.touched.stock && formik.errors.stock ? (
-                        <div>{formik.errors.stock}</div>
-                      ) : null}
-                    </div>
-
-                    <div>
-                      <button type="submit">SAVE</button>
-                    </div>
-                  </div>
-                </div>
-              </form>
-            </AddForm>
+                        variant={
+                          product.categories.includes(categori)
+                            ? 'contained'
+                            : 'outlined'
+                        }
+                      >
+                        {categori}
+                      </Button>
+                    ))}
+                  </ButtonGroup> */}
+                  <InputLabel id='categories-select-label'>Choose categories</InputLabel>
+                  <Select labelId="categories-select-label" id="categories-select" multiple value={categorySelect as any} onChange={handleChange} input={<OutlinedInput label="Categories"/>}>
+                    {categories.map(category => (
+                      <MenuItem key={category} value={category}>{category}</MenuItem>
+                    ))}
+                  </Select>
+                <Box>
+                  <Button type="submit">SAVE</Button>
+                </Box>
+              </Box>
+            </Box>
+          </form>
           </Drawer>
         </Box>
         <AdminEditProduct />
