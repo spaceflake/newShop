@@ -45,10 +45,10 @@ I denna uppgift skall vi bygga en webbshops-applikation inkluderande en klient o
       (Vi använde oss av `React` för `Client` och `Express` för `Server`)
 
 - [x] Skapa ett ER diagram och koddiagram, detta ska lämnas in vid idégodkännandet G)
-      (Klart)
+      (Vi använde oss `Figma` och sedan presenterade det för våran `handledare`)
 
 - [x] Beskriv er företagsidé i en kort textuell presentation, detta ska lämnas in vid idégodkännandet (G)
-      (Presenterat för läraren)
+      (Presenterat för `handledaren`)
 
 - [x] All data som programmet utnyttjar ska vara sparat i en Mongo-databas (produkter, beställningar, konton mm) (G)
       (Skapat resurser i databasen där respektiva data hanteras till kollektioner)
@@ -60,7 +60,7 @@ I denna uppgift skall vi bygga en webbshops-applikation inkluderande en klient o
       (Genom att använda `bcrypt`)
 
 - [x] En besökare ska kunna beställa produkter från sidan, detta ska uppdatera lagersaldot i databasen (G)
-      (Detta gör vi med endpoints. Besökaren skickar samlingen av kompletta produkter, till servern som sedan slår ihop dem till en order som skickas tillbaks till client)
+      (Detta gör vi med endpoints. Besökaren skickar samlingen av kompletta produkter, sin adress till servern som sedan slår ihop dem till en order som skickas tillbaks till client)
 
 - [x] Administratörer ska kunna uppdatera antalet produkter i lager från admin delen av sidan (G)
       (kommentar)
@@ -69,7 +69,7 @@ I denna uppgift skall vi bygga en webbshops-applikation inkluderande en klient o
       (Genom ett `fetch-anrop` till klientsidan från databasen)
 
 - [x] Sidans produkter ska delas upp i kategorier, en produkt ska tillhöra minst en kategori, men kan tillhöra flera (G)
-      (kommentar)
+      (När man skapar en produkt krävs att man sät)
 
 - [x] Från hemsidan ska man kunna se en lista över alla produkter, och man ska kunna lista bara dom produkter som tillhör en kategori (G)
       (Produkterna skickas från server till client och mappas ut, på produkt datan finns en string array som innehåller kategorierna. String arrayen extraheras från produkterna och mappas ut som knappar. Trycker man på en knapp används dess string som search param och utifrån den parametern filtreras produkterna. )
