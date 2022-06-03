@@ -15,7 +15,7 @@ import {
   Typography,
 } from '@mui/material';
 import { FormikErrors, useFormik } from 'formik';
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import { Product } from '@shared/types';
 import { useProduct } from '../../contexts/ProductsContext';
 
@@ -95,9 +95,18 @@ function ProductCard({ product }: Props) {
         ...updatedProduct,
         photoId: '',
       });
-      window.location.reload();
     },
   });
+
+  const uploadImage = (e: ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files) return;
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.set('media', file);
+
+    const res = { _id: 'asjdjasdhgasd' };
+    formik.setFieldValue('photoId', res._id);
+  };
 
   return (
     <Card key={product.id} sx={{ borderRadius: '1rem', padding: '1rem' }}>
@@ -226,7 +235,7 @@ function ProductCard({ product }: Props) {
                     id="image"
                     name="image"
                     type="text"
-                    onChange={formik.handleChange}
+                    onChange={uploadImage}
                     onBlur={formik.handleBlur}
                     value={formik.values.photo}
                   />
@@ -277,14 +286,14 @@ function ProductCard({ product }: Props) {
                 <div>
                   <label htmlFor="description">Stock</label>
                   <TextField
-                    id="Stock"
-                    name="Stock"
+                    id="stock"
+                    name="stock"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.stock}
                   />
                   {product.stock <= 2 ? (
-                    <p>This prosduct almost finished</p>
+                    <p>This product almost finished</p>
                   ) : null}
                   {formik.touched.stock && formik.errors.stock ? (
                     <div>{formik.errors.stock}</div>

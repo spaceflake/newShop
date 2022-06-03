@@ -46,7 +46,7 @@ function ProductListPage() {
 
   useEffect(() => {
     getAllProducts();
-  }, [getAllProducts, prods]);
+  }, []);
 
   return (
     <>
@@ -91,7 +91,8 @@ function ProductListPage() {
         </Box>
         <Grid
           container
-          sx={{ gap: '1rem', alignItems: 'center', justifyContent: 'center' }}>
+          sx={{ gap: '1rem', alignItems: 'center', justifyContent: 'center' }}
+        >
           {filteredProducts.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}

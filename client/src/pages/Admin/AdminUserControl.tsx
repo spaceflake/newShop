@@ -21,7 +21,7 @@ const AdminUserControl = () => {
   const [openDelete, setOpenDelete] = React.useState(false);
   const [openEdit, setOpenEdit] = React.useState(false);
 
-  const { allUsers } = useUser();
+  const { allUsers, getAllUsers } = useUser();
   console.log(allUsers);
 
   const handleDeleteDrawerOpen = () => {
@@ -37,7 +37,9 @@ const AdminUserControl = () => {
     setOpenEdit(false);
   };
 
-  useEffect(() => {});
+  useEffect(() => {
+    getAllUsers();
+  }, []);
 
   const editUser = async () => {
     await axios
