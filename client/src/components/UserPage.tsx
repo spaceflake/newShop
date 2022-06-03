@@ -48,9 +48,7 @@ export default function UserPage() {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const res = await axios.put('/api/user/' + user?.id, {
-      adminRequest: true,
-    });
+    const res = await axios.put('/api/user/adminrequest/' + user?.id);
     const result = await res.data;
 
     console.log('Request to become admin totally sent, I promise.. ' + result);
