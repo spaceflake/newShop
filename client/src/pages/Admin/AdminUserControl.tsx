@@ -9,7 +9,11 @@ import {
   IconButton,
   styled,
   Chip,
+  ListItem,
+  Menu,
+  MenuItem,
 } from '@mui/material';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 import React, { useEffect, useState } from 'react';
 import { useUser } from '../../contexts/UserContext';
 import type { User } from '@shared/types';
@@ -20,6 +24,14 @@ const AdminUserControl = () => {
   const [selectedUser, setSelectedUser] = useState<string>();
   const [openDelete, setOpenDelete] = React.useState(false);
   const [openEdit, setOpenEdit] = React.useState(false);
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   const { allUsers, getAllUsers } = useUser();
   console.log(allUsers);
@@ -75,39 +87,71 @@ const AdminUserControl = () => {
 
   return (
     <Container maxWidth="xl" sx={{ height: '100%' }}>
+      <Typography variant="h4">Customers</Typography>
       <List>
         {allUsers.map((user: User) => (
-          <Box key={user.id}>
-            <Paper elevation={3}>
-              <Box>
-                <Typography variant="h5">
-                  {user.firstName + ' ' + user.lastName}
-                </Typography>
-                <Typography variant="body1">
-                  {user.isAdmin ? 'Admin' : 'Customer'}
-                </Typography>
-                <button
+          <ListItem
+            key={user.id}
+            secondaryAction={
+              <IconButton edge="end" onClick={handleClick}>
+                <MoreVertIcon />
+              </IconButton>
+            }
+          >
+            <Box>
+              <Typography variant="h5">
+                {user.firstName + ' ' + user.lastName}
+              </Typography>
+              <Typography variant="body1">
+                {user.isAdmin ? 'Admin' : 'Customer'}
+              </Typography>
+              <Menu
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'left',
+                }}
+              >
+                <MenuItem
                   onClick={() => {
                     setSelectedUser(user.id);
                     handleDeleteDrawerOpen();
                   }}
                 >
                   Delete
-                </button>
+                </MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    setSelectedUser(user.id);
+                    handleEditDrawerOpen();
+                  }}
+                >
+                  {/* {selectedUser. 'Make Admin'} */}
+                </MenuItem>
+                {/* <button
+                  onClick={() => {
+                    setSelectedUser(user.id);
+                    handleDeleteDrawerOpen();
+                  }}
+                >
+                  Delete
+                </button> */}
 
-                <button
+                {/* <button
                   onClick={() => {
                     setSelectedUser(user.id);
                     handleEditDrawerOpen();
                   }}
                 >
                   Make Admin
-                </button>
-                {user.adminRequested && !user.isAdmin && (
-                  <Chip label="Admin requested" />
-                )}
-              </Box>
-            </Paper>
+                </button> */}
+              </Menu>
+              {user.adminRequested && !user.isAdmin && (
+                <Chip label="Admin requested" />
+              )}
+            </Box>
             <Drawer variant="persistent" anchor="right" open={openDelete}>
               <DrawerHeader>
                 <IconButton onClick={handleDeleteDrawerClose}></IconButton>
@@ -158,7 +202,7 @@ const AdminUserControl = () => {
                 Yes
               </Button>
             </Drawer>
-          </Box>
+          </ListItem>
         ))}
       </List>
     </Container>
