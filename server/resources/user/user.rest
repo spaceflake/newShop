@@ -20,8 +20,8 @@ Content-Type: application/json
 
 
 {
-  "email": "hazem@hazemmmmmmm",
-  "password": "123456"
+  "email": "vindicated@hotmail.com",
+  "password": "1234"
 }
 
 ###
