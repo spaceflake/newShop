@@ -1,14 +1,12 @@
-import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
-import { Button } from "@mui/material";
-import { Types } from "../contexts/Reducers";
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import { Button } from '@mui/material';
+import { Types } from '../contexts/Reducers';
 
 function BuyButton({ dispatch, product }: any) {
   return (
     <>
       <Button
         sx={{
-          mt: 2,
-          mb: 2,
           padding: '0.5rem 1rem',
           color: 'black',
           border: 'solid',
