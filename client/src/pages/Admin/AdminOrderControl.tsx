@@ -1,12 +1,12 @@
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import {
   Box,
   Button,
-  Checkbox,
+  CircularProgress,
   Collapse,
   Container,
   IconButton,
-  List,
-  ListItem,
   Paper,
   Table,
   TableBody,
@@ -16,8 +16,6 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { Order } from '@shared/types';
 import axios, { AxiosResponse } from 'axios';
 import { useEffect, useState } from 'react';
@@ -28,6 +26,20 @@ interface OrderProp {
 
 const OrderRow = ({ order }: OrderProp) => {
   const [open, setOpen] = useState(false);
+  const [selectedOrder, setSelectedOrder] = useState<String>();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleClick = async () => {
+    setIsLoading(true);
+    await axios
+      .put('/api/order/' + selectedOrder, {
+        isSent: true,
+      })
+      .then((res: AxiosResponse) => {
+        console.log(res.data.msg);
+        setIsLoading(!isLoading);
+      });
+  };
 
   return (
     <>
@@ -44,9 +56,7 @@ const OrderRow = ({ order }: OrderProp) => {
         <TableCell component="th" scope="row">
           {order.id}
         </TableCell>
-        <TableCell align="right">{order.user}</TableCell>
         <TableCell align="right">{order.createdAt}</TableCell>
-        <TableCell align="right">{order.shippingMethod}</TableCell>
         <TableCell align="right">
           {order.isSent ? 'shipped' : 'not shipped'}
         </TableCell>
@@ -54,7 +64,7 @@ const OrderRow = ({ order }: OrderProp) => {
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box sx={{ margin: 1 }}>
+            <Box sx={{ margin: 1, overflow: 'auto' }}>
               <Typography variant="h6" gutterBottom component="div">
                 Order details
               </Typography>
@@ -74,8 +84,7 @@ const OrderRow = ({ order }: OrderProp) => {
                       </TableCell>
                       <TableCell align="right">{productRow.qty}</TableCell>
                       <TableCell align="right">
-                        {Math.round(productRow.qty * productRow.price * 100) /
-                          100}
+                        {productRow.qty * productRow.price}
                       </TableCell>
                     </TableRow>
                   ))}
@@ -112,7 +121,21 @@ const OrderRow = ({ order }: OrderProp) => {
                   ))}
                 </TableBody>
               </Table>
-              <Button>Mark as sent</Button>
+              {order.isSent ? (
+                'shipped'
+              ) : (
+                <Button
+                  onClick={() => {
+                    setSelectedOrder(order.id);
+                    if (selectedOrder) {
+                      handleClick();
+                      console.log(selectedOrder);
+                    }
+                  }}
+                >
+                  {!isLoading ? 'Mark as sent' : <CircularProgress />}
+                </Button>
+              )}
             </Box>
           </Collapse>
         </TableCell>
@@ -122,39 +145,26 @@ const OrderRow = ({ order }: OrderProp) => {
 };
 
 const AdminOrderControl = () => {
-  // state for checkbox
   const [orders, setOrders] = useState<Order[]>([]);
-  const [selectedorder, setSelectedorder] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  // get all orders
-
   useEffect(() => {
+    if (orders.length && !isLoading) {
+      return;
+    }
+    setIsLoading(true);
     const getOrders = async () => {
       const res = await axios.get('/api/order');
       const orders = await res.data;
 
-      setOrders(orders);
+      if (orders) {
+        setOrders(orders);
+        setIsLoading(false);
+      }
     };
 
     getOrders();
-  }, [isLoading]);
-
-  const handleClick = async () => {
-    await axios
-      .put('/api/order/' + selectedorder, {
-        isSent: true,
-      })
-      .then(
-        (res: AxiosResponse) => {
-          console.log(res.data.msg);
-          setIsLoading(!isLoading);
-        },
-        () => {
-          console.log('Failure');
-        }
-      );
-  };
+  }, [isLoading, orders.length]);
 
   return (
     <Container>
@@ -164,44 +174,22 @@ const AdminOrderControl = () => {
             <TableRow>
               <TableCell />
               <TableCell>Order Id</TableCell>
-              <TableCell align="right">Customer</TableCell>
               <TableCell align="right">Order date</TableCell>
-              <TableCell align="right">Delivery Company</TableCell>
               <TableCell align="right">Status</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {orders.map((order) => (
-              <OrderRow key={order.id} order={order} />
-            ))}
+            {isLoading ? (
+              <Box sx={{ display: 'flex' }}>
+                <CircularProgress />
+              </Box>
+            ) : (
+              orders.map((order) => <OrderRow key={order.id} order={order} />)
+            )}
           </TableBody>
         </Table>
       </TableContainer>
     </Container>
-    // <>
-    //   {orders.map((order) => (
-    //     <List key={order.id}>
-    //       <ListItem sx={{ marginBlock: '1rem' }}>
-    //         <Typography variant="body1">{order.id}</Typography>
-    //         {order.isSent === false ? (
-    //           <>
-    //             <Checkbox
-    //               onChange={() => {
-    //                 setSelectedorder(order.id);
-    //               }}
-    //             />
-    //             <Button
-    //               onClick={handleClick}
-    //               disabled={selectedorder === order.id ? false : true}
-    //             >
-    //               Mark as sent
-    //             </Button>
-    //           </>
-    //         ) : null}
-    //       </ListItem>
-    //     </List>
-    //   ))}
-    // </>
   );
 };
 
