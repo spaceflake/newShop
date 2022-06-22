@@ -1,30 +1,40 @@
 import CloseIcon from '@mui/icons-material/Close';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import {
+  AppBar,
   Box,
-  Button,
-  ButtonGroup,
-  Card,
+  Button, Card,
   CardActionArea,
   CardActions,
   CardContent,
   CardMedia,
-  Drawer,
-  IconButton,
-  InputLabel,
-  MenuItem,
+  Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, MenuItem,
   OutlinedInput,
+  Paper,
   Select,
+  Slide,
   styled,
   TextField,
-  Typography,
+  Toolbar,
+  Typography
 } from '@mui/material';
 import { SelectChangeEvent } from '@mui/material/Select';
+import { TransitionProps } from '@mui/material/transitions';
+import { Product } from '@shared/types';
+import axios from 'axios';
 import { FormikErrors, useFormik } from 'formik';
 import React, { ChangeEvent, useState } from 'react';
-import { Product } from '@shared/types';
 import { useProduct } from '../../contexts/ProductsContext';
-import { PhotoCamera } from '@mui/icons-material';
-import axios, { AxiosResponse } from 'axios';
+
+
+const Transition = React.forwardRef(function Transition(
+  props: TransitionProps & {
+    children: React.ReactElement;
+  },
+  ref: React.Ref<unknown>,
+) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 const validate = (values: Product) => {
   const errors: FormikErrors<Product> = {};
@@ -33,12 +43,6 @@ const validate = (values: Product) => {
   } else if (values.title.length > 15 || values.title.length < 2) {
     errors.title = 'Must be between 2 and 15 characters';
   }
-
-  // if (!values.categories) {
-  //   errors.categories = 'Required';
-  // } else if (values.brand.length > 15 || values.brand.length < 2) {
-  //   errors.brand = 'Must be between 2 and 15 characters';
-  // }
 
   if (!values.price) {
     errors.price = 'Required';
@@ -64,12 +68,24 @@ const Input = styled('input')({
 
 
 function ProductCard({ product }: Props) {
-  const [openEditProduct, setOpenEditProduct] = useState(false);
-  const [openDelete, setOpenDelete] = React.useState(false);
   const { updateProduct, deleteProduct, categories } = useProduct();
   const [imgSrc, setImgSrc] = useState<any>();
-  // const [newCategories, setNewCategories] = useState<string[]>([]);
   const [categorySelect, setCategorySelect] = React.useState<string[]>([]);
+  const [openEditProduct, setOpenEditProduct] = React.useState(false);
+  const [openDeleteProduct, setOpenDeleteProduct] = React.useState(false);
+
+  function handleClickOpen(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+    if (e.currentTarget.innerText === "EDIT") {
+      setOpenEditProduct(true);
+    } else {
+      setOpenDeleteProduct(true)
+    }
+  };
+
+  function handleClose() {
+    setOpenEditProduct(false);
+    setOpenDeleteProduct(false)
+  };
 
   const handleChange = (event: SelectChangeEvent) => {
     const {
@@ -78,36 +94,9 @@ function ProductCard({ product }: Props) {
     setCategorySelect(
       typeof value === 'string' ? value.split(',') : value,
     );
-    formik.setFieldValue('categories',  [...categorySelect])
+    formik.setFieldValue('categories', [...categorySelect])
   };
 
-  
-  
-  const handleEditDrawerOpen = () => {
-    setOpenEditProduct(true);
-  };
-  const handleEditDrawerClose = () => {
-    setOpenEditProduct(false);
-  };
-  const handleDeleteDrawerOpen = () => {
-    setOpenDelete(true);
-  };
-  const handleDeleteDrawerClose = () => {
-    setOpenDelete(false);
-  };
-
-  let drawerWidth;
-  if (!openEditProduct) {
-    drawerWidth = '0%';
-  } else {
-    drawerWidth = '100%';
-  }
-  let drawerHeight;
-  if (!openEditProduct) {
-    drawerHeight = '0%';
-  } else {
-    drawerHeight = '100%';
-  }
   const formik = useFormik<Product>({
     initialValues: product,
     validate,
@@ -121,32 +110,28 @@ function ProductCard({ product }: Props) {
     },
   });
 
-  const uploadImage =  (e: ChangeEvent<HTMLInputElement>) => {
+  const uploadImage = (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
     const file = e.target.files[0];
     const formData = new FormData();
     formData.set('media', file);
     console.log(file);
-   
-    
+
     axios.post('/api/media/', formData)
       .then(
         res => {
-          formik.setFieldValue('photoId',  res.data._id)  
+          formik.setFieldValue('photoId', res.data._id)
         })
 
-        let reader = new FileReader();
-    
-    
-        reader.onloadend = () => {
-          setImgSrc(reader.result)
-        }
-        
-    
+    let reader = new FileReader();
+
+    reader.onloadend = () => {
+      setImgSrc(reader.result)
+    }
   };
 
   return (
-    <Card key={product.id} sx={{ borderRadius: '1rem', padding: '1rem' }}>
+    <Card elevation={3} key={product.id} sx={{ borderRadius: '1rem', padding: '1rem' }}>
       <CardActionArea>
         <CardContent sx={{ padding: '0' }}>
           <CardMedia
@@ -198,230 +183,192 @@ function ProductCard({ product }: Props) {
               borderColor: '#c6c6c6',
             },
           }}
-          onClick={() => {
-            handleEditDrawerOpen();
+          onClick={(e) => {
+            handleClickOpen(e);
           }}
           variant="outlined"
         >
           Edit
         </Button>
-        <Drawer
-          sx={{
-            // position: 'absolute',
-            flexShrink: 0,
-            '& .MuiDrawer-paper': {
-              marginTop: '3rem',
-              width: "min(100% - 1rem, 30rem)",
-              marginInline: "auto",
-              backgroundColor: '#ECECEC',
-              borderRadius: '20px',
-            },
-          }}
-          variant="persistent"
-          anchor="right"
+
+        <Dialog
+          fullScreen
           open={openEditProduct}
+          onClose={handleClose}
+          TransitionComponent={Transition}
         >
-          <DrawerHeader
-            sx={{
-              margin: '1rem',
+          <AppBar sx={{ position: 'relative' }}>
+            <Toolbar>
+              <IconButton
+                edge="start"
+                color="inherit"
+                onClick={handleClose}
+                aria-label="close"
+              >
+                <CloseIcon />
+              </IconButton>
+              <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
+                Edit product
+              </Typography>
+            </Toolbar>
+          </AppBar>
+
+          <form
+            style={{
+              padding: '3rem 0rem',
+              display: 'flex',
+              justifyContent: 'center',
+              flexDirection: 'column',
+              width: 'max-content',
+              maxWidth: '95%',
+              margin: '0 auto',
+              gap: '1rem'
             }}
-          >
-            <IconButton onClick={handleEditDrawerClose}>
-              <CloseIcon style={{ fontSize: 32 }} />
-            </IconButton>
-            <Typography>Edit Product</Typography>
-          </DrawerHeader>
+            onSubmit={
+              formik.handleSubmit
+            }>
 
-          <form onSubmit={formik.handleSubmit}>
+            <TextField
+              id="title"
+              name="title"
+              type="title"
+              label="Title"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.title}
+            />
+            {formik.touched.title && formik.errors.title ? (
+              <Box>{formik.errors.title}</Box>
+            ) : null}
+            <TextField
+              id="price"
+              name="price"
+              type="price"
+              label="Price"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.price}
+            />
+            {formik.touched.price && formik.errors.price ? (
+              <Box>{formik.errors.price}</Box>
+            ) : null}
+
+            <TextField
+              id="description"
+              name="description"
+              label="Description"
+              multiline
+              rows={4}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.description}
+            />
+            {formik.touched.description && formik.errors.description ? (
+              <Box>{formik.errors.description}</Box>
+            ) : null}
+
+            <TextField
+              id="stock"
+              name="stock"
+              label="Stock"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.stock}
+            />
+            {product.stock <= 2 ? (
+              <Typography color="red">This product is almost sold out</Typography>
+            ) : null}
+            {formik.touched.stock && formik.errors.stock ? (
+              <div>{formik.errors.stock}</div>
+            ) : null}
+
             <Box>
-              <Box>
-                <Box>
-                  <TextField
-                    id="title"
-                    name="title"
-                    type="title"
-                    label="Title"
-
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.title}
-                  />
-                  {formik.touched.title && formik.errors.title ? (
-                    <Box>{formik.errors.title}</Box>
-                  ) : null}
-                </Box>
-
-                <Box>
-                  <TextField
-                    id="price"
-                    name="price"
-                    type="price"
-                    label="Price"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.price}
-                  />
-                  {formik.touched.price && formik.errors.price ? (
-                    <Box>{formik.errors.price}</Box>
-                  ) : null}
-                </Box>
-
-                <Box>
-        
-                {/* <input type="file" onChange={uploadImage}/> */}
-                    <img src={product.photoUrl} alt="" />
-                <Box>
-                </Box>
-                <label htmlFor="contained-button-file">
-                <Input id="contained-button-file"  type="file" onChange={uploadImage} />
-                <Button variant="contained" component="span">
-                  Upload
-                </Button>
-                  </label>
-                </Box>
-
-                <Box>
-                  <label htmlFor="description">Description
-               
-                  </label>
-                  <TextField
-                    id="description"
-                    name="description"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.description}
-                  />
-                  {formik.touched.description && formik.errors.description ? (
-                    <Box>{formik.errors.description}</Box>
-                  ) : null}
-                </Box>                
-                <Box>
-                  <label htmlFor="description">Stock</label>
-                  <TextField
-                    id="stock"
-                    name="stock"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.stock}
-                  />
-                  {product.stock <= 2 ? (
-                    <p>This product almost finished</p>
-                  ) : null}
-                  {formik.touched.stock && formik.errors.stock ? (
-                    <div>{formik.errors.stock}</div>
-                  ) : null}
-                </Box>
-                <label htmlFor="categories">Add new category</label>
-                  <TextField
-                    id="category"
-                    name="category"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    // value={formik.values.category}
-                  />
-                {/* <ButtonGroup>
-                    {categories.map((categori) => (
-                      <Button
-                        key={categori}
-                        onClick={() => {
-                          setNewCategories([categori])
-                          formik.setFieldValue('categories',  newCategories)
-                          console.log(categori);
-                          
-                        }}
-                        variant={
-                          product.categories.includes(categori)
-                            ? 'contained'
-                            : 'outlined'
-                        }
-                      >
-                        {categori}
-                      </Button>
-                    ))}
-                  </ButtonGroup> */}
-                  <InputLabel id='categories-select-label'>Choose categories</InputLabel>
-                  <Select labelId="categories-select-label" id="categories-select" multiple value={categorySelect as any} onChange={handleChange} input={<OutlinedInput label="Categories"/>}>
-                    {categories.map(category => (
-                      <MenuItem key={category} value={category}>{category}</MenuItem>
-                    ))}
-                  </Select>
-                <Box>
-                  <Button type="submit">SAVE</Button>
-                </Box>
-              </Box>
+              {/* <Typography>Current categories: {formik.values.categories}</Typography> */}
+              <TextField
+                id="category"
+                name="category"
+                label="Add category"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+              />
+              <Select labelId="categories-select-label" id="categories-select" multiple value={categorySelect as any} onChange={handleChange} input={<OutlinedInput label="Categories" />}>
+                {categories.map(category => (
+                  <MenuItem key={category} value={category}>{category}</MenuItem>
+                ))}
+              </Select>
             </Box>
+
+            <Paper
+              elevation={5}
+              sx={{
+                padding: '1rem',
+                display: 'flex',
+                justifyContent: 'center',
+                flexDirection: 'column',
+                alignItems: 'center'
+              }}>
+              <img style={{ width: '350px' }} src={product.photoUrl} alt="" />
+              <label htmlFor="contained-button-file">
+                <Input id="contained-button-file" type="file" onChange={uploadImage} />
+                <Button variant="outlined" component="span">
+                  Upload image
+                </Button>
+              </label>
+            </Paper>
+
+            <Button variant="contained" type="submit">SAVE</Button>
           </form>
-        </Drawer>
+
+        </Dialog>
+
         <Button
-          onClick={handleDeleteDrawerOpen}
+          onClick={(e) => handleClickOpen(e)}
           sx={{
             mt: 2,
             mb: 2,
             height: '3rem',
-            bgcolor: '#ffffff',
+            bgcolor: 'red',
             border: '1',
             borderColor: '#c6c6c6',
-            color: ' black',
+            color: 'white',
             '&:hover': {
-              bgcolor: '#c6c6c6',
+              bgcolor: 'black',
               borderColor: '#c6c6c6',
             },
           }}
           variant="outlined"
         >
-          Delete
+          <DeleteForeverIcon />
         </Button>
-        <Drawer
-          sx={{
-            flexShrink: 0,
-            '& .MuiDrawer-paper': {
-              marginTop: '10rem',
-              marginRight: { sm: '8rem', lg: '20rem' },
-              width: { xs: '50%', sm: '50%', md: '50%', lg: '50%' },
-              height: { xs: '60%', sm: '50%', md: '50%', lg: '50%' },
-              backgroundColor: '#ECECEC',
-              borderRadius: '20px',
-            },
-          }}
-          variant="persistent"
-          anchor="right"
-          open={openDelete}
+        <Dialog
+          open={openDeleteProduct}
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
         >
-          <DrawerHeader>
-            <IconButton onClick={handleDeleteDrawerClose}>
-              <CloseIcon />
-            </IconButton>
-            <Typography>Are you sure you want to delete this post?</Typography>
-          </DrawerHeader>
-          <Button
-            type="button"
-            onClick={() => {
-              handleDeleteDrawerClose();
-            }}
-          >
-            No
-          </Button>
-          <Button
-            type="button"
-            onClick={() => {
+          <DialogTitle id="alert-dialog-title">
+            {"Delete product"}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Are you sure you wish to delete the "{formik.values.title}" product?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => {
               deleteProduct(product.id);
-              handleDeleteDrawerClose();
               console.log(product.id);
-            }}
-          >
-            Yes
-          </Button>
-        </Drawer>
+              handleClose();
+            }}>
+              Yes
+            </Button>
+            <Button onClick={handleClose} autoFocus>No</Button>
+          </DialogActions>
+        </Dialog>
+
       </CardActions>
     </Card>
   );
 }
-
-const DrawerHeader = styled('div')(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  padding: theme.spacing(0, 1),
-  justifyContent: 'flex-start',
-}));
 
 export default ProductCard;
