@@ -34,6 +34,7 @@ function ShowCarousel() {
         sx={{
           width: '100%',
           margin: 'auto',
+          padding: '0px',
         }}
       >
         {images.map((item, i) => (
