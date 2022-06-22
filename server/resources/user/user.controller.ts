@@ -5,16 +5,13 @@ import { User, UserModel } from './user.model';
 
 export const getAllUsers = async (req: Request, res: Response) => {
   const users = await UserModel.find({});
-  
+
   if (!users) {
-    throw new HttpError(404, 'Users not found')
+    throw new HttpError(404, 'Users not found');
   }
   res.status(200).json(users);
 };
-export const addUser = async (
-  req: Request<{}, {}, User>,
-  res: Response,
-) => {
+export const addUser = async (req: Request<{}, {}, User>, res: Response) => {
   const { firstName, lastName, password, email } = req?.body;
   if (
     !firstName ||
@@ -71,7 +68,9 @@ export const updateUser = async (
   if (!user) {
     throw new HttpError(404, 'User not found');
   }
-  res.status(200).json('Updated user with id: ' + req.params.id);
+  res
+    .status(200)
+    .json({ success: true, msg: 'Updated user with id: ' + req.params.id });
 };
 export const deleteUser = async (req: Request, res: Response) => {
   const user = await UserModel.findByIdAndDelete(req.params.id);
