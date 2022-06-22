@@ -1,20 +1,19 @@
+import CloseIcon from '@mui/icons-material/Close';
 import {
-  accordionSummaryClasses,
   Box,
   Button,
   Checkbox,
+  Container,
   FormControlLabel,
   Grid,
   IconButton,
-  List,
   Snackbar,
   Typography,
 } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
+import { Order } from '@shared/types';
+import axios from 'axios';
 import { FormEvent, useEffect, useState } from 'react';
 import { useUser } from '../contexts/UserContext';
-import axios, { AxiosResponse } from 'axios';
-import { Order, Product } from '@shared/types';
 
 export default function UserPage() {
   const { user } = useUser();
@@ -35,7 +34,9 @@ export default function UserPage() {
     e.preventDefault();
     const res = await axios.put('/api/user/adminrequest/' + user?.id);
     const result = await res.data;
-    setOpen(true);
+    if (result.ok) {
+      setOpen(true);
+    }
   };
 
   const handleClose = (
@@ -63,17 +64,17 @@ export default function UserPage() {
   );
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        flexDirection: 'column',
-        marginTop: '1em',
-      }}
-    >
-      <Typography variant="h6">Your previous orders:</Typography>
-      <Box sx={{ border: '1px solid black', padding: '.1em' }}>
+    <Container>
+      <Typography variant="h6" mt={5}>
+        Hi, {user?.firstName}!
+      </Typography>
+      <Typography variant="body1">
+        You have made {userOrders.length} orders with us.
+      </Typography>
+      <Typography variant="h6" mt={5} mb={3}>
+        Your previous orders:
+      </Typography>
+      <Grid container spacing={2}>
         {userOrders.map((order) => (
           <Grid
             key={order.id}
@@ -85,25 +86,36 @@ export default function UserPage() {
             sx={{ borderBottom: '1px solid black', padding: '.5em' }}
           >
             <Box>
-              Order ID: {order.id}
-              <br />
-              Order date:
-              {order.createdAt}
+              <Typography>Order ID: {order.id}</Typography>
+              <Typography>
+                Order date:
+                {order.createdAt}
+              </Typography>
             </Box>
 
             <Typography variant="h6">Order details:</Typography>
             {order.products.map((prod) => (
               <Box key={prod.id} sx={{ padding: '.5em' }}>
-                <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                <Box sx={{ display: 'flex', gap: '1rem' }}>
                   <p>{prod.title}</p>
                   <p>{prod.qty}</p>
+                </Box>
+              </Box>
+            ))}
+            <Typography variant="h6">Delivery details:</Typography>
+            {order.deliveryAddress.map((delivery) => (
+              <Box key={delivery.firstName} sx={{ padding: '.5em' }}>
+                <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                  <Typography variant="body1">{delivery.street}</Typography>
+                  <Typography variant="body1">{delivery.city}</Typography>
+                  <Typography variant="body1">{delivery.zipcode}</Typography>
                 </Box>
               </Box>
             ))}
             {order.isSent ? <p>Your order has been Shipped</p> : <p>Pending</p>}
           </Grid>
         ))}
-      </Box>
+      </Grid>
 
       {user?.isAdmin ? null : user?.adminRequested ? (
         'Request for Admin role under review'
@@ -149,6 +161,6 @@ export default function UserPage() {
         message="Request sent"
         action={action}
       />
-    </Box>
+    </Container>
   );
 }
