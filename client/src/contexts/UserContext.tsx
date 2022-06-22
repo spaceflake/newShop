@@ -10,7 +10,7 @@ interface UserContextValue {
   login: (loginDetails: LoginDetails) => Promise<boolean>;
   logout: () => void;
   getAllUsers: () => void;
-  allUsers: any;
+  allUsers: User[];
 }
 export const UserContext = React.createContext<UserContextValue>({
   isLoading: false,
@@ -28,15 +28,15 @@ export const UserContext = React.createContext<UserContextValue>({
   },
   allUsers: [],
   login: (_loginDetails: LoginDetails): Promise<boolean> => {
-    return new Promise(() => { });
+    return new Promise(() => {});
   },
-  logout: () => { },
-  getAllUsers: () => { },
+  logout: () => {},
+  getAllUsers: () => {},
 });
 
 export const UserProvider: React.FC<React.ReactNode> = ({ children }) => {
   const [user, setUser] = React.useState<User>();
-  const [allUsers, setAllUsers] = React.useState([]);
+  const [allUsers, setAllUsers] = React.useState<User[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const login = async (loginDetails: LoginDetails) => {
@@ -70,10 +70,13 @@ export const UserProvider: React.FC<React.ReactNode> = ({ children }) => {
     });
   };
   const getAllUsers = async () => {
+    setIsLoading(true);
     const response = await axios.get('/api/user');
     const res = await response.data;
-    setAllUsers(res);
-    console.log(res);
+    if (res) {
+      setAllUsers(res);
+      setIsLoading(false);
+    }
   };
 
   return (
