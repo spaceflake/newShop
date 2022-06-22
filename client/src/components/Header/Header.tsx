@@ -60,7 +60,7 @@ const Header: FC<HeaderProps> = () => {
         sx={{ backgroundColor: 'white', zIndex: 3, paddingBlock: '1rem' }}
         position="fixed"
       >
-        <Toolbar disableGutters>
+        <Toolbar sx={{ justifyContent: 'space-between' }} disableGutters>
           <Link
             style={{
               display: 'flex',
