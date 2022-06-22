@@ -3,12 +3,19 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import {
   AppBar,
   Box,
-  Button, Card,
+  Button,
+  Card,
   CardActionArea,
   CardActions,
   CardContent,
   CardMedia,
-  Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, MenuItem,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  IconButton,
+  MenuItem,
   OutlinedInput,
   Paper,
   Select,
@@ -16,7 +23,7 @@ import {
   styled,
   TextField,
   Toolbar,
-  Typography
+  Typography,
 } from '@mui/material';
 import { SelectChangeEvent } from '@mui/material/Select';
 import { TransitionProps } from '@mui/material/transitions';
@@ -26,12 +33,11 @@ import { FormikErrors, useFormik } from 'formik';
 import React, { ChangeEvent, useState } from 'react';
 import { useProduct } from '../../contexts/ProductsContext';
 
-
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
     children: React.ReactElement;
   },
-  ref: React.Ref<unknown>,
+  ref: React.Ref<unknown>
 ) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -66,7 +72,6 @@ const Input = styled('input')({
   display: 'none',
 });
 
-
 function ProductCard({ product }: Props) {
   const { updateProduct, deleteProduct, categories } = useProduct();
   const [imgSrc, setImgSrc] = useState<any>();
@@ -75,26 +80,24 @@ function ProductCard({ product }: Props) {
   const [openDeleteProduct, setOpenDeleteProduct] = React.useState(false);
 
   function handleClickOpen(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
-    if (e.currentTarget.innerText === "EDIT") {
+    if (e.currentTarget.innerText === 'EDIT') {
       setOpenEditProduct(true);
     } else {
-      setOpenDeleteProduct(true)
+      setOpenDeleteProduct(true);
     }
-  };
+  }
 
   function handleClose() {
     setOpenEditProduct(false);
-    setOpenDeleteProduct(false)
-  };
+    setOpenDeleteProduct(false);
+  }
 
   const handleChange = (event: SelectChangeEvent) => {
     const {
       target: { value },
     } = event;
-    setCategorySelect(
-      typeof value === 'string' ? value.split(',') : value,
-    );
-    formik.setFieldValue('categories', [...categorySelect])
+    setCategorySelect(typeof value === 'string' ? value.split(',') : value);
+    formik.setFieldValue('categories', [...categorySelect]);
   };
 
   const formik = useFormik<Product>({
@@ -107,6 +110,7 @@ function ProductCard({ product }: Props) {
       updateProduct({
         ...updatedProduct,
       });
+      handleClose();
     },
   });
 
@@ -117,21 +121,23 @@ function ProductCard({ product }: Props) {
     formData.set('media', file);
     console.log(file);
 
-    axios.post('/api/media/', formData)
-      .then(
-        res => {
-          formik.setFieldValue('photoId', res.data._id)
-        })
+    axios.post('/api/media/', formData).then((res) => {
+      formik.setFieldValue('photoId', res.data._id);
+    });
 
     let reader = new FileReader();
 
     reader.onloadend = () => {
-      setImgSrc(reader.result)
-    }
+      setImgSrc(reader.result);
+    };
   };
 
   return (
-    <Card elevation={3} key={product.id} sx={{ borderRadius: '1rem', padding: '1rem' }}>
+    <Card
+      elevation={3}
+      key={product.id}
+      sx={{ borderRadius: '1rem', padding: '1rem' }}
+    >
       <CardActionArea>
         <CardContent sx={{ padding: '0' }}>
           <CardMedia
@@ -222,12 +228,10 @@ function ProductCard({ product }: Props) {
               width: 'max-content',
               maxWidth: '95%',
               margin: '0 auto',
-              gap: '1rem'
+              gap: '1rem',
             }}
-            onSubmit={
-              formik.handleSubmit
-            }>
-
+            onSubmit={formik.handleSubmit}
+          >
             <TextField
               id="title"
               name="title"
@@ -276,7 +280,9 @@ function ProductCard({ product }: Props) {
               value={formik.values.stock}
             />
             {product.stock <= 2 ? (
-              <Typography color="red">This product is almost sold out</Typography>
+              <Typography color="red">
+                This product is almost sold out
+              </Typography>
             ) : null}
             {formik.touched.stock && formik.errors.stock ? (
               <div>{formik.errors.stock}</div>
@@ -291,9 +297,18 @@ function ProductCard({ product }: Props) {
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
               />
-              <Select labelId="categories-select-label" id="categories-select" multiple value={categorySelect as any} onChange={handleChange} input={<OutlinedInput label="Categories" />}>
-                {categories.map(category => (
-                  <MenuItem key={category} value={category}>{category}</MenuItem>
+              <Select
+                labelId="categories-select-label"
+                id="categories-select"
+                multiple
+                value={categorySelect as any}
+                onChange={handleChange}
+                input={<OutlinedInput label="Categories" />}
+              >
+                {categories.map((category) => (
+                  <MenuItem key={category} value={category}>
+                    {category}
+                  </MenuItem>
                 ))}
               </Select>
             </Box>
@@ -305,20 +320,26 @@ function ProductCard({ product }: Props) {
                 display: 'flex',
                 justifyContent: 'center',
                 flexDirection: 'column',
-                alignItems: 'center'
-              }}>
+                alignItems: 'center',
+              }}
+            >
               <img style={{ width: '350px' }} src={product.photoUrl} alt="" />
               <label htmlFor="contained-button-file">
-                <Input id="contained-button-file" type="file" onChange={uploadImage} />
+                <Input
+                  id="contained-button-file"
+                  type="file"
+                  onChange={uploadImage}
+                />
                 <Button variant="outlined" component="span">
                   Upload image
                 </Button>
               </label>
             </Paper>
 
-            <Button variant="contained" type="submit">SAVE</Button>
+            <Button variant="contained" type="submit">
+              SAVE
+            </Button>
           </form>
-
         </Dialog>
 
         <Button
@@ -346,26 +367,28 @@ function ProductCard({ product }: Props) {
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
-          <DialogTitle id="alert-dialog-title">
-            {"Delete product"}
-          </DialogTitle>
+          <DialogTitle id="alert-dialog-title">{'Delete product'}</DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
-              Are you sure you wish to delete the "{formik.values.title}" product?
+              Are you sure you wish to delete the "{formik.values.title}"
+              product?
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={() => {
-              deleteProduct(product.id);
-              console.log(product.id);
-              handleClose();
-            }}>
+            <Button
+              onClick={() => {
+                deleteProduct(product.id);
+                console.log(product.id);
+                handleClose();
+              }}
+            >
               Yes
             </Button>
-            <Button onClick={handleClose} autoFocus>No</Button>
+            <Button onClick={handleClose} autoFocus>
+              No
+            </Button>
           </DialogActions>
         </Dialog>
-
       </CardActions>
     </Card>
   );
