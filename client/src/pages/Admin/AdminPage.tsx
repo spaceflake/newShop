@@ -92,7 +92,7 @@ function AdminPage() {
         <Link to="/">
           <Button startIcon={<ArrowBackIcon />}>Back to home page</Button>
         </Link>
-        <Grid container>
+        <Grid container sx={{ overflowX: 'auto' }}>
           <Grid item gridColumn="span 2">
             <Box
               sx={{
