@@ -82,6 +82,7 @@ const AdminUserControl = () => {
 
   return (
     <Container maxWidth="xl" sx={{ height: '100%' }}>
+
       <Typography variant="h4">Customers</Typography>
       {loadState ? (
         <Box sx={{ display: 'flex' }}>
