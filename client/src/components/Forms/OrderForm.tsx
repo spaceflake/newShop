@@ -21,8 +21,6 @@ import ShippingForm, {
   AdressFormSchema,
   emptyShippingForm,
 } from './ShippingForm';
-import { useUser } from '../../contexts/UserContext';
-import { useProduct } from '../../contexts/ProductsContext';
 
 export interface OrderData {
   deliveryAddress: Address;
@@ -86,15 +84,10 @@ interface Props {
 }
 
 function OrderForm(props: Props) {
-  const { updateProduct } = useProduct();
-
   let navigate = useNavigate();
   const { dispatch } = useCart();
   const [isLoading, setLoading] = React.useState<boolean>(false);
-  // let [allOrderDetails, setAllDetails] = useLocalStorage<AllOrderData>(
-  //   'orderDetails',
-  //   ''
-  // );
+
   let [sumDetails] = useLocalStorage<number>('cartSum', '');
   let [productsDetails] = useLocalStorage<CartType[]>('cart', '');
 
@@ -107,17 +100,15 @@ function OrderForm(props: Props) {
       deliveryAddress,
       products: productsDetails,
       shippingMethod,
+      orderSum: sumDetails,
     };
 
     // fetch api and navigate to confirmed-order page if successful
     // const success = await placeOrderFetch();
     try {
-      // updateStock();
       const res = await axios.post('/api/order', order);
 
       const result = await res.data;
-
-      console.log(result);
 
       if (result.success) {
         dispatch({
@@ -131,21 +122,6 @@ function OrderForm(props: Props) {
       console.log(error);
     }
   }
-
-  //populate a full Local storage key with all order details
-  // function setOrderDetails(orderDetails: OrderData) {
-  //   allOrderDetails = {
-  //     orderDetails: orderDetails,
-  //     orderTotal:
-  //       sumDetails +
-  //       (typeof orderDetails.shippingMethod === 'number'
-  //         ? deliveryOptions[orderDetails.shippingMethod].price
-  //         : 0),
-  //     products: productsDetails,
-  //   };
-
-  //   setAllDetails(allOrderDetails);
-  // }
 
   const formikProps = useFormik<OrderData>({
     initialValues: emptyForm,

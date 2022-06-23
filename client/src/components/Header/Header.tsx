@@ -6,6 +6,7 @@ import {
   createTheme,
   IconButton,
   Menu,
+  ThemeProvider,
   Toolbar,
   Tooltip,
   Typography,
@@ -59,7 +60,7 @@ const Header: FC<HeaderProps> = () => {
         sx={{ backgroundColor: 'white', zIndex: 3, paddingBlock: '1rem' }}
         position="fixed"
       >
-        <Toolbar disableGutters>
+        <Toolbar sx={{ justifyContent: 'space-between' }} disableGutters>
           <Link
             style={{
               display: 'flex',
@@ -80,14 +81,16 @@ const Header: FC<HeaderProps> = () => {
                 display: { xs: 'none', md: 'flex' },
               }}
             />
-            <Typography
-              variant="h1"
-              sx={{
-                fontSize: 'clamp(1.5rem, 1rem + 1vw, 2rem)',
-              }}
-            >
-              Hats On Hats
-            </Typography>
+            <ThemeProvider theme={theme}>
+              <Typography
+                variant="h1"
+                sx={{
+                  fontSize: 'clamp(1.5rem, 1rem + 1vw, 2rem)',
+                }}
+              >
+                Hats On Hats
+              </Typography>
+            </ThemeProvider>
           </Link>
 
           <Box

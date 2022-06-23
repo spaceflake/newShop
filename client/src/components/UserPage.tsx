@@ -1,32 +1,36 @@
+import CloseIcon from '@mui/icons-material/Close';
 import {
-  accordionSummaryClasses,
   Box,
   Button,
   Checkbox,
+  Container,
   FormControlLabel,
   Grid,
   IconButton,
-  List,
   Snackbar,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
   Typography,
 } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
+import { Order } from '@shared/types';
+import axios from 'axios';
 import { FormEvent, useEffect, useState } from 'react';
 import { useUser } from '../contexts/UserContext';
-import axios, { AxiosResponse } from 'axios';
-import { Order, Product } from '@shared/types';
 
 export default function UserPage() {
   const { user } = useUser();
   const [userOrders, setUserOrders] = useState<Order[]>([]);
   const [open, setOpen] = useState(false);
+  const [adminRequested, setAdminRequested] = useState(false);
 
   useEffect(() => {
     const getUserOrders = async () => {
       const res = await axios.get('/api/users-orders/' + user?.id);
       const userOrders = await res.data;
       setUserOrders(userOrders);
-      console.log('userOrders', userOrders);
     };
     getUserOrders();
   }, [user?.id]);
@@ -35,7 +39,10 @@ export default function UserPage() {
     e.preventDefault();
     const res = await axios.put('/api/user/adminrequest/' + user?.id);
     const result = await res.data;
-    setOpen(true);
+    if (result) {
+      setOpen(true);
+      setAdminRequested(true);
+    }
   };
 
   const handleClose = (
@@ -63,17 +70,17 @@ export default function UserPage() {
   );
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        flexDirection: 'column',
-        marginTop: '1em',
-      }}
-    >
-      <Typography variant="h6">Your previous orders:</Typography>
-      <Box sx={{ border: '1px solid black', padding: '.1em' }}>
+    <Container>
+      <Typography variant="h6" mt={5}>
+        Hi, {user?.firstName}!
+      </Typography>
+      <Typography variant="body1">
+        You have made {userOrders.length} orders with us.
+      </Typography>
+      <Typography variant="h6" mt={5} mb={3}>
+        Your previous orders:
+      </Typography>
+      <Grid container spacing={2} sx={{ display: 'flex', flexDirection: 'column',}}>
         {userOrders.map((order) => (
           <Grid
             key={order.id}
@@ -81,31 +88,66 @@ export default function UserPage() {
             xs={12}
             sm={6}
             md={4}
-            lg={3}
+            lg={12}
             sx={{ borderBottom: '1px solid black', padding: '.5em' }}
           >
             <Box>
-              Order ID: {order.id}
-              <br />
-              Order date:
-              {order.createdAt}
+              <Box sx={{ display: 'flex', justifyContent: 'space-between'}} >
+              <Typography>Order ID:</Typography>
+              <Typography>{order.id}</Typography>
+              </Box>
+              <Box sx={{ display: 'flex', justifyContent: 'space-between'}} >
+              <Typography> Order date::</Typography>
+              <Typography>{order.createdAt.toString().split('T')[0]}</Typography>
+              </Box>
             </Box>
-
             <Typography variant="h6">Order details:</Typography>
-            {order.products.map((prod) => (
+            <Table size="small" aria-label="purchases">
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Product name</TableCell>
+                    <TableCell align="right">Amount</TableCell>
+                    <TableCell align="right">Total price (SEK)</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {order.products.map((productRow) => (
+                    <TableRow key={productRow.id}>
+                      <TableCell component="th" scope="row">
+                        {productRow.title}
+                      </TableCell>
+                      <TableCell align="right">{productRow.qty}</TableCell>
+                      <TableCell align="right">
+                        {productRow.qty * productRow.price}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            {/* {order.products.map((prod) => (
               <Box key={prod.id} sx={{ padding: '.5em' }}>
-                <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                <Box sx={{ display: 'flex', gap: '1rem' }}>
                   <p>{prod.title}</p>
                   <p>{prod.qty}</p>
+                </Box>
+              </Box>
+            ))} */}
+            <Typography variant="h6">Delivery details:</Typography>
+            {order.deliveryAddress.map((delivery) => (
+              <Box key={delivery.firstName} sx={{ padding: '.5em' }}>
+                <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                  <Typography variant="body1">{delivery.street}</Typography>
+                  <Typography variant="body1">{delivery.city}</Typography>
+                  <Typography variant="body1">{delivery.zipcode}</Typography>
                 </Box>
               </Box>
             ))}
             {order.isSent ? <p>Your order has been Shipped</p> : <p>Pending</p>}
           </Grid>
         ))}
-      </Box>
+      </Grid>
 
-      {user?.isAdmin ? null : user?.adminRequested ? (
+      {user?.isAdmin ? null : adminRequested ? (
         'Request for Admin role under review'
       ) : (
         <form
@@ -149,6 +191,6 @@ export default function UserPage() {
         message="Request sent"
         action={action}
       />
-    </Box>
+    </Container>
   );
 }
