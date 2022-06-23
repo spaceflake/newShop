@@ -8,6 +8,11 @@ import {
   Grid,
   IconButton,
   Snackbar,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
   Typography,
 } from '@mui/material';
 import { Order } from '@shared/types';
@@ -74,7 +79,7 @@ export default function UserPage() {
       <Typography variant="h6" mt={5} mb={3}>
         Your previous orders:
       </Typography>
-      <Grid container spacing={2}>
+      <Grid container spacing={2} sx={{ display: 'flex', flexDirection: 'column',}}>
         {userOrders.map((order) => (
           <Grid
             key={order.id}
@@ -82,26 +87,50 @@ export default function UserPage() {
             xs={12}
             sm={6}
             md={4}
-            lg={3}
+            lg={12}
             sx={{ borderBottom: '1px solid black', padding: '.5em' }}
           >
             <Box>
-              <Typography>Order ID: {order.id}</Typography>
-              <Typography>
-                Order date:
-                {order.createdAt}
-              </Typography>
+              <Box sx={{ display: 'flex', justifyContent: 'space-between'}} >
+              <Typography>Order ID:</Typography>
+              <Typography>{order.id}</Typography>
+              </Box>
+              <Box sx={{ display: 'flex', justifyContent: 'space-between'}} >
+              <Typography> Order date::</Typography>
+              <Typography>{order.createdAt.toString().split('T')[0]}</Typography>
+              </Box>
             </Box>
-
             <Typography variant="h6">Order details:</Typography>
-            {order.products.map((prod) => (
+            <Table size="small" aria-label="purchases">
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Product name</TableCell>
+                    <TableCell align="right">Amount</TableCell>
+                    <TableCell align="right">Total price (SEK)</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {order.products.map((productRow) => (
+                    <TableRow key={productRow.id}>
+                      <TableCell component="th" scope="row">
+                        {productRow.title}
+                      </TableCell>
+                      <TableCell align="right">{productRow.qty}</TableCell>
+                      <TableCell align="right">
+                        {productRow.qty * productRow.price}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            {/* {order.products.map((prod) => (
               <Box key={prod.id} sx={{ padding: '.5em' }}>
                 <Box sx={{ display: 'flex', gap: '1rem' }}>
                   <p>{prod.title}</p>
                   <p>{prod.qty}</p>
                 </Box>
               </Box>
-            ))}
+            ))} */}
             <Typography variant="h6">Delivery details:</Typography>
             {order.deliveryAddress.map((delivery) => (
               <Box key={delivery.firstName} sx={{ padding: '.5em' }}>
