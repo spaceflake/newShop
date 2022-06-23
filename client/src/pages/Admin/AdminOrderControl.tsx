@@ -56,7 +56,7 @@ const OrderRow = ({ order }: OrderProp) => {
         <TableCell component="th" scope="row">
           {order.id}
         </TableCell>
-        <TableCell align="right">{order.createdAt}</TableCell>
+        {/* <TableCell align="right">{order.createdAt}</TableCell> */}
         <TableCell align="right">
           {order.isSent ? 'shipped' : 'not shipped'}
         </TableCell>
@@ -64,9 +64,35 @@ const OrderRow = ({ order }: OrderProp) => {
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box sx={{ margin: 1, overflow: 'auto' }}>
-              <Typography variant="h6" gutterBottom component="div">
-                Order details
+            <Box sx={{ margin: 1, overflowX: 'auto' }}>
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                }}
+              >
+                <Typography variant="h6" gutterBottom component="div">
+                  Order details
+                </Typography>
+                {order.isSent ? (
+                  'shipped'
+                ) : (
+                  <Button
+                    onClick={() => {
+                      setSelectedOrder(order.id);
+                      if (selectedOrder) {
+                        handleClick();
+                        console.log(selectedOrder);
+                      }
+                    }}
+                  >
+                    {!isLoading ? 'Mark as sent' : <CircularProgress />}
+                  </Button>
+                )}
+              </Box>
+              <Typography variant="body2" gutterBottom component="div">
+                {`Order date: ${order.createdAt.toString().split('T')[0]}`}
               </Typography>
               <Table size="small" aria-label="purchases">
                 <TableHead>
@@ -94,7 +120,7 @@ const OrderRow = ({ order }: OrderProp) => {
                 Delivery details
               </Typography>
               <Table size="small" aria-label="delivery">
-                <TableHead>
+                {/* <TableHead>
                   <TableRow>
                     <TableCell>Firstname</TableCell>
                     <TableCell align="right">Lastname</TableCell>
@@ -103,39 +129,21 @@ const OrderRow = ({ order }: OrderProp) => {
                     <TableCell align="right">Zipcode</TableCell>
                     <TableCell align="right">Email</TableCell>
                   </TableRow>
-                </TableHead>
+                </TableHead> */}
                 <TableBody>
                   {order.deliveryAddress.map((deliveryRow) => (
                     <TableRow key={deliveryRow.email}>
-                      <TableCell component="th" scope="row">
-                        {deliveryRow.firstName}
-                      </TableCell>
-                      <TableCell align="right">
-                        {deliveryRow.lastName}
-                      </TableCell>
-                      <TableCell align="right">{deliveryRow.street}</TableCell>
-                      <TableCell align="right">{deliveryRow.city}</TableCell>
-                      <TableCell align="right">{deliveryRow.zipcode}</TableCell>
-                      <TableCell align="right">{deliveryRow.email}</TableCell>
+                      <TableRow component="th" scope="row">
+                        {`${deliveryRow.firstName} ${deliveryRow.lastName}`}
+                      </TableRow>
+                      <TableRow>{deliveryRow.street}</TableRow>
+                      <TableRow>{deliveryRow.city}</TableRow>
+                      <TableRow>{deliveryRow.zipcode}</TableRow>
+                      <TableRow>{deliveryRow.email}</TableRow>
                     </TableRow>
                   ))}
                 </TableBody>
               </Table>
-              {order.isSent ? (
-                'shipped'
-              ) : (
-                <Button
-                  onClick={() => {
-                    setSelectedOrder(order.id);
-                    if (selectedOrder) {
-                      handleClick();
-                      console.log(selectedOrder);
-                    }
-                  }}
-                >
-                  {!isLoading ? 'Mark as sent' : <CircularProgress />}
-                </Button>
-              )}
             </Box>
           </Collapse>
         </TableCell>
@@ -174,7 +182,7 @@ const AdminOrderControl = () => {
             <TableRow>
               <TableCell />
               <TableCell>Order Id</TableCell>
-              <TableCell align="right">Order date</TableCell>
+              {/* <TableCell align="right">Order date</TableCell> */}
               <TableCell align="right">Status</TableCell>
             </TableRow>
           </TableHead>
