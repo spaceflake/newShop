@@ -108,7 +108,6 @@ const AdminProductControl = () => {
     const file = e.target.files[0];
     const formData = new FormData();
     formData.set('media', file);
-    console.log(file);
 
     axios.post('/api/media/', formData).then((res) => {
       formik.setFieldValue('photoId', res.data._id);
@@ -277,7 +276,6 @@ const AdminProductControl = () => {
 
               <Button variant="contained" onClick={() => 
                { 
-                console.log(formik.values)
                 const newProduct = { ...formik.values };
                 createProduct(newProduct);
                 window.location.reload();

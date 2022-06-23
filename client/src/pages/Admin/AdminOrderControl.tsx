@@ -55,7 +55,6 @@ const OrderRow = ({ order }: OrderProp) => {
         isSent: true,
       })
       .then((res: AxiosResponse) => {
-        console.log(res.data.msg);
         setIsLoading(false);
         handleClose();
       });
@@ -115,8 +114,6 @@ const OrderRow = ({ order }: OrderProp) => {
                       onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                         setAnchorEl(e.currentTarget);
                         setSelectedOrder(order.id);
-
-                        console.log(selectedOrder);
                       }}
                     >
                       {!isLoading ? 'Mark as sent' : <CircularProgress />}

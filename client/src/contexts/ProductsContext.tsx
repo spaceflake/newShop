@@ -79,14 +79,12 @@ export const ProductsProvider: React.FC = ({ children }) => {
           console.log('Failure');
         }
       );
-    console.log(product.id);
   };
 
   const deleteProduct = async (productId: string) => {
     await axios.delete('/api/product/' + productId).then(
       (res: AxiosResponse) => {
         console.log('suc');
-        console.log(productId);
       },
       () => {
         console.log('Failure');

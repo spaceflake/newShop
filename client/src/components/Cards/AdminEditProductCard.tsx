@@ -119,7 +119,6 @@ function ProductCard({ product }: Props) {
     const file = e.target.files[0];
     const formData = new FormData();
     formData.set('media', file);
-    console.log(file);
 
     axios.post('/api/media/', formData).then((res) => {
       formik.setFieldValue('photoId', res.data._id);
@@ -383,7 +382,6 @@ function ProductCard({ product }: Props) {
             <Button
               onClick={() => {
                 deleteProduct(product.id);
-                console.log(product.id);
                 handleClose();
                 window.location.reload();
               }}

@@ -118,7 +118,6 @@ const AdminUserControl = () => {
                     onClick={() => {
                       handleEditDrawerOpen();
                       setSelectedUser(user.id);
-                      console.log(selectedUser);
                     }}
                   />
                 )}

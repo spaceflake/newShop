@@ -64,7 +64,6 @@ export const UserProvider: React.FC<React.ReactNode> = ({ children }) => {
   const logout = async () => {
     // talk to server
     await axios.get('/api/user/logout').then((res: AxiosResponse) => {
-      console.log(res.data.message);
       setUser(undefined);
       setIsLoading(false);
     });
