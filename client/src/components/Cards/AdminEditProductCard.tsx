@@ -279,9 +279,14 @@ function ProductCard({ product }: Props) {
               onBlur={formik.handleBlur}
               value={formik.values.stock}
             />
-            {product.stock <= 2 ? (
+            {product.stock <= 3 && product.stock > 0 ? (
               <Typography color="red">
                 This product is almost sold out
+              </Typography>
+            ) : null}
+            {product.stock <= 0 ? (
+              <Typography color="red">
+                This product is sold out
               </Typography>
             ) : null}
             {formik.touched.stock && formik.errors.stock ? (

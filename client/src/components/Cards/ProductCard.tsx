@@ -111,8 +111,8 @@ function ProductCard({ product }: Props) {
         </Link>
         {cart && cart.some((p: CartType) => p.id === product.id) ? (
           <Button sx={{ color: '#ED6C02' }}>In cart</Button>
-        ) : product.stock === 0 ? (
-          'not in stock'
+        ) : product.stock <= 0 ? (
+          <Typography>OUT OF STOCK</Typography>
         ) : (
           <BuyButton dispatch={dispatch} product={product} />
         )}
