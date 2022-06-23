@@ -340,7 +340,11 @@ function ProductCard({ product }: Props) {
               </label>
             </Paper>
 
-            <Button variant="contained" type="submit">
+            <Button variant="contained" onClick={() => {
+               updateProduct({...formik.values})
+               handleClose();
+              }}
+            >
               SAVE
             </Button>
           </form>
