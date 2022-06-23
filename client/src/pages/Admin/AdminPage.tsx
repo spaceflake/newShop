@@ -1,20 +1,14 @@
-import { AccountCircle } from '@mui/icons-material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import MenuIcon from '@mui/icons-material/Menu';
 import {
   AppBar,
   Avatar,
   Box,
   Button,
   Chip,
-  Grid,
-  IconButton,
-  Menu,
-  MenuItem,
   Toolbar,
   Typography,
 } from '@mui/material';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useUser } from '../../contexts/UserContext';
 import AdminOrderControl from './AdminOrderControl';
@@ -24,15 +18,6 @@ import AdminUserControl from './AdminUserControl';
 function AdminPage() {
   const { user } = useUser();
   const [activePage, setActivePage] = useState('products');
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-
-  const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
 
   return (
     <>
