@@ -385,6 +385,7 @@ function ProductCard({ product }: Props) {
                 deleteProduct(product.id);
                 console.log(product.id);
                 handleClose();
+                window.location.reload();
               }}
             >
               Yes
