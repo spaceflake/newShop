@@ -49,7 +49,6 @@ function LoginForm(_props: Props) {
           .catch((e) => {
             setSubmitError(e.message);
           });
-        console.log(loginDetails);
       },
     });
 
