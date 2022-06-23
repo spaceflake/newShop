@@ -87,7 +87,7 @@ const AdminUserControl = () => {
 
   return (
     <Container maxWidth="xl" sx={{ height: '100%' }}>
-      <Typography variant="h4">Customers</Typography>
+      <Typography variant="h4">Users:</Typography>
       <List>
         {allUsers.map((user: User) => (
           <ListItem
