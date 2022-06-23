@@ -1,13 +1,17 @@
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import LocalShippingIcon from '@mui/icons-material/LocalShipping';
+import InventoryIcon from '@mui/icons-material/Inventory';
 import {
   Box,
   Button,
+  Chip,
   CircularProgress,
   Collapse,
   Container,
   IconButton,
   Paper,
+  Popover,
   Table,
   TableBody,
   TableCell,
@@ -19,6 +23,7 @@ import {
 import { Order } from '@shared/types';
 import axios, { AxiosResponse } from 'axios';
 import { useEffect, useState } from 'react';
+import React from 'react';
 
 interface OrderProp {
   order: Order;
@@ -28,8 +33,22 @@ const OrderRow = ({ order }: OrderProp) => {
   const [open, setOpen] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState<String>();
   const [isLoading, setIsLoading] = useState(false);
+  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
+    null
+  );
 
-  const handleClick = async () => {
+  // const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  //   setAnchorEl(event.currentTarget);
+  // };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const openPop = Boolean(anchorEl);
+  const id = open ? 'simple-popover' : undefined;
+
+  const updateSentStatus = async () => {
     setIsLoading(true);
     await axios
       .put('/api/order/' + selectedOrder, {
@@ -37,7 +56,8 @@ const OrderRow = ({ order }: OrderProp) => {
       })
       .then((res: AxiosResponse) => {
         console.log(res.data.msg);
-        setIsLoading(!isLoading);
+        setIsLoading(false);
+        handleClose();
       });
   };
 
@@ -58,7 +78,19 @@ const OrderRow = ({ order }: OrderProp) => {
         </TableCell>
         {/* <TableCell align="right">{order.createdAt}</TableCell> */}
         <TableCell align="right">
-          {order.isSent ? 'shipped' : 'not shipped'}
+          {order.isSent ? (
+            <Chip
+              icon={<LocalShippingIcon />}
+              color="success"
+              label="Shipped"
+            />
+          ) : (
+            <Chip
+              icon={<InventoryIcon />}
+              color="warning"
+              label="Not shipped"
+            />
+          )}
         </TableCell>
       </TableRow>
       <TableRow>
@@ -76,19 +108,38 @@ const OrderRow = ({ order }: OrderProp) => {
                   Order details
                 </Typography>
                 {order.isSent ? (
-                  'shipped'
+                  <Chip icon={<LocalShippingIcon />} label="Shipped" />
                 ) : (
-                  <Button
-                    onClick={() => {
-                      setSelectedOrder(order.id);
-                      if (selectedOrder) {
-                        handleClick();
+                  <>
+                    <Button
+                      onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                        setAnchorEl(e.currentTarget);
+                        setSelectedOrder(order.id);
+
                         console.log(selectedOrder);
-                      }
-                    }}
-                  >
-                    {!isLoading ? 'Mark as sent' : <CircularProgress />}
-                  </Button>
+                      }}
+                    >
+                      {!isLoading ? 'Mark as sent' : <CircularProgress />}
+                    </Button>
+                    <Popover
+                      id={id}
+                      open={openPop}
+                      anchorEl={anchorEl}
+                      onClose={handleClose}
+                      anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'left',
+                      }}
+                    >
+                      <Typography sx={{ p: 2 }}>Confirm?</Typography>
+                      <Button sx={{ p: 2 }} onClick={updateSentStatus}>
+                        Yes
+                      </Button>
+                      <Button sx={{ p: 2 }} onClick={handleClose}>
+                        No
+                      </Button>
+                    </Popover>
+                  </>
                 )}
               </Box>
               <Typography variant="body2" gutterBottom component="div">
