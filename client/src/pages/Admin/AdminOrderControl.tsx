@@ -37,10 +37,6 @@ const OrderRow = ({ order }: OrderProp) => {
     null
   );
 
-  // const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-  //   setAnchorEl(event.currentTarget);
-  // };
-
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -57,13 +53,14 @@ const OrderRow = ({ order }: OrderProp) => {
       .then((res: AxiosResponse) => {
         setIsLoading(false);
         handleClose();
+        setOpen(false);
       });
   };
 
   return (
     <>
       <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
-        <TableCell>
+        <TableCell sx={{ pr: '0' }}>
           <IconButton
             aria-label="expand row"
             size="small"
@@ -72,23 +69,15 @@ const OrderRow = ({ order }: OrderProp) => {
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        <TableCell component="th" scope="row">
+        <TableCell component="th" scope="row" sx={{ pr: '0' }}>
           {order.id}
         </TableCell>
         {/* <TableCell align="right">{order.createdAt}</TableCell> */}
         <TableCell align="right">
           {order.isSent ? (
-            <Chip
-              icon={<LocalShippingIcon />}
-              color="success"
-              label="Shipped"
-            />
+            <Chip icon={<LocalShippingIcon />} color="success" />
           ) : (
-            <Chip
-              icon={<InventoryIcon />}
-              color="warning"
-              label="Not shipped"
-            />
+            <Chip icon={<InventoryIcon />} color="warning" />
           )}
         </TableCell>
       </TableRow>
@@ -181,13 +170,17 @@ const OrderRow = ({ order }: OrderProp) => {
                 <TableBody>
                   {order.deliveryAddress.map((deliveryRow) => (
                     <TableRow key={deliveryRow.email}>
-                      <TableRow component="th" scope="row">
-                        {`${deliveryRow.firstName} ${deliveryRow.lastName}`}
-                      </TableRow>
-                      <TableRow>{deliveryRow.street}</TableRow>
-                      <TableRow>{deliveryRow.city}</TableRow>
-                      <TableRow>{deliveryRow.zipcode}</TableRow>
-                      <TableRow>{deliveryRow.email}</TableRow>
+                      <TableCell>
+                        <Box>
+                          <Typography>
+                            {`${deliveryRow.firstName} ${deliveryRow.lastName}`}
+                          </Typography>
+                          <Typography>{deliveryRow.street}</Typography>
+                          <Typography>{deliveryRow.city}</Typography>
+                          <Typography>{deliveryRow.zipcode}</Typography>
+                          <Typography>{deliveryRow.email}</Typography>
+                        </Box>
+                      </TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
@@ -226,10 +219,14 @@ const AdminOrderControl = () => {
     <Container>
       <TableContainer component={Paper}>
         <Table aria-label="collapsible table">
-          <TableHead sx={{ backgroundColor: 'hsl(214, 100%, 76%)' }}>
+          <TableHead
+            sx={{
+              backgroundColor: 'hsl(214, 100%, 76%)',
+            }}
+          >
             <TableRow>
               <TableCell />
-              <TableCell>Order Id</TableCell>
+              <TableCell sx={{ pr: '0' }}>Order Id</TableCell>
               {/* <TableCell align="right">Order date</TableCell> */}
               <TableCell align="right">Status</TableCell>
             </TableRow>
