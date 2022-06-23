@@ -23,7 +23,7 @@ function AdminPage() {
   const { user } = useUser();
   const [activePage, setActivePage] = useState('products');
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-
+  const [isDesktop] = useState(false)
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -37,15 +37,18 @@ function AdminPage() {
       <>
         <AppBar position="static">
           <Toolbar>
+          { window.innerWidth > 1150 ? null : (
             <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="menu"
-              sx={{ mr: 2 }}
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+            sx={{ mr: 2 }}
             >
-              <MenuIcon />
-            </IconButton>
+            <MenuIcon />
+          </IconButton>
+            )}
+           
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               Admin Dashboard
             </Typography>
