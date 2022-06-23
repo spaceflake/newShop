@@ -19,13 +19,13 @@ export default function UserPage() {
   const { user } = useUser();
   const [userOrders, setUserOrders] = useState<Order[]>([]);
   const [open, setOpen] = useState(false);
+  const [adminRequested, setAdminRequested] = useState(false);
 
   useEffect(() => {
     const getUserOrders = async () => {
       const res = await axios.get('/api/users-orders/' + user?.id);
       const userOrders = await res.data;
       setUserOrders(userOrders);
-      console.log('userOrders', userOrders);
     };
     getUserOrders();
   }, [user?.id]);
@@ -34,8 +34,9 @@ export default function UserPage() {
     e.preventDefault();
     const res = await axios.put('/api/user/adminrequest/' + user?.id);
     const result = await res.data;
-    if (result.ok) {
+    if (result) {
       setOpen(true);
+      setAdminRequested(true);
     }
   };
 
@@ -117,7 +118,7 @@ export default function UserPage() {
         ))}
       </Grid>
 
-      {user?.isAdmin ? null : user?.adminRequested ? (
+      {user?.isAdmin ? null : adminRequested ? (
         'Request for Admin role under review'
       ) : (
         <form
