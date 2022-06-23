@@ -22,7 +22,15 @@ function ProductCard({ product }: Props) {
   const { cart, dispatch } = useCart();
 
   return (
-    <Card elevation={10} key={product.id} sx={{ maxHeight: '450px', width: '300px', borderRadius: '1rem', padding: '1rem' }}>
+    <Card
+      elevation={1}
+      key={product.id}
+      sx={{
+        width: '300px',
+        borderRadius: '0.25rem',
+        padding: '1rem',
+      }}
+    >
       <CardActionArea>
         <Link to={`/products/${product.id}`}>
           <CardContent sx={{ padding: '0' }}>
@@ -43,29 +51,36 @@ function ProductCard({ product }: Props) {
                 flexDirection: 'column',
               }}
             >
-
-              <Box component="span">
-              </Box>
+              <Box component="span"></Box>
             </Box>
           </CardContent>
         </Link>
       </CardActionArea>
-      <Box sx={{textAlign: 'center'}}>
-        <Typography
-          variant="h5"
-          component="span"
-          fontWeight="700"
-          sx={{ marginRight: '.4rem', color: '#181818' }}
+      <Box sx={{ textAlign: 'left' }}>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            flexWrap: 'wrap',
+          }}
         >
-          {product.title}
-        </Typography>
-        <br/>
-        <Typography>{product.price} kr</Typography>
-        <Typography
-          component="span"
-          sx={{ marginRight: '.4rem', color: '#181818' }}
-        >
-          {product.stock === 0 ? 'Out of stock' : `${product.stock} left in stock`}
+          <Typography
+            variant="h5"
+            fontWeight="700"
+            component="span"
+            sx={{ marginRight: '.4rem', color: '#181818' }}
+          >
+            {product.title}
+          </Typography>
+          <Typography variant="h6" component="span">
+            {product.price} kr
+          </Typography>
+        </Box>
+        <Typography sx={{ marginRight: '.4rem', color: '#181818' }}>
+          {product.stock === 0
+            ? 'Out of stock'
+            : `${product.stock} left in stock`}
         </Typography>
       </Box>
       <CardActions

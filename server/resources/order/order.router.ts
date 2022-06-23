@@ -11,7 +11,7 @@ import {
 export const orderRouter = express
   .Router()
   .get('/order', auth, admin, getAllOrders)
-  .get('/order/:id', auth, admin, getOrder)
+  .get('/order/:id', auth, getOrder)
   .get('/users-orders/:id', getSpecUserOrders)
   .post('/order', auth, addOrder)
   .put('/order/:id', auth, admin, updateOrder);

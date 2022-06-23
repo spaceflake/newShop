@@ -1,14 +1,18 @@
-import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
-import { Button } from "@mui/material";
-import { Types } from "../contexts/Reducers";
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import { Button } from '@mui/material';
+import { Product } from '@shared/types';
+import { CartActions, Types } from '../contexts/Reducers';
 
-function BuyButton({ dispatch, product }: any) {
+interface Props {
+  product: Product;
+  dispatch: React.Dispatch<CartActions>;
+}
+
+function BuyButton({ dispatch, product }: Props) {
   return (
     <>
       <Button
         sx={{
-          mt: 2,
-          mb: 2,
           padding: '0.5rem 1rem',
           color: 'black',
           border: 'solid',

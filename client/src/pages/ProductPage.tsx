@@ -7,12 +7,12 @@ import {
   CardMedia,
   Container,
   Typography,
-} from "@mui/material";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { Link, useParams } from "react-router-dom";
-import BuyButton from "../components/BuyButton";
-import { useProduct } from "../contexts/ProductsContext";
-import { useCart } from "../contexts/CartContext";
+} from '@mui/material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { Link, useParams } from 'react-router-dom';
+import BuyButton from '../components/BuyButton';
+import { useProduct } from '../contexts/ProductsContext';
+import { useCart } from '../contexts/CartContext';
 
 function ProductPage() {
   let { id } = useParams();
@@ -23,26 +23,31 @@ function ProductPage() {
   return (
     <Container maxWidth="md">
       <Link to="/products">
-        <Button sx={{
-          mt: 2,
-          mb: '1rem',
-          height: "3rem",
-          bgcolor: "#ED6C02",
-          border: "none",
-          color: " white",
-          "&:hover": {
-            bgcolor: '#181818',
-            color: 'white',
-          },
-        }} startIcon={<ArrowBackIcon />}>Back to products</Button>
+        <Button
+          sx={{
+            mt: 2,
+            mb: '1rem',
+            height: '3rem',
+            bgcolor: '#ED6C02',
+            border: 'none',
+            color: ' white',
+            '&:hover': {
+              bgcolor: '#181818',
+              color: 'white',
+            },
+          }}
+          startIcon={<ArrowBackIcon />}
+        >
+          Back to products
+        </Button>
       </Link>
       {product && (
-        <Card elevation={10} sx={{ height: "100%" }}>
+        <Card elevation={0} sx={{ height: '100%' }}>
           <Box
             sx={{
-              display: "flex",
-              alignItems: "stretch",
-              flexWrap: "wrap",
+              display: 'flex',
+              alignItems: 'stretch',
+              flexWrap: 'wrap',
             }}
           >
             <CardMedia
@@ -53,13 +58,13 @@ function ProductPage() {
             />
             <Box
               sx={{
-                display: "flex",
-                flexDirection: "column",
-                flexGrow: "1",
-                alignItems: "center",
+                display: 'flex',
+                flexDirection: 'column',
+                flexGrow: '1',
+                alignItems: 'center',
               }}
             >
-              <CardContent sx={{ flexGrow: "1" }}>
+              <CardContent sx={{ flexGrow: '1' }}>
                 <Typography variant="h3" component="div" gutterBottom>
                   {product.title}
                 </Typography>

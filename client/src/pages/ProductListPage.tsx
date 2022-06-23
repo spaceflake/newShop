@@ -91,7 +91,7 @@ function ProductListPage() {
         </Box>
         <Grid
           container
-          sx={{ gap: '1rem', alignItems: 'center', justifyContent: 'center' }}
+          sx={{ gap: '1rem', alignItems: 'center', justifyContent: 'left' }}
         >
           {filteredProducts.map((product) => (
             <ProductCard key={product.id} product={product} />

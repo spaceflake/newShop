@@ -9,13 +9,10 @@ function wait(time: number) {
     }, time);
   });
 }
-export async function UserFetch(
-  loginDetails: LoginDetails
-): Promise<User> {
+export async function UserFetch(loginDetails: LoginDetails): Promise<User> {
   const res = await axios.post('/api/user/login', loginDetails);
 
   const result = await res.data.user;
-  console.log(result.user);
 
   return result;
 }

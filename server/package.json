@@ -34,6 +34,7 @@
     "express-async-errors": "^3.1.1",
     "mongoose": "^6.3.3",
     "multer": "^1.4.4",
+    "nanoid": "^4.0.0",
     "nodemon": "^2.0.16",
     "passport": "^0.5.3",
     "passport-local": "^1.0.0",

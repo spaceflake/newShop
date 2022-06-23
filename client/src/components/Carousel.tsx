@@ -27,11 +27,15 @@ function ShowCarousel() {
   ];
 
   return (
-    <Container >
+    <Container sx={{ padding: '0px' }}>
       <Carousel
         interval={3000}
         indicators={false}
-        sx={{ height: {xs: '10rem', sm: '20rem', md: '40rem'}, width: '100%', margin: 'auto' }}
+        sx={{
+          width: '100%',
+          margin: 'auto',
+          padding: '0px',
+        }}
       >
         {images.map((item, i) => (
           <ShowImages key={i} item={item} />
