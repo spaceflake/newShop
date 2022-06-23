@@ -19,7 +19,7 @@ interface Props {
 }
 
 function ProductCard({ product }: Props) {
-  const { cart, dispatch } = useCart();
+  const { dispatch } = useCart();
 
   return (
     <Card
@@ -78,7 +78,7 @@ function ProductCard({ product }: Props) {
           </Typography>
         </Box>
         <Typography sx={{ marginRight: '.4rem', color: '#181818' }}>
-          {product.stock === 0
+          {product.stock <= 0
             ? 'Out of stock'
             : `${product.stock} left in stock`}
         </Typography>
@@ -109,13 +109,7 @@ function ProductCard({ product }: Props) {
             Show
           </Button>
         </Link>
-        {cart && cart.some((p: CartType) => p.id === product.id) ? (
-          <Button sx={{ color: '#ED6C02' }}>In cart</Button>
-        ) : product.stock <= 0 ? (
-          <Typography>OUT OF STOCK</Typography>
-        ) : (
           <BuyButton dispatch={dispatch} product={product} />
-        )}
       </CardActions>
     </Card>
   );
