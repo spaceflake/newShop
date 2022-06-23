@@ -80,10 +80,10 @@ const AdminProductControl = () => {
     },
     validate,
     onSubmit: (values) => {
-      const newProduct = { ...values };
-      console.log(values);
-      createProduct({ ...newProduct });
-      window.location.reload();
+      // const newProduct = { ...values };
+      // console.log(values);
+      // createProduct(newProduct);
+      // window.location.reload();
     },
   });
 
@@ -275,7 +275,14 @@ const AdminProductControl = () => {
                 </label>
               </Paper>
 
-              <Button variant="contained" type="submit">
+              <Button variant="contained" onClick={() => 
+               { 
+                console.log(formik.values)
+                const newProduct = { ...formik.values };
+                createProduct(newProduct);
+                window.location.reload();
+              }
+                }>
                 SAVE
               </Button>
             </form>
