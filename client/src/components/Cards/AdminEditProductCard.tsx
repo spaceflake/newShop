@@ -293,7 +293,18 @@ function ProductCard({ product }: Props) {
             ) : null}
 
             <Box>
-              {/* <Typography>Current categories: {formik.values.categories}</Typography> */}
+              <Typography color='primary'>Selecting new categories will overwrite the old ones.</Typography>
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  gap: '0.5rem',
+                  marginBottom: '1rem'
+                }}>
+                Current categories: {product.categories.map((item) => (
+                  <Typography key={item}>{item},</Typography>
+                ))}
+              </Box>
               <TextField
                 id="category"
                 name="category"
@@ -341,9 +352,9 @@ function ProductCard({ product }: Props) {
             </Paper>
 
             <Button variant="contained" onClick={() => {
-               updateProduct({...formik.values})
-               handleClose();
-              }}
+              updateProduct({ ...formik.values })
+              handleClose();
+            }}
             >
               SAVE
             </Button>
