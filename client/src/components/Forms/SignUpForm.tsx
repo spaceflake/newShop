@@ -56,10 +56,6 @@ function SignUpForm(_props: Props) {
             )
             .then(
               (res: AxiosResponse) => {
-                console.log('user has been registerd ');
-                console.log(res);
-                console.log(SignUpDetails);
-
                 nav('/');
                 resetForm();
               },

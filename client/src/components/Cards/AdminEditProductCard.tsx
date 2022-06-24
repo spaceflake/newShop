@@ -119,7 +119,6 @@ function ProductCard({ product }: Props) {
     const file = e.target.files[0];
     const formData = new FormData();
     formData.set('media', file);
-    console.log(file);
 
     axios.post('/api/media/', formData).then((res) => {
       formik.setFieldValue('photoId', res.data._id);
@@ -279,9 +278,14 @@ function ProductCard({ product }: Props) {
               onBlur={formik.handleBlur}
               value={formik.values.stock}
             />
-            {product.stock <= 2 ? (
+            {product.stock <= 3 && product.stock > 0 ? (
               <Typography color="red">
                 This product is almost sold out
+              </Typography>
+            ) : null}
+            {product.stock <= 0 ? (
+              <Typography color="red">
+                This product is sold out
               </Typography>
             ) : null}
             {formik.touched.stock && formik.errors.stock ? (
@@ -289,7 +293,18 @@ function ProductCard({ product }: Props) {
             ) : null}
 
             <Box>
-              {/* <Typography>Current categories: {formik.values.categories}</Typography> */}
+              <Typography color='primary'>Selecting new categories will overwrite the old ones.</Typography>
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  gap: '0.5rem',
+                  marginBottom: '1rem'
+                }}>
+                Current categories: {product.categories.map((item) => (
+                  <Typography key={item}>{item},</Typography>
+                ))}
+              </Box>
               <TextField
                 id="category"
                 name="category"
@@ -336,7 +351,11 @@ function ProductCard({ product }: Props) {
               </label>
             </Paper>
 
-            <Button variant="contained" type="submit">
+            <Button variant="contained" onClick={() => {
+              updateProduct({ ...formik.values })
+              handleClose();
+            }}
+            >
               SAVE
             </Button>
           </form>
@@ -378,8 +397,8 @@ function ProductCard({ product }: Props) {
             <Button
               onClick={() => {
                 deleteProduct(product.id);
-                console.log(product.id);
                 handleClose();
+                window.location.reload();
               }}
             >
               Yes

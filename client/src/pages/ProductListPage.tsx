@@ -15,10 +15,10 @@ import type { Product } from '@shared/types';
 
 function ProductListPage() {
   const { prods, categories, getAllProducts } = useProduct();
-  // const [categories, setCategories] = useState<string[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [searchParams, setSearchParams] = useSearchParams();
   const selectedCategory = searchParams.get('category');
+
 
   const matches = useMediaQuery('(max-width: 440px)');
 

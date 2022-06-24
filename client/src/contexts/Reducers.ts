@@ -151,7 +151,6 @@ export function ProductEditReducer(
     case ProductEditReducerType.Update:
       const key = action.payload.key;
       const value = action.payload.value;
-      console.log('key', key);
 
       return {
         ...state,

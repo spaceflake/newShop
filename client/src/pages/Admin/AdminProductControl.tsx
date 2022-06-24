@@ -5,15 +5,18 @@ import {
   Box,
   Button,
   Container,
-  Dialog, IconButton,
-  Input, MenuItem,
+  Dialog,
+  IconButton,
+  Input,
+  MenuItem,
   OutlinedInput,
   Paper,
   Select,
   SelectChangeEvent,
-  Slide, TextField,
+  Slide,
+  TextField,
   Toolbar,
-  Typography
+  Typography,
 } from '@mui/material';
 import { TransitionProps } from '@mui/material/transitions';
 import axios from 'axios';
@@ -26,7 +29,7 @@ const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
     children: React.ReactElement;
   },
-  ref: React.Ref<unknown>,
+  ref: React.Ref<unknown>
 ) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -77,10 +80,10 @@ const AdminProductControl = () => {
     },
     validate,
     onSubmit: (values) => {
-      const newProduct = { ...values }
-      console.log(values);
-      createProduct({ ...newProduct });
-      window.location.reload();
+      // const newProduct = { ...values };
+      // console.log(values);
+      // createProduct(newProduct);
+      // window.location.reload();
     },
   });
 
@@ -96,10 +99,8 @@ const AdminProductControl = () => {
     const {
       target: { value },
     } = event;
-    setCategorySelect(
-      typeof value === 'string' ? value.split(',') : value,
-    );
-    formik.setFieldValue('categories', [...categorySelect])
+    setCategorySelect(typeof value === 'string' ? value.split(',') : value);
+    formik.setFieldValue('categories', [...categorySelect]);
   };
 
   const uploadImage = (e: ChangeEvent<HTMLInputElement>) => {
@@ -107,18 +108,15 @@ const AdminProductControl = () => {
     const file = e.target.files[0];
     const formData = new FormData();
     formData.set('media', file);
-    console.log(file);
 
-    axios.post('/api/media/', formData)
-      .then(
-        res => {
-          formik.setFieldValue('photoId', res.data._id)
-        })
+    axios.post('/api/media/', formData).then((res) => {
+      formik.setFieldValue('photoId', res.data._id);
+    });
 
     let reader = new FileReader();
     reader.onloadend = () => {
-      setImgSrc(reader.result)
-    }
+      setImgSrc(reader.result);
+    };
   };
 
   return (
@@ -126,7 +124,8 @@ const AdminProductControl = () => {
       <Box
         sx={{
           height: '100%',
-        }}>
+        }}
+      >
         <Box>
           <Button
             startIcon={<AddCircleOutlineOutlinedIcon />}
@@ -151,7 +150,11 @@ const AdminProductControl = () => {
                 >
                   <CloseIcon />
                 </IconButton>
-                <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
+                <Typography
+                  sx={{ ml: 2, flex: 1 }}
+                  variant="h6"
+                  component="div"
+                >
                   Create product
                 </Typography>
               </Toolbar>
@@ -271,12 +274,17 @@ const AdminProductControl = () => {
                 </label>
               </Paper>
 
-              <Button variant="contained" type="submit">
+              <Button variant="contained" onClick={() => 
+               { 
+                const newProduct = { ...formik.values };
+                createProduct(newProduct);
+                window.location.reload();
+              }
+                }>
                 SAVE
               </Button>
             </form>
           </Dialog>
-
         </Box>
         <AdminEditProduct />
       </Box>
@@ -285,147 +293,3 @@ const AdminProductControl = () => {
 };
 
 export default AdminProductControl;
-
-
-{/* <Drawer
-sx={{
- // position: 'absolute',
- flexShrink: 0,
- '& .MuiDrawer-paper': {
-   marginTop: '3rem',
-   width: "min(100% - 1rem, 30rem)",
-   marginInline: "auto",
-   backgroundColor: '#ECECEC',
-   borderRadius: '20px',
- },
-}}
-variant="persistent"
-anchor="right"
-open={openAddProduct}
->
-<DrawerHeader
- sx={{
-   margin: '1rem',
- }}
->
- <IconButton onClick={handleAddDrawerClose}>
-   <CloseIcon style={{ fontSize: 32 }} />
- </IconButton>
- <Typography>Add Product</Typography>
-</DrawerHeader>
-<form onSubmit={formik.handleSubmit}>
-<Box>
- <Box>
-   <Box>
-     <label htmlFor="name">Title</label>
-     <TextField
-       id="title"
-       name="title"
-       type="title"
-       onChange={formik.handleChange}
-       onBlur={formik.handleBlur}
-       value={formik.values.title}
-     />
-     {formik.touched.title && formik.errors.title ? (
-       <Box>{formik.errors.title}</Box>
-     ) : null}
-   </Box>
-
-   <Box>
-     <label htmlFor="price">Price</label>
-     <TextField
-       id="price"
-       name="price"
-       type="price"
-       onChange={formik.handleChange}
-       onBlur={formik.handleBlur}
-       value={formik.values.price}
-     />
-     {formik.touched.price && formik.errors.price ? (
-       <Box>{formik.errors.price}</Box>
-     ) : null}
-   </Box>
-
-   <Box>
-
-  // <input type="file" onChange={uploadImage}/>
-       <img src={imgSrc} alt="" />
-   <Box>
-   </Box>
-   <label htmlFor="contained-button-file">
-   <Input id="contained-button-file"  type="file" onChange={uploadImage} />
-   <Button variant="contained" component="span">
-     Upload
-   </Button>
-     </label>
-   </Box>
-
-   <Box>
-     <label htmlFor="description">Description
-  
-     </label>
-     <TextField
-       id="description"
-       name="description"
-       onChange={formik.handleChange}
-       onBlur={formik.handleBlur}
-       value={formik.values.description}
-     />
-     {formik.touched.description && formik.errors.description ? (
-       <Box>{formik.errors.description}</Box>
-     ) : null}
-   </Box>                
-   <Box>
-     <label htmlFor="description">Stock</label>
-     <TextField
-       id="stock"
-       name="stock"
-       onChange={formik.handleChange}
-       onBlur={formik.handleBlur}
-       value={formik.values.stock}
-     />
-     {formik.touched.stock && formik.errors.stock ? (
-       <div>{formik.errors.stock}</div>
-     ) : null}
-   </Box>
-//    <label htmlFor="categories">Add new category</label>
-//     <TextField
-//       id="category"
-//       name="category"
-//       onChange={formik.handleChange}
-//       onBlur={formik.handleBlur}
-//       // value={formik.values.category}
-//     />
-// <ButtonGroup>
-//       {categories.map((categori) => (
-//         <Button
-//           key={categori}
-//           onClick={() => {
-//             setNewCategories([categori])
-//             formik.setFieldValue('categories',  newCategories)
-//             console.log(categori);
-//             
-//           }}
-//           variant={
-//             product.categories.includes(categori)
-//               ? 'contained'
-//               : 'outlined'
-//           }
-//         >
-//           {categori}
-//         </Button>
-//       ))}
-     </ButtonGroup>
-     <InputLabel id='categories-select-label'>Choose categories</InputLabel>
-     <Select labelId="categories-select-label" id="categories-select" multiple value={categorySelect as any} onChange={handleChange} input={<OutlinedInput label="Categories"/>}>
-       {categories.map(category => (
-         <MenuItem key={category} value={category}>{category}</MenuItem>
-       ))}
-     </Select>
-   <Box>
-     <Button type="submit">SAVE</Button>
-   </Box>
- </Box>
-</Box>
-</form>
-</Drawer> */}

@@ -1,13 +1,17 @@
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import LocalShippingIcon from '@mui/icons-material/LocalShipping';
+import InventoryIcon from '@mui/icons-material/Inventory';
 import {
   Box,
   Button,
+  Chip,
   CircularProgress,
   Collapse,
   Container,
   IconButton,
   Paper,
+  Popover,
   Table,
   TableBody,
   TableCell,
@@ -19,6 +23,7 @@ import {
 import { Order } from '@shared/types';
 import axios, { AxiosResponse } from 'axios';
 import { useEffect, useState } from 'react';
+import React from 'react';
 
 interface OrderProp {
   order: Order;
@@ -28,23 +33,34 @@ const OrderRow = ({ order }: OrderProp) => {
   const [open, setOpen] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState<String>();
   const [isLoading, setIsLoading] = useState(false);
+  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
+    null
+  );
 
-  const handleClick = async () => {
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const openPop = Boolean(anchorEl);
+  const id = open ? 'simple-popover' : undefined;
+
+  const updateSentStatus = async () => {
     setIsLoading(true);
     await axios
       .put('/api/order/' + selectedOrder, {
         isSent: true,
       })
       .then((res: AxiosResponse) => {
-        console.log(res.data.msg);
-        setIsLoading(!isLoading);
+        setIsLoading(false);
+        handleClose();
+        setOpen(false);
       });
   };
 
   return (
     <>
       <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
-        <TableCell>
+        <TableCell sx={{ pr: '0' }}>
           <IconButton
             aria-label="expand row"
             size="small"
@@ -53,12 +69,16 @@ const OrderRow = ({ order }: OrderProp) => {
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        <TableCell component="th" scope="row">
+        <TableCell component="th" scope="row" sx={{ pr: '0' }}>
           {order.id}
         </TableCell>
         {/* <TableCell align="right">{order.createdAt}</TableCell> */}
         <TableCell align="right">
-          {order.isSent ? 'shipped' : 'not shipped'}
+          {order.isSent ? (
+            <Chip icon={<LocalShippingIcon />} color="success" />
+          ) : (
+            <Chip icon={<InventoryIcon />} color="warning" />
+          )}
         </TableCell>
       </TableRow>
       <TableRow>
@@ -76,19 +96,36 @@ const OrderRow = ({ order }: OrderProp) => {
                   Order details
                 </Typography>
                 {order.isSent ? (
-                  'shipped'
+                  <Chip icon={<LocalShippingIcon />} label="Shipped" />
                 ) : (
-                  <Button
-                    onClick={() => {
-                      setSelectedOrder(order.id);
-                      if (selectedOrder) {
-                        handleClick();
-                        console.log(selectedOrder);
-                      }
-                    }}
-                  >
-                    {!isLoading ? 'Mark as sent' : <CircularProgress />}
-                  </Button>
+                  <>
+                    <Button
+                      onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                        setAnchorEl(e.currentTarget);
+                        setSelectedOrder(order.id);
+                      }}
+                    >
+                      {!isLoading ? 'Mark as sent' : <CircularProgress />}
+                    </Button>
+                    <Popover
+                      id={id}
+                      open={openPop}
+                      anchorEl={anchorEl}
+                      onClose={handleClose}
+                      anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'left',
+                      }}
+                    >
+                      <Typography sx={{ p: 2 }}>Confirm?</Typography>
+                      <Button sx={{ p: 2 }} onClick={updateSentStatus}>
+                        Yes
+                      </Button>
+                      <Button sx={{ p: 2 }} onClick={handleClose}>
+                        No
+                      </Button>
+                    </Popover>
+                  </>
                 )}
               </Box>
               <Typography variant="body2" gutterBottom component="div">
@@ -133,13 +170,17 @@ const OrderRow = ({ order }: OrderProp) => {
                 <TableBody>
                   {order.deliveryAddress.map((deliveryRow) => (
                     <TableRow key={deliveryRow.email}>
-                      <TableRow component="th" scope="row">
-                        {`${deliveryRow.firstName} ${deliveryRow.lastName}`}
-                      </TableRow>
-                      <TableRow>{deliveryRow.street}</TableRow>
-                      <TableRow>{deliveryRow.city}</TableRow>
-                      <TableRow>{deliveryRow.zipcode}</TableRow>
-                      <TableRow>{deliveryRow.email}</TableRow>
+                      <TableCell>
+                        <Box>
+                          <Typography>
+                            {`${deliveryRow.firstName} ${deliveryRow.lastName}`}
+                          </Typography>
+                          <Typography>{deliveryRow.street}</Typography>
+                          <Typography>{deliveryRow.city}</Typography>
+                          <Typography>{deliveryRow.zipcode}</Typography>
+                          <Typography>{deliveryRow.email}</Typography>
+                        </Box>
+                      </TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
@@ -178,10 +219,14 @@ const AdminOrderControl = () => {
     <Container>
       <TableContainer component={Paper}>
         <Table aria-label="collapsible table">
-          <TableHead sx={{ backgroundColor: 'hsl(214, 100%, 76%)' }}>
+          <TableHead
+            sx={{
+              backgroundColor: 'hsl(214, 100%, 76%)',
+            }}
+          >
             <TableRow>
               <TableCell />
-              <TableCell>Order Id</TableCell>
+              <TableCell sx={{ pr: '0' }}>Order Id</TableCell>
               {/* <TableCell align="right">Order date</TableCell> */}
               <TableCell align="right">Status</TableCell>
             </TableRow>

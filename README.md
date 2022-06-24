@@ -39,6 +39,7 @@ I denna uppgift skall vi bygga en webbshops-applikation inkluderande en klient o
 ## Krav
 
 ### GODKÄNT
+
 - [x] Alla sidor skall vara responsiva. (G)
       (Genom att använda `CSS`)
 
@@ -67,7 +68,7 @@ I denna uppgift skall vi bygga en webbshops-applikation inkluderande en klient o
       (Genom ett `edit-forumlär`)
 
 - [x] Administratörer ska kunna se en lista på alla gjorda beställningar (G)
-      (Genom ett `fetch-anrop` till klientsidan från databasen)
+      (Genom ett `fetch-anrop` till klientsidan från databasen. Presenteras en tabell med orderstatus, produkter, leveransadress)
 
 - [x] Sidans produkter ska delas upp i kategorier, en produkt ska tillhöra minst en kategori, men kan tillhöra flera (G)
       (När man skapar en produkt krävs att man sätter en `string[]`och den `string[]`används för att dela upp katergorierna)
@@ -93,6 +94,7 @@ I denna uppgift skall vi bygga en webbshops-applikation inkluderande en klient o
 <br>
 
 ### VÄL GODKÄNT
+
 - [x] Man ska kunna registrera sig som administratör på sidan, nya användare ska sparas i databasen (VG)
       (Endpoints finns för att registrera en önskan om att bli admin, existerande admins måste sen godkänna.)
 
@@ -100,15 +102,15 @@ I denna uppgift skall vi bygga en webbshops-applikation inkluderande en klient o
       (-||-)
 
 - [x] Administratörer ska kunna markera beställningar som skickade (VG)
-      (kommentar)
+      (Endpoint för att uppdatera order status, genom knapp på öppnad accordion på ordertabellen. Visas om inte ordern är skickad.)
 
 - [x] När man är inloggad som kund ska man kunna se sina gjorda beställning och om det är skickade eller inte (VG)
       (Användare har en egen sida. Orders med status hämtas från endpoint)
 
 - [ ] Administratörer ska kunna redigera vilka kategorier en produkt tillhör(VG)
-      (ej klart)
-- [ ] Administratörer ska kunna lägga till och ta bort produkter(VG)
-      (ej klart)
+      (Avgränsing, behöver välja flera kategorier, då sista inte läggs till.)
+- [x] Administratörer ska kunna lägga till och ta bort produkter(VG)
+      (Går att lägga till nya produkter)
 
 - [x] Backendapplikationen måste ha en fungerande global felhantering (VG)
       (Genom att skapa en `felhanterare`)
@@ -136,5 +138,6 @@ När modulerna är nedladdade skriv `npm start` för att köra projektet i brows
 
  <br>
 
- ## Links 
- [REPO](https://github.com/spaceflake/newShop)
+## Links
+
+[REPO](https://github.com/spaceflake/newShop)

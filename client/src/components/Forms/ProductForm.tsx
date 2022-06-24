@@ -65,7 +65,6 @@ function ProductForm({ product } : Props) {
     const file = e.target.files[0];
     const formData = new FormData();
     formData.set('media', file);
-    console.log(file);
 
 
     await axios.post('/api/media/', formData)
